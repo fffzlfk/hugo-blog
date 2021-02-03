@@ -1,4 +1,4 @@
-baseurl      = "https://fffzlfk.gitlab.io"
+baseurl      = "https://fffzlfk.netlify.com/"
 title        = "fffzlfk's Blog"
 languageCode = "en-us"
 theme        = ["hello-friend-ng", "hugo-notice"]
