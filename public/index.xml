@@ -109,15 +109,6 @@ def bar(func): def inner(): print(f&amp;#39;In Bar Before {func.</description>
     </item>
     
     <item>
-      <title>CF#653(div3)</title>
-      <link>https://fffzlfk.gitlab.io/2020/08/03/cf#653div3/</link>
-      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://fffzlfk.gitlab.io/2020/08/03/cf#653div3/</guid>
-      <description>AC代码 AC代码 AC代码 AC代码 AC代码 </description>
-    </item>
-    
-    <item>
       <title>LeetCode杂题</title>
       <link>https://fffzlfk.gitlab.io/2020/07/27/leetcode/</link>
       <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
@@ -230,16 +221,6 @@ AC代码 class Solution { public: double average(vector&amp;lt;int&amp;gt;&amp;a
       
       <guid>https://fffzlfk.gitlab.io/2020/06/17/%CF%B0/</guid>
       <description>以下题目来自洛谷 P3390 【模板】矩阵快速幂 AC代码 P3383 【模板】线性筛素数    10 100 1000 10000 100000 1000000 10000000 100000000     4 29 197 1426 11018 89516 754095 6515550    AC代码 CF822A I&amp;rsquo;m bored with life AC代码 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; // using ll = long long; // 不打表也能过 int get_mul[] = {1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600}; int main() { int a, b; scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;a, &amp;amp;b); printf(&amp;#34;%d\n&amp;#34;, get_mul[min(a, b) - 1]); // for (int i = 1; i &amp;lt; 13; i++) printf(&amp;#34;%d, &amp;#34;, get(i));  // system(&amp;#34;pause&amp;#34;);  return 0; } 素数个数（线性筛模版） AC代码 #include &amp;lt;bits/stdc++.</description>
-    </item>
-    
-    <item>
-      <title>CF#640(div4)</title>
-      <link>https://fffzlfk.gitlab.io/2020/06/15/cf#640div4/</link>
-      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://fffzlfk.gitlab.io/2020/06/15/cf#640div4/</guid>
-      <description>Problem A For example, the following numbers are round: $$ 4000, 1, 9, 800, 90. $$ The following numbers are not round: $$ 110, 707, 222, 1001. $$
-You are given a positive integer n ($$1≤n≤10^4$$). Represent the number n as a sum of round numbers using the minimum number of summands (addends). In other words, you need to represent the given number n as a sum of the least number of terms, each of which is a round number.</description>
     </item>
     
     <item>
