@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="hihoCoder#1014" />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://fffzlfk.gitlab.io/posts/%E5%AD%97%E5%85%B8%E6%A0%91trie-tree/" /> 
+<title>
+     字典树（trie tree） :: fffzlfk&#39;s Blog  — Thinking will not overcome fear but action will. 
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css">  
+<link rel="stylesheet" href="/main.0b44ca839b5cf0ae1c9a176353cd724cec3113bb1cfc03e2d9bbec8c21d31f40.css"> 
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+ <meta itemprop="name" content="字典树（trie tree）">
+<meta itemprop="description" content="hihoCoder#1014">
+<meta itemprop="datePublished" content="2020-10-03T12:45:22+08:00" />
+<meta itemprop="dateModified" content="2020-10-03T12:45:22+08:00" />
+<meta itemprop="wordCount" content="228">
+<meta itemprop="image" content="https://fffzlfk.gitlab.io"/>
+
+
+
+<meta itemprop="keywords" content="" />
+ <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://fffzlfk.gitlab.io"/>
+
+<meta name="twitter:title" content="字典树（trie tree）"/>
+<meta name="twitter:description" content="hihoCoder#1014"/>
+  <meta property="og:title" content="字典树（trie tree）" />
+<meta property="og:description" content="hihoCoder#1014" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fffzlfk.gitlab.io/posts/%E5%AD%97%E5%85%B8%E6%A0%91trie-tree/" />
+<meta property="og:image" content="https://fffzlfk.gitlab.io"/>
+<meta property="article:published_time" content="2020-10-03T12:45:22+08:00" />
+<meta property="article:modified_time" content="2020-10-03T12:45:22+08:00" /><meta property="og:site_name" content="fffzlfk&#39;s Blog" />
+   
+<meta property="article:published_time" content="2020-10-03 12:45:22 &#43;0800 CST" /> 
+
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+</script>
+
+<body class="line-numbers" ></body>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0BH7B3RWSF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-0BH7B3RWSF');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd fffzlfk/home/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://fffzlfk.gitlab.io/about">About</a></li><li><a href="https://fffzlfk.gitlab.io/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        2 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://fffzlfk.gitlab.io/posts/%E5%AD%97%E5%85%B8%E6%A0%91trie-tree/">字典树（trie tree）</a>
+      </h1>
+
+      
+
+      <div class="post-content">
+        <style type="text/css">.notice{padding:18px;line-height:24px;margin-bottom:24px;border-radius:4px;color:#444;background:#e7f2fa}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:#fff;background:#6ab0de}.notice.warning .notice-title{background:rgba(217,83,79,.9)}.notice.warning{background:#fae2e2}.notice.info .notice-title{background:#f0b37e}.notice.info{background:#fff2db}.notice.note .notice-title{background:#6ab0de}.notice.note{background:#e7f2fA}.notice.tip .notice-title{background:rgba(92,184,92,.8)}.notice.tip{background:#e6f9e6}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:currentColor}.icon-notice img,.icon-notice.baseline svg{top:0.125em;position:relative}</style>
+<svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg><div class="notice warning" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#warning-notice"></use></svg></span>Warning</p><p>时间限制:10000ms<br>
+单点时限:1000ms<br>
+内存限制:256MB</p></div>
+
+<h2 id="描述">描述</h2>
+<p>小Hi和小Ho是一对好朋友，出生在信息化社会的他们对编程产生了莫大的兴趣，他们约定好互相帮助，在编程的学习道路上一同前进。</p>
+<p>这一天，他们遇到了一本词典，于是小Hi就向小Ho提出了那个经典的问题：“小Ho，你能不能对于每一个我给出的字符串，都在这个词典里面找到以这个字符串开头的所有单词呢？”</p>
+<p>身经百战的小Ho答道：“怎么会不能呢！你每给我一个字符串，我就依次遍历词典里的所有单词，检查你给我的字符串是不是这个单词的前缀不就是了？”</p>
+<p>小Hi笑道：“你啊，还是太年轻了！~假设这本词典里有10万个单词，我询问你一万次，你得要算到哪年哪月去？”</p>
+<p>小Ho低头算了一算，看着那一堆堆的0，顿时感觉自己这辈子都要花在上面了&hellip;</p>
+<p>小Hi看着小Ho的囧样，也是继续笑道：“让我来提高一下你的知识水平吧~你知道树这样一种数据结构么？”</p>
+<p>小Ho想了想，说道：“知道~它是一种基础的数据结构，就像<a href="http://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)">这里</a>说的一样！”</p>
+<p>小Hi满意的点了点头，说道：“那你知道我怎么样用一棵树来表示整个词典么？”</p>
+<p>小Ho摇摇头表示自己不清楚。</p>
+<div class="notice tip" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#tip-notice"></use></svg></span>Tip</p><p>提示一：Trie树的建立<br>
+小Hi于是在纸上画了一会，递给小Ho，道：“你看这棵树和这个词典有什么关系？”</p>
+<p><img src="http://media.hihocoder.com//problem_images/20140712/14051554971354.jpg" alt=""></p>
+<p>小Ho盯着手里的纸想了一会道：“我知道了！对于从树的根节点走到每一个黑色节点所经过的路径，如果将路径上的字母都连起来的话，就都对应着词典中的一个单词呢！”</p>
+<p>小Hi说道：“那你知道如何根据一个词典构建这样一棵树么？”</p>
+<p>“不造！”</p>
+<p>“想你也不知道，我来告诉你吧~”小Hi摆出一副老师的样子，说道：“你先这么想，如果我已经有了这样的一个词典和对应的一棵树，我要添加一个新的单词apart，我应该怎么做？”</p>
+<p>“让我想想……”小Ho又开始苦思冥想：“首先我要先看看已经能走到哪一步了对吧？比如我从1号节点走&quot;a&quot;这一条边就可以走到2号节点，然后从2号节点走&quot;p&quot;这一条边可以走到3号节点，然后……就没路可走了！这时候我就需要添加一条从3号节点出发且标记为&quot;p&quot;的边才可以接着往下走……最后就是这样了！然后我把最后到达的这个结点标记为黑色就可以了。”</p>
+<p><img src="http://media.hihocoder.com//problem_images/20140712/14051555414053.jpg" alt=""></p>
+<p>小Hi说道：“真聪明~那你不妨再算算如果是一个有10W个单词的词典，每个单词的长度不超过10的话，这棵树会有多大？”</p>
+<p>小Ho于是掏出笔来，一边画一遍念叨：“假设我已经将前三个单词构成了这样一棵树，那么我要添加一个新的单词的时候，最坏情况是这个单词和之前的三个单词都没有公共前缀，那么这个新的单词的长度如果是5的话，我就至少要添加5个结点到树中才能够继续表示这个词典！”</p>
+<p>“而如果每次都是最坏情况的话，这棵树最多也就100W个结点这么大！更何况最坏情况是不可能次次都发生的！毕竟字母表也才26个字母呢！”小Ho继续说道。</p>
+<p>“嗯~这样我们是不是就可以用（单词个数*单词长度）个结点来表示一个词典了呢？小Hi问道。</p>
+<p>“是的呢！”小Ho道：“但是这样一棵树又有什么用呢？”</p>
+<p>“可别小看了它，它就是传说中的Trie树哦~至于他有什么用，一会你就知道了！”小Hi笑嘻嘻的回答道。</p></div>
+
+<p>“你看，我们现在得到了这样一棵树，那么你看，如果我给你一个字符串ap，你要怎么找到所有以ap开头的单词呢？”小Hi又开始考校小Ho。</p>
+<p>“唔&hellip;一个个遍历所有的单词？”小Ho还是不忘自己最开始提出来的算法。</p>
+<p>“笨！这棵树难道就白构建了！”小Hi教训完小Ho，继续道：“看好了！”
+<div class="notice tip" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#tip-notice"></use></svg></span>Tip</p><p>提示二：如何使用Trie树<br>
+小Hi在树上用绿色标出了一个节点，递给小Ho。
+<img src="http://media.hihocoder.com//problem_images/20140712/14051555696936.jpg" alt=""></p>
+<p>“这个结点……是从根节点先走&quot;a&quot;然后走&quot;p&quot;到达的结点呢！哦~~我知道了，以这个结点为根的子树里所有标记结点都是以&quot;ap&quot;为前缀的单词呢！而且所有以&quot;ap&quot;为前缀的单词都在以这个节点为根的子树里~”小Ho惊喜道。</p>
+<p>“是的呢~那你对怎么解决我的问题有想法了么？”小Hi追问道。</p>
+<p>“唔&hellip;那就是每次拿到你的字符串之后，我在树上找到其对应的那个结点，然后统计这个节点中有多少个标记节点？”小Ho不是很确定的答道：“但是这样&hellip;似乎在最坏情况，也就是你每次给个字符串都很短的时候，我还是要扫描这棵树的很大一部分呢？也就是说虽然平均时间复杂度降低了，但是最坏情况时间复杂度还是很高的样子！”</p>
+<p>小Hi笑嘻嘻道：”没想到你自己看出来了呢~我还以为又要教训你了！~那你有什么好的解决方法么？”</p>
+<p>“没呢！小Hi你就别卖关子了，赶紧告诉我吧！”被折磨的够呛的小Ho开始求饶。</p>
+<p>“好吧！就帮你这一回~”</p></div>
+
+<div class="notice tip" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#tip-notice"></use></svg></span>Tip</p><p>提示三：在建立Trie树时同时进行统计！<br>
+“小Ho你有没有想过这样一个问题？不妨称以T为根的子树中标记节点的个数为L[T]，既然我要统计某个L[T1]，，而这个结点是不确定的，我有没有办法一次性把所有结点的L[T]求出来呢？”小Hi整理了下思绪，问道。</p>
+<p>“似乎是有的，老师以前说过，递归什么的。。”小Ho答道。</p>
+<p>“递归太复杂了！我们可以之后再说，你这么想，在你构建Trie树的时候，当你经过一个结点的时候，说明了什么？”小Hi撇了撇头，继续问道。</p>
+<p>“我想想，经过一个结点……标记结点……说明了以这个结点为根的子树中将要多出来一个标记结点？”</p>
+<p>“没错！那你有没有什么办法来记录这个改变呢？”</p>
+<p>“我想想，我在最开始置所有L[T]=0，然后每次添加一个新的单词的时候，都将它经过的所有结点的L[T]全部+1，这样我构建完这棵Trie树的时候，我也就能够同时统计到所有L[T]了，对么？”小Ho开心道。</p></div>
+
+“那么现在！赶紧去用代码实现吧！”小Hi如是说道</p>
+<h2 id="样例输入">样例输入</h2>
+<blockquote>
+<p>5<br>
+babaab<br>
+babbbaaaa<br>
+abba<br>
+aaaaabaa<br>
+babaababb<br>
+5<br>
+babb<br>
+baabaaa<br>
+bab<br>
+bb<br>
+bbabbaab</p>
+</blockquote>
+<h2 id="样例输出">样例输出</h2>
+<blockquote>
+<p>1<br>
+0<br>
+3<br>
+0<br>
+0</p>
+</blockquote>
+<h2 id="代码">代码</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Node</span> {
+    Node<span style="color:#f92672">*</span> next[<span style="color:#ae81ff">26</span>];
+    <span style="color:#66d9ef">int</span> count;
+    Node() {
+        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">26</span>; i<span style="color:#f92672">++</span>) next[i] <span style="color:#f92672">=</span> NULL;
+        count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+};
+Node <span style="color:#f92672">*</span>root;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insert</span>(string word) {
+	Node <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> root;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">&amp;</span>e : word) {
+		<span style="color:#66d9ef">int</span>	tmp <span style="color:#f92672">=</span> e <span style="color:#f92672">-</span> <span style="color:#e6db74">&#39;a&#39;</span>;
+		<span style="color:#66d9ef">if</span> (p<span style="color:#f92672">-&gt;</span>next[tmp] <span style="color:#f92672">==</span> NULL)
+			p<span style="color:#f92672">-&gt;</span>next[tmp] <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node();
+		p <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>next[tmp];
+		p<span style="color:#f92672">-&gt;</span>count<span style="color:#f92672">++</span>;
+	}
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get_cnt</span>(string word) {
+	Node <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> root;
+	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">&amp;</span>e : word) {
+		<span style="color:#66d9ef">int</span> tmp <span style="color:#f92672">=</span> e <span style="color:#f92672">-</span> <span style="color:#e6db74">&#39;a&#39;</span>;
+		<span style="color:#66d9ef">if</span> (p<span style="color:#f92672">-&gt;</span>next[tmp] <span style="color:#f92672">==</span> NULL)
+			p<span style="color:#f92672">-&gt;</span>next[tmp] <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node();
+		p <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>next[tmp];
+	}
+	<span style="color:#66d9ef">return</span> p<span style="color:#f92672">-&gt;</span>count;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() { 
+	ios<span style="color:#f92672">::</span>sync_with_stdio(false);
+	cin.tie(<span style="color:#ae81ff">0</span>);
+	root <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Node();
+	<span style="color:#66d9ef">int</span> n, m;
+	cin <span style="color:#f92672">&gt;&gt;</span> n;
+	string str;
+	<span style="color:#66d9ef">while</span> (n<span style="color:#f92672">--</span>) {
+		cin <span style="color:#f92672">&gt;&gt;</span> str;
+		insert(str);	
+	}
+	cin <span style="color:#f92672">&gt;&gt;</span> m;
+	<span style="color:#66d9ef">while</span> (m<span style="color:#f92672">--</span>) {
+		cin <span style="color:#f92672">&gt;&gt;</span> str;
+		printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, get_cnt(str));
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        228 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2020-10-03 12:45
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;caption=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;canonicalUrl=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;body=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f&amp;media=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f;description=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f&amp;title=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;summary=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;source=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f&amp;resubmit=true&amp;title=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f;title=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89%20https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f&amp;t=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=%e5%ad%97%e5%85%b8%e6%a0%91%ef%bc%88trie%20tree%ef%bc%89&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2f%25E5%25AD%2597%25E5%2585%25B8%25E6%25A0%2591trie-tree%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+      <div class="pagination">
+        <div class="pagination__title">
+          <span class="pagination__title-h">Read other posts</span>
+          <hr />
+        </div>
+
+        <div class="pagination__buttons">
+          
+            <span class="button previous">
+              <a href="https://fffzlfk.gitlab.io/posts/leetcode%E6%9D%82%E9%A2%982/">
+                <span class="button__icon">←</span>
+                <span class="button__text">LeetCode杂题2</span>
+              </a>
+            </span>
+          
+
+          
+            <span class="button next">
+              <a href="https://fffzlfk.gitlab.io/posts/%E7%AE%97%E6%B3%95%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97%E6%89%93%E5%8D%A1/">
+                <span class="button__text">算法进阶指南打卡</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          
+        </div>
+      </div>
+    
+
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            
+                <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://fffzlfk.gitlab.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/fffzlfk">fffzlfk</a></span>
+          </div>
+    </div>
+</footer>
+<script src="https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js"></script>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.074523d4a7ea4c66d0617d43c2d0ea3783a6599876123627c61b28fa46b5c6005b6526f9cdfcd9a3bde4791145652e1b2dfd9ec30abb69fd067621dd3a852d25.js" integrity="sha512-B0Uj1KfqTGbQYX1DwtDqN4OmWZh2EjYnxhso&#43;ka1xgBbZSb5zfzZo73keRFFZS4bLf2ewwq7af0GdiHdOoUtJQ=="></script>
+
+
+
+    </body>
+</html>

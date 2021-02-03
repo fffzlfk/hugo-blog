@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>排序 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E6%8E%92%E5%BA%8F/</link>
+    <description>Recent content in 排序 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 04 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E6%8E%92%E5%BA%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>希尔排序&amp;快排&amp;堆排序</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/04//</link>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/04//</guid>
+      <description>希尔排序 算法描述 代码实现 #include &amp;lt;algorithm&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;using namespace std; void ShellInsert(vector&amp;lt;int&amp;gt; &amp;amp;L, int dk) { for (int i = dk; i &amp;lt; L.size(); i++) { int j; int tmp; if (L[i] &amp;lt; L[i - dk]) { tmp = L[i]; // 暂存  for (j = i - dk; j &amp;gt; 0 &amp;amp;&amp;amp; L[j] &amp;gt; tmp; j -= dk) L[j + dk] = L[j]; //向后移动到插入位置  L[j + dk] = tmp; //插入  } } } void ShellSort(vector&amp;lt;int&amp;gt; &amp;amp;L, int dlta[], int t) { for (int k = 0; k &amp;lt; t; k++) ShellInsert(L, dlta[k]); } int main(int argc, char const *argv[]) { vector&amp;lt;int&amp;gt; L = {0, 3, 1, 4, 7, 4, 2, 9}; int dlta[] = {3, 2, 1}; ShellSort(L, dlta, 3); vector&amp;lt;int&amp;gt;::iterator it = L.</description>
+    </item>
+    
+  </channel>
+</rss>

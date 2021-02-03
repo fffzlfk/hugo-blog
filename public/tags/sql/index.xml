@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SQL on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/sql/</link>
+    <description>Recent content in SQL on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sat, 24 Oct 2020 20:22:42 +0800</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/sql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQL</title>
+      <link>https://fffzlfk.gitlab.io/posts/sql/</link>
+      <pubDate>Sat, 24 Oct 2020 20:22:42 +0800</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/posts/sql/</guid>
+      <description>SQL概述 SQL的特点  综合统一：集DQ、DDL、DML、DCL于一体 高度非过程化：不用考虑如何实现，只需提出“做什么”，不关心“怎么做” 面向集合的操作方式：查询、插入、删除、更新操作对象及结果都是集合 以同一种语法结构提供两种使用方法：可交互式和嵌入式使用 以简捷的自然语言实现对数据库的定义、操作和控制功能：定义了少量的关键字实现对数据库的定义、操纵和控制功能  SQL所使用的动词（核心功能）    SQL功能 动词     数据查询 SELECT   数据定义 CREATE, DROP, ALTER   数据操作 INSERT, UPDATE, DELETE   数据控制 GRANT, REVOKE    数据定义 SQL的数据定义语句 SQL中的数据类型 基本表的定义 创建基本表 CREATE TABLE &amp;lt;表名&amp;gt; ( &amp;lt;列名&amp;gt; &amp;lt;数据类型&amp;gt;[&amp;lt;列级完整性约束条件&amp;gt;] [, &amp;lt;列名&amp;gt; &amp;lt;数据类型&amp;gt;[&amp;lt;列级完整性约束条件&amp;gt;] ] … [, &amp;lt;表级完整性约束条件&amp;gt; ] ) ;  常用的完整性约束  主码约束：PRIMARY KEY (&amp;lt;列名1&amp;gt;, &amp;lt;列名2&amp;gt;,…) 非空值约束：NOT NULL 唯一性约束：UNIQUE 参照完整性约束：FOREIGN KEY (&amp;lt;列名&amp;gt;) REFERENCES &amp;lt;表名&amp;gt;(&amp;lt;列名&amp;gt;) 一般性约束：CHECK(&amp;lt;谓词&amp;gt;)    删除基本表 DROP TABLE &amp;lt;表名&amp;gt; [RESTRICT|CASCADE];   RESTRICT：删除表是有限制的：</description>
+    </item>
+    
+  </channel>
+</rss>

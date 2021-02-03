@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二叉树 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+    <description>Recent content in 二叉树 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 26 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>二叉树的遍历</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/26/%C4%B1/</link>
+      <pubDate>Tue, 26 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/26/%C4%B1/</guid>
+      <description>问题描述 二叉树的遍历 本题要求给定二叉树的4种遍历。
+函数接口定义：
+void InorderTraversal( BinTree BT ); void PreorderTraversal( BinTree BT ); void PostorderTraversal( BinTree BT ); void LevelorderTraversal( BinTree BT ); 其中BinTree结构定义如下：
+typedef struct TNode *Position; typedef Position BinTree; struct TNode{ ElementType Data; BinTree Left; BinTree Right; }; 要求4个函数分别按照访问顺序打印出结点的内容，格式为一个空格跟着一个字符。
+输出样例 （对于图中给出的树）：
+Inorder: D B E F A G H C IPreorder: A B D F E C G H IPostorder: D E F B H G I C ALevelorder: A B C D F G I E H代码实现 void InorderTraversal(BinTree BT) { if (BT) { InorderTraversal(BT-&amp;gt;Left); printf(&amp;#34; %c&amp;#34;, BT-&amp;gt;Data); InorderTraversal(BT-&amp;gt;Right); } else { return; } } void PreorderTraversal(BinTree BT) { if (BT) { printf(&amp;#34; %c&amp;#34;, BT-&amp;gt;Data); PreorderTraversal(BT-&amp;gt;Left); PreorderTraversal(BT-&amp;gt;Right); } else { return; } } void PostorderTraversal(BinTree BT) { if (BT) { PostorderTraversal(BT-&amp;gt;Left); PostorderTraversal(BT-&amp;gt;Right); printf(&amp;#34; %c&amp;#34;, BT-&amp;gt;Data); } else { return; } } void LevelorderTraversal(BinTree BT) { BinTree Q[100]; int front = 0; int rear = 0; if (BT) { Q[++rear] = BT; } while (front !</description>
+    </item>
+    
+    <item>
+      <title>二叉树前序、中序、后序遍历的相互求法</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/24/%D7%AA/</link>
+      <pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/24/%D7%AA/</guid>
+      <description>一、已知前序、中序、求后序遍历 例如：
+前序遍历: GDAFEMHZ中序遍历: ADEFGHMZ  根据前序遍历的特点，我们知道根结点为G
+  观察中序遍历ADEFGHMZ。其中root节点G左侧的ADEF必然是root的左子树，G右侧的HMZ必然是root的右子树。
+  观察左子树ADEF，左子树的中的根节点必然是大树的root的leftchild。在前序遍历中，大树的root的leftchild位于root之后，所以左子树的根节点为D。
+  同样的道理，root的右子树节点HMZ中的根节点也可以通过前序遍历求得。在前序遍历中，一定是先把root和root的所有左子树节点遍历完之后才会遍历右子树，并且遍历的左子树的第一个节点就是左子树的根节点。同理，遍历的右子树的第一个节点就是右子树的根节点。
+  观察发现，上面的过程是递归的。先找到当前树的根节点，然后划分为左子树，右子树，然后进入左子树重复上面的过程，然后进入右子树重复上面的过程。最后就可以还原一棵树了。该步递归的过程可以简洁表达如下：
+ 确定根,确定左子树，确定右子树。 在左子树中递归。 在右子树中递归。 打印当前根。    核心代码
+buildTreebyPre(preorder + 1, inorder, root_idx, root-&amp;gt;left); buildTreebyPre(preorder + 1 + root_idx, inorder + root_idx + 1, length - (root_idx + 1), root-&amp;gt;right); 二、已知中序、后序遍历、求前序遍历 依然是上面的题，这次我们只给出中序和后序遍历：
+中序遍历: ADEFGHMZ后序遍历: AEFDHZMG  根据后序遍历的特点，我们知道后序遍历最后一个结点即为根结点，即根结点为G。
+  观察中序遍历ADEFGHMZ。其中root节点G左侧的ADEF必然是root的左子树，G右侧的HMZ必然是root的右子树。
+  观察左子树ADEF，左子树的中的根节点必然是大树的root的leftchild。在前序遍历中，大树的root的leftchild位于root之后，所以左子树的根节点为D。
+  同样的道理，root的右子树节点HMZ中的根节点也可以通过前序遍历求得。在前后序遍历中，一定是先把root和root的所有左子树节点遍历完之后才会遍历右子树，并且遍历的左子树的第一个节点就是左子树的根节点。同理，遍历的右子树的第一个节点就是右子树的根节点。</description>
+    </item>
+    
+    <item>
+      <title>105.从前序与中序遍历序列构造二叉树</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/17/leetcode-105-%C7%B0%D0%B9/</link>
+      <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/17/leetcode-105-%C7%B0%D0%B9/</guid>
+      <description>问题描述 题目链接
+根据一棵树的前序遍历与中序遍历构造二叉树。
+  注意: 你可以假设树中没有重复的元素。
+  例如，给出
+  前序遍历 preorder = [3,9,20,15,7] 中序遍历 inorder = [9,3,15,20,7] 返回如下的二叉树：
+ 3/ \9 20/ \15 7代码实现 class Solution { public: vector&amp;lt;int&amp;gt; pre_order; vector&amp;lt;int&amp;gt; in_order; map&amp;lt;int,int&amp;gt; m; int pre_idx = 0; TreeNode* help(int inleft, int inright) { if (inleft == inright) return NULL; int root_val = pre_order[pre_idx]; TreeNode *root = new TreeNode(root_val); int index = m[root_val]; pre_idx++; root-&amp;gt;left = help(inleft, index); root-&amp;gt;right = help(index + 1, inright); return root; } TreeNode* buildTree(vector&amp;lt;int&amp;gt;&amp;amp; preorder, vector&amp;lt;int&amp;gt;&amp;amp; inorder) { pre_order = preorder; in_order = inorder; for (int i = 0; i &amp;lt; (int)inorder.</description>
+    </item>
+    
+    <item>
+      <title>98.验证二叉搜索树</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/17/leetcode-98-%D6%A4/</link>
+      <pubDate>Sun, 17 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/17/leetcode-98-%D6%A4/</guid>
+      <description>问题描述 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
+假设一个二叉搜索树具有如下特征：
+节点的左子树只包含小于当前节点的数。 节点的右子树只包含大于当前节点的数。 所有左子树和右子树自身必须也是二叉搜索树。
+示例 示例 1:  输入:   2/ \1 3 输出: true  示例 2:  输入:   5/ \1 4/ \3 6 输出: false  解释: 输入为: [5,1,4,null,null,3,6]。  根节点的值为 5 ，但是其右子节点值为 4 。
+代码实现 bool helper(struct TreeNode *root, int lower, int upper) { if (!root) return true; // printf(&amp;#34;current low:%d\ncurrent up:%d\n&amp;#34;, lower, upper); 	if (lower !</description>
+    </item>
+    
+    <item>
+      <title>求元素子树深度</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/13/%D4%AB/</link>
+      <pubDate>Wed, 13 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/13/%D4%AB/</guid>
+      <description>问题描述 请设计递归算法求以元素为x根节点的子树深度
+代码实现 #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt; #define OK 1 #define ERROR 0 typedef char ElemType; typedef int Status; typedef struct Node { ElemType data; Node *left; Node *right; } * BTree; Status createBTree(BTree &amp;amp;T) { ElemType c; scanf(&amp;#34;%c&amp;#34;, &amp;amp;c); getchar(); if (c == &amp;#39; &amp;#39;) T = NULL; else { if (!(T = (Node*)malloc(sizeof(Node)))) return ERROR; T-&amp;gt;data = c; printf(&amp;#34;请输入%c的左孩子\n&amp;#34;, c); createBTree(T-&amp;gt;left); printf(&amp;#34;请输入%c的右孩子\n&amp;#34;, c); createBTree(T-&amp;gt;right); } } int getDepth(BTree T) { if (T == NULL) return 0; else { return getDepth(T-&amp;gt;left) &amp;gt; getDepth(T-&amp;gt;right) ?</description>
+    </item>
+    
+    <item>
+      <title>哈夫曼编码及译码器</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/10/%EB%BC%B0/</link>
+      <pubDate>Sun, 10 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/10/%EB%BC%B0/</guid>
+      <description>问题描述 利用哈夫曼编码进行通信可以大大提高信道利用率,缩短信息传输时间,降低传输成本。但是,这要求在发送端通过一个编码系统对待传数据预先码,在接收端将传来的数据进行译码(复原)。对于双工信道(即可以双向传输信息的信道),每端需要一个完编/译码系统。试为这样的信息收发站写一个哈夫曼码的编/译码系统。
+基本要求 一个完整的系统应具有以下功能:
+ I :初始化(Initialization)。从终端读人字符集大小n,以及n个字符和n个权值,建立哈夫曼树,并将它存于文件 hfmTree 中。 E :编码(Encoding)。利用以建好的哈夫曼树(如不在内存,则从文件 hfmTree 中读人),对文件 ToBeTran 中的正文进行编码,然后将结果存人文件 CodeFile 中。 D :译 码(Decoding)。利用已建好的哈夫曼树将文件 CodeFile 中的代码进行译码,结果存人文件 TextFile 中。 P :印代码文件(Print)。将文件 CodeFile 以紧凑格式显示在终端上,每行50个代码。同时将此字符形式的编码文件写人文件 CodePrin。 T :打印哈夫曼树(Tree printing)。将已在内存中的哈夫曼树以直观的方式(树或凹人表形式)显示在终端上,同时将此字符形式的哈夫曼树写人文件 TreePrint 中。  代码实现 #include &amp;lt;bits/stdc++.h&amp;gt;#define INT_MAX 2147483647 #define OK 1 #define ERROR 0 typedef char ElemType; typedef int Status; typedef struct { char c; int weight; int parent; int left; int right; char *code; } HNode; HNode *T; int n; Status select(HNode *T, int pos, int *s1, int *s2) { int m1, m2; m1 = m2 = INT_MAX; for (int j = 1; j &amp;lt;= pos; j++) { if (T[j].</description>
+    </item>
+    
+    <item>
+      <title>哈夫曼树和哈夫曼编码</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/07//</link>
+      <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/07//</guid>
+      <description>概念解释 Huffman树是一种特殊结构的二叉树，由Huffman树设计的二进制前缀编码，也称为Huffman编码在通信领域有着广泛的应用。
+  路径长度 路径长度指的是路径上分支的数目，在上图中，路径长度为2。
+  节点的权 节点的权指的是为树中的每一个节点赋予的一个非负的值，如上图中每一个节点中的值。
+  节点的带权路径长度 节点的带权路径长度指的是从根节点到该节点之间的路径长度与该节点权的乘积：如对于1节点的带权路径长度为：2。
+  树的带权路径长度 树的带权路径长度指的是所有叶子节点的带权路径长度之和。
+   有了如上的概念，对于Huffman树，其定义为： 给定nn权值作为nn个叶子节点，构造一棵二叉树，若这棵二叉树的带权路径长度达到最小，则称这样的二叉树为最优二叉树，也称为Huffman树。
+ 解决方法 重复以下的步骤：
+ 按照权值对每一个节点排序：D-F-T-E-R-A 选择权值最小的两个节点，此处为D和F生成新的节点，节点的权重这两个节点的权重之和，为2 直到只剩最后的根节点  代码实现 readfile #include &amp;lt;iostream&amp;gt;#include &amp;lt;vector&amp;gt;#include &amp;lt;map&amp;gt;#include &amp;lt;algorithm&amp;gt; using namespace std; const int MAXSIZE = 1000; int read_file(FILE *fn, map&amp;lt;char, int&amp;gt; &amp;amp;word) { if (fn == NULL) return -1; char line[MAXSIZE]; while (fgets(line, 1024, fn)) { fprintf(stderr, &amp;#34;%s\n&amp;#34;, line); char *p = line; while (*p !</description>
+    </item>
+    
+  </channel>
+</rss>

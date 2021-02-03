@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>机器学习 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 机器学习 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 30 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>机器学习02-决策树</title>
+      <link>https://fffzlfk.gitlab.io/2020/03/30/%D1%A7%CF%B002-/</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/03/30/%D1%A7%CF%B002-/</guid>
+      <description>一个简单的例子 from sklearn import tree features = [[140, 1], [130, 1], [150, 0], [170, 0]] labels = [0, 0, 1, 1] clf = tree.DecisionTreeClassifier() clf = clf.fit(features, labels) print(clf.predict([[150, 1]])) 经典例子iris 代码 import numpy as np from sklearn.datasets import load_iris from sklearn import tree iris = load_iris() # print(iris.feature_names) # print(iris.target_names) # print(iris.data[0]) # print(iris.target[0]) test_idx = [0, 50, 100] train_target = np.delete(iris.target, test_idx) train_data = np.delete(iris.data, test_idx, axis=0) test_target = iris.</description>
+    </item>
+    
+    <item>
+      <title>机器学习03-KNN</title>
+      <link>https://fffzlfk.gitlab.io/2020/04/01/%D1%A7%CF%B003-knn/</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/04/01/%D1%A7%CF%B003-knn/</guid>
+      <description>from scipy.spatial import distance def euc(a, b): return distance.euclidean(a, b) class ScrappyKNN(): def fit(self, X_train, y_train): self.X_train = X_train self.y_train = y_train def predict(self, X_test): predictions = [] for row in X_test: label = self.closest(row) predictions.append(label) return predictions def closest(self, row): best_dist = euc(row, self.X_train[0]) best_index = 0 for i in range(1, len(self.X_train)): dist = euc(row, self.X_train[i]) if dist &amp;lt; best_dist: best_dist = dist best_index = i return self.y_train[best_index] from sklearn import datasets iris = datasets.</description>
+    </item>
+    
+    <item>
+      <title>机器学习01</title>
+      <link>https://fffzlfk.gitlab.io/2020/03/21/%D1%A7%CF%B001/</link>
+      <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/03/21/%D1%A7%CF%B001/</guid>
+      <description>卷积神经网络入门 import tensorflow as tf import numpy as np from tensorflow import keras # 创建一层的神经网络 model = tf.keras.Sequential([keras.layers.Dense(units=1, input_shape=[1])]) # 指定loss和optimizer函数 &amp;#39;sgd&amp;#39;(梯度随机下降) (均方误差) model.compile(optimizer=&amp;#39;sgd&amp;#39;, loss=&amp;#39;mean_squared_error&amp;#39;) # 生成测试数据 X = [] for i in range(-1, 5): X.append(i * 1.0) Y = [3 * i + 1 for i in X] xs = np.array(X, dtype=float) ys = np.array(Y, dtype=float) model.fit(xs, ys, epochs=2500) # 使用模型 print(model.predict([0.0])) 手写数字识别代码 from tensorflow.examples.tutorials.mnist import input_data minist = input_data.</description>
+    </item>
+    
+  </channel>
+</rss>

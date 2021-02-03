@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DP on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/dp/</link>
+    <description>Recent content in DP on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 25 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/dp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>背包九讲</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/25/%C5%BE/</link>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/25/%C5%BE/</guid>
+      <description>#01 01背包问题 AC代码 AC代码 #02 完全背包问题 AC代码 AC代码 #03 多重背包问题 AC代码 AC代码 AC代码 #04 混合背包问题 AC代码 AC代码 AC代码 #06 分组背包问题 AC代码 #07 有依赖的背包问题 AC代码 AC代码 #08 背包问题求方案数 AC代码 #09 背包问题求具体方案 AC代码   </description>
+    </item>
+    
+  </channel>
+</rss>

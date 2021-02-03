@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C/Java on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/c/java/</link>
+    <description>Recent content in C/Java on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><atom:link href="https://fffzlfk.gitlab.io/tags/c/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KMP算法</title>
+      <link>https://fffzlfk.gitlab.io/2019/10/13/kmp%E3%B7%A8/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/10/13/kmp%E3%B7%A8/</guid>
+      <description>KMP算法描述  算法流程   设文本串匹配到i，模式串匹配到j
+  若j == -1或者匹配成功(s[i] == p[j])，则i++，j++； 若j != -1且匹配不成功，则j = next[j]（相当于模式串p相对于文本串s向右移动(j - next[j])位）。  得到next数组   next数组表示当前字符之前的字符串中，有多大长度的相同前缀后缀
+ 对于P的前j+1个序列字符：
+ 若p[k] == p[j]，则next[j + 1 ] = next [j] + 1 = k + 1； 若p[k ] ≠ p[j]，如果此时p[ next[k] ] == p[j ]，则next[ j + 1 ] = next[k] + 1，否则继续递归前缀索引k = next[k]，而后重复此过程。  代码实现 C语言 #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt; #define MAXN 100  int* GetNext(char* p) { int pLen = strlen(p); int j = 0; int k = -1; int* next = new int[strlen(p)]; next[0] = -1; while (j &amp;lt; pLen - 1) { if (k == -1 || p[j] == p[k]) { j++; k++; if (p[j] !</description>
+    </item>
+    
+  </channel>
+</rss>

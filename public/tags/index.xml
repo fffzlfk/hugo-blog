@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/</link>
+    <description>Recent content in Tags on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 02 Feb 2021 14:23:44 +0800</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python</title>
+      <link>https://fffzlfk.gitlab.io/tags/python/</link>
+      <pubDate>Tue, 02 Feb 2021 14:23:44 +0800</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://fffzlfk.gitlab.io/tags/c&#43;&#43;/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL</title>
+      <link>https://fffzlfk.gitlab.io/tags/sql/</link>
+      <pubDate>Sat, 24 Oct 2020 20:22:42 +0800</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/sql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CodeForces</title>
+      <link>https://fffzlfk.gitlab.io/tags/codeforces/</link>
+      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/codeforces/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LeetCode</title>
+      <link>https://fffzlfk.gitlab.io/tags/leetcode/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/leetcode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>分治</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E5%88%86%E6%B2%BB/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E5%88%86%E6%B2%BB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DP</title>
+      <link>https://fffzlfk.gitlab.io/tags/dp/</link>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/dp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>动态规划</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>KMP</title>
+      <link>https://fffzlfk.gitlab.io/tags/kmp/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/kmp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Manacher</title>
+      <link>https://fffzlfk.gitlab.io/tags/manacher/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/manacher/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>二分</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86/</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>图论</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E5%9B%BE%E8%AE%BA/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E5%9B%BE%E8%AE%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>搜索</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%90%9C%E7%B4%A2/</link>
+      <pubDate>Wed, 17 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%90%9C%E7%B4%A2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数论</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%95%B0%E8%AE%BA/</link>
+      <pubDate>Wed, 17 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%95%B0%E8%AE%BA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vue.js</title>
+      <link>https://fffzlfk.gitlab.io/tags/vue.js/</link>
+      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/vue.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数据结构</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>机器学习</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 30 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>优先队列</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/</link>
+      <pubDate>Tue, 31 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>图</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E5%9B%BE/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E5%9B%BE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>拓扑排序</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>栈</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%A0%88/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%A0%88/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>概率论与数理统计</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1/</link>
+      <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>堆</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E5%A0%86/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E5%A0%86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>排序</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%8E%92%E5%BA%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C</title>
+      <link>https://fffzlfk.gitlab.io/tags/c/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>二叉排序树</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>查找</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%9F%A5%E6%89%BE/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%9F%A5%E6%89%BE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PTA</title>
+      <link>https://fffzlfk.gitlab.io/tags/pta/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/pta/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>二叉树</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+      <pubDate>Tue, 26 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>二分查找</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</link>
+      <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>链表</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E9%93%BE%E8%A1%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>队列</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E9%98%9F%E5%88%97/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E9%98%9F%E5%88%97/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>树</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E6%A0%91/</link>
+      <pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E6%A0%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>编程</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Wed, 30 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E7%BC%96%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>串</title>
+      <link>https://fffzlfk.gitlab.io/tags/%E4%B8%B2/</link>
+      <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/%E4%B8%B2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C/Java</title>
+      <link>https://fffzlfk.gitlab.io/tags/c/java/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/tags/c/java/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

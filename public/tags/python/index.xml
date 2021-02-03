@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/python/</link>
+    <description>Recent content in Python on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 02 Feb 2021 14:23:44 +0800</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python装饰器</title>
+      <link>https://fffzlfk.gitlab.io/posts/python%E8%A3%85%E9%A5%B0%E5%99%A8/</link>
+      <pubDate>Tue, 02 Feb 2021 14:23:44 +0800</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/posts/python%E8%A3%85%E9%A5%B0%E5%99%A8/</guid>
+      <description>引入 当我们想在一个函数执行前后干点什么事情的时候，可以这么写：
+def foo(): print(&amp;#39;foo()!!!&amp;#39;) def bar(): print(&amp;#39;Before&amp;#39;) foo() print(&amp;#39;After&amp;#39;) bar() 装饰器实现 但这样看着总是很别扭，我们可以写成这样：
+def foo(): print(&amp;#39;foo()!!!&amp;#39;) def bar(func): def inner(): print(f&amp;#39;Before {func.__name__}&amp;#39;) func() print(f&amp;#39;After {func.__name__}&amp;#39;) return inner bar(foo)() .notice{padding:18px;line-height:24px;margin-bottom:24px;border-radius:4px;color:#444;background:#e7f2fa}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:#fff;background:#6ab0de}.notice.warning .notice-title{background:rgba(217,83,79,.9)}.notice.warning{background:#fae2e2}.notice.info .notice-title{background:#f0b37e}.notice.info{background:#fff2db}.notice.note .notice-title{background:#6ab0de}.notice.note{background:#e7f2fA}.notice.tip .notice-title{background:rgba(92,184,92,.8)}.notice.tip{background:#e6f9e6}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:currentColor}.icon-notice img,.icon-notice.baseline svg{top:0.125em;position:relative}Note
+在Python中function是第一公民，所以可以它作为参数
+这样我们就实现了一个简单的装饰器，我们可以发现这样在调用的时候比较麻烦，Python还提供了这样了一个语法糖：
+def bar(func): def inner(): print(f&amp;#39;In Bar Before {func.__name__}&amp;#39;) func() print(f&amp;#39;In Bar After {func.__name__}&amp;#39;) return inner @bar def foo(): print(&amp;#39;foo()!!!&amp;#39;) foo() 除此之外，Python装饰器可以有多个，相当与一层层的包裹：
+def bar(func): def inner(): print(f&amp;#39;In Bar Before {func.</description>
+    </item>
+    
+    <item>
+      <title>让课代表收作业变得更简单</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/02/%CA%BC/</link>
+      <pubDate>Mon, 02 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/02/%CA%BC/</guid>
+      <description>前期准备  一个邮箱地址和密码 Python3环境  教程  在邮箱设置里开启pop 安装xlwt和xlrd  pip3 install xlwt pip3 install xlrd 将下面代码中的邮件地址, 口令和POP3服务器地址改为你所对应的；并指定att_file(存储路径)。  #!/usr/bin/env python3 # -*- coding: utf-8 -*- import poplib import email import datetime import time import os import xlrd import xlwt from email.parser import Parser from email.header import decode_header from email.utils import parseaddr # 输入邮件地址, 口令和POP3服务器地址: email = &amp;#39;***@163.com&amp;#39; password = &amp;#39;********&amp;#39; pop3_server = &amp;#39;pop.163.com&amp;#39; def decode_str(s): #字符编码转换 value, charset = decode_header(s)[0] if charset: value = value.</description>
+    </item>
+    
+  </channel>
+</rss>

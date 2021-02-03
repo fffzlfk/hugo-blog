@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>堆 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E5%A0%86/</link>
+    <description>Recent content in 堆 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 05 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E5%A0%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>堆中的路径</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/05/%D0%B5/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/05/%D0%B5/</guid>
+      <description>问题描述 将一系列给定数字插入一个初始为空的小顶堆H[]。随后对任意给定的下标i，打印从H[i]到根结点的路径。
+输入格式: 每组测试第1行包含2个正整数N和M(≤1000)，分别是插入元素的个数、以及需要打印的路径条数。下一行给出区间[-10000, 10000]内的N个要被插入一个初始为空的小顶堆的整数。最后一行给出M个下标。
+输出格式: 对输入中给出的每个下标i，在一行中输出从H[i]到根结点的路径上的数据。数字间以1个空格分隔，行末不得有多余空格。
+输入样例: 5 346 23 26 24 105 4 3输出样例: 24 23 1046 23 1026 10代码实现 #include &amp;lt;algorithm&amp;gt;#include &amp;lt;iostream&amp;gt;#include &amp;lt;queue&amp;gt;using namespace std; int n; int m; int h[1005]; int s = 0; void add(int k) { s++; int i; for (i = s; h[i / 2] &amp;gt; k; i /= 2) h[i] = h[i / 2]; h[i] = k; } int main() { cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m; int t; int N = n; h[0] = -10001; //注意h[0]要很小，否则会进入死循环  while (N--) { cin &amp;gt;&amp;gt; t; add(t); } while (m--) { cin &amp;gt;&amp;gt; t; while (t !</description>
+    </item>
+    
+  </channel>
+</rss>

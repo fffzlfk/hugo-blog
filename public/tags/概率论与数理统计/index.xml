@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>概率论与数理统计 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1/</link>
+    <description>Recent content in 概率论与数理统计 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 09 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>部分置信区间总结</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/09//</link>
+      <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/09//</guid>
+      <description>单正态分布均值μ
+  σ2已知 $$ (\bar X-\frac{\sigma}{\sqrt{n}}z_{\frac \alpha 2},\bar X+\frac{\sigma}{\sqrt{n}}z_{\frac \alpha 2}) $$
+  σ2未知，样本方差S2$$ (\bar X-\frac{S}{\sqrt n}t_\frac \alpha 2 (n-1),\bar X+\frac{S}{\sqrt n}t_\frac \alpha 2 (n-1)) $$
+    单正态分布方差σ2  μ已知 $$ (\frac{\sum_{i=1}^n(X_i-\mu)^2}{\chi_{\frac \alpha 2}^2(n)},\frac{\sum_{i=1}^n(X_i-\mu)^2}{\chi_{1-\frac \alpha 2}^2(n)}) $$
+  μ未知，样本方差S2已知 $$ (\frac {(n-1)S^2}{\chi _{\frac \alpha 2}^2(n-1)},\frac {(n-1)S^2}{\chi _{1-\frac \alpha 2}^2(n-1)}) $$
+    双正态分布μ1-μ2  σ12, σ22已知 $$ (\bar X-\bar Y\pm\sqrt{\frac {\sigma_1^2} {n_1} +\frac {\sigma_2^2} {n_2} }z_{\frac \alpha 2}) $$</description>
+    </item>
+    
+  </channel>
+</rss>

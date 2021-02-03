@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E5%9B%BE/</link>
+    <description>Recent content in 图 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 19 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E5%9B%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关键活动</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/19/%D8%BC/</link>
+      <pubDate>Thu, 19 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/19/%D8%BC/</guid>
+      <description>问题描述 假定一个工程项目由一组子任务构成，子任务之间有的可以并行执行，有的必须在完成了其它一些子任务后才能执行。“任务调度”包括一组子任务、以及每个子任务可以执行所依赖的子任务集。
+比如完成一个专业的所有课程学习和毕业设计可以看成一个本科生要完成的一项工程，各门课程可以看成是子任务。有些课程可以同时开设，比如英语和C程序设计，它们没有必须先修哪门的约束；有些课程则不可以同时开设，因为它们有先后的依赖关系，比如C程序设计和数据结构两门课，必须先学习前者。
+但是需要注意的是，对一组子任务，并不是任意的任务调度都是一个可行的方案。比如方案中存在“子任务A依赖于子任务B，子任务B依赖于子任务C，子任务C又依赖于子任务A”，那么这三个任务哪个都不能先执行，这就是一个不可行的方案。
+任务调度问题中，如果还给出了完成每个子任务需要的时间，则我们可以算出完成整个工程需要的最短时间。在这些子任务中，有些任务即使推迟几天完成，也不会影响全局的工期；但是有些任务必须准时完成，否则整个项目的工期就要因此延误，这种任务就叫“关键活动”。
+请编写程序判定一个给定的工程项目的任务调度是否可行；如果该调度方案可行，则计算完成整个工程项目需要的最短时间，并输出所有的关键活动。
+输入格式: 输入第1行给出两个正整数N(≤100)和M，其中N是任务交接点（即衔接相互依赖的两个子任务的节点，例如：若任务2要在任务1完成后才开始，则两任务之间必有一个交接点）的数量。交接点按1~N编号，M是子任务的数量，依次编号为1~M。随后M行，每行给出了3个正整数，分别是该任务开始和完成涉及的交接点编号以及该任务所需的时间，整数间用空格分隔。
+输出格式: 如果任务调度不可行，则输出0；否则第1行输出完成整个工程项目需要的时间，第2行开始输出所有关键活动，每个关键活动占一行，按格式“V-&amp;gt;W”输出，其中V和W为该任务开始和完成涉及的交接点编号。关键活动输出的顺序规则是：任务开始的交接点编号小者优先，起点编号相同时，与输入时任务的顺序相反。
+输入样例: 7 81 2 41 3 32 4 53 4 34 5 14 6 65 7 56 7 2输出样例: 171-&amp;gt;22-&amp;gt;44-&amp;gt;66-&amp;gt;7代码实现 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int n, m; struct Node { int id; int len; }; vector&amp;lt;Node&amp;gt; G[105]; int ve[105]; int vl[105]; int in[105]; stack&amp;lt;int&amp;gt; S; void read() { scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;n, &amp;amp;m); int a, b, c; while (m--) { scanf(&amp;#34;%d%d%d&amp;#34;, &amp;amp;a, &amp;amp;b, &amp;amp;c); Node t; t.</description>
+    </item>
+    
+    <item>
+      <title>哥尼斯堡七桥问题</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/08/%C4%A1/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/08/%C4%A1/</guid>
+      <description>问题描述 哥尼斯堡是位于普累格河上的一座城市，它包含两个岛屿及连接它们的七座桥，如下图所示。
+可否走过这样的七座桥，而且每桥只走过一次？瑞士数学家欧拉(Leonhard Euler，1707—1783)最终解决了这个问题，并由此创立了拓扑学。
+这个问题如今可以描述为判断欧拉回路是否存在的问题。欧拉回路是指不令笔离开纸面，可画过图中每条边仅一次，且可以回到起点的一条回路。现给定一个无向图，问是否存在欧拉回路？
+输入格式: 输入第一行给出两个正整数，分别是节点数N (1≤N≤1000)和边数M；随后的M行对应M条边，每行给出一对正整数，分别是该条边直接连通的两个节点的编号（节点从1到N编号）。
+输出格式: 若欧拉回路存在则输出1，否则输出0。
+样例 输入样例1: 6 101 22 33 14 55 66 41 41 63 43 6输出样例1: 1输入样例2: 5 81 21 32 32 42 55 35 43 4输出样例2: 0代码实现 使用并查集判断连通性 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int n, m; struct { int pre; int dgr = 0; } Node[1005]; int find(int i) { return Node[i].</description>
+    </item>
+    
+    <item>
+      <title>六度空间</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/29/%C8%BF%D5%BC/</link>
+      <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/29/%C8%BF%D5%BC/</guid>
+      <description>问题描述 “六度空间”理论又称作“六度分隔（Six Degrees of Separation）”理论。这个理论可以通俗地阐述为：“你和任何一个陌生人之间所间隔的人不会超过六个，也就是说，最多通过五个人你就能够认识任何一个陌生人。”如图1所示。
+“六度空间”理论虽然得到广泛的认同，并且正在得到越来越多的应用。但是数十年来，试图验证这个理论始终是许多社会学家努力追求的目标。然而由于历史的原因，这样的研究具有太大的局限性和困难。随着当代人的联络主要依赖于电话、短信、微信以及因特网上即时通信等工具，能够体现社交网络关系的一手数据已经逐渐使得“六度空间”理论的验证成为可能。
+假如给你一个社交网络图，请你对每个节点计算符合“六度空间”理论的结点占结点总数的百分比。
+输入格式: 输入第1行给出两个正整数，分别表示社交网络图的结点数N（1&amp;lt;N≤1000​ ，表示人数）、边数M≤33×N，表示社交关系数）。随后的M行对应M条边，每行给出一对正整数，分别是该条边直接连通的两个结点的编号（节点从1到N编号）。
+输出格式: 对每个结点输出与该结点距离不超过6的结点数占结点总数的百分比，精确到小数点后2位。每个结节点输出一行，格式为“结点编号:（空格）百分比%”。
+输入样例: 10 91 22 33 44 55 66 77 88 99 10输出样例: 1: 70.00%2: 80.00%3: 90.00%4: 100.00%5: 100.00%6: 100.00%7: 100.00%8: 90.00%9: 80.00%10: 70.00%代码实现 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int n, m; int arcs[1005][1005]; int d[1005][1005]; void read() { cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m; int a, b; for (int i = 1; i &amp;lt;= n; i++) { for (int j = 1; j &amp;lt;= n; j++) arcs[i][j] = 2005; } while (m--) { cin &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b; arcs[a][b] = 1; arcs[b][a] = 1; } } void solve() { for (int i = 1; i &amp;lt;= n; i++) { for (int j = 1; j &amp;lt;= n; j++) { d[i][j] = arcs[i][j]; } } for (int i = 1; i &amp;lt;= n; i++) d[i][i] = 0; for (int i = 1; i &amp;lt;= n; i++) { for (int j = 1; j &amp;lt;= n; j++) { for (int k = 1; k &amp;lt;= n; k++) { d[j][k] = min(d[j][i] + d[i][k], d[j][k]); } } } } void print() { for (int i = 1; i &amp;lt;= n; i++) { double count = 0; for (int j = 1; j &amp;lt;= n; j++) { if (d[i][j] &amp;lt;= 6) count++; } printf(&amp;#34;%d: %.</description>
+    </item>
+    
+    <item>
+      <title>列出可连通集</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/28/%D0%B3%CD%A8/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/28/%D0%B3%CD%A8/</guid>
+      <description>问题描述 给定一个有N个顶点和E条边的无向图，请用DFS和BFS分别列出其所有的连通集。假设顶点从0到N−1编号。进行搜索时，假设我们总是从编号最小的顶点出发，按编号递增的顺序访问邻接点。
+输入格式: 输入第1行给出2个整数N(0&amp;lt;N≤10)和E，分别是图的顶点数和边数。随后E行，每行给出一条边的两个端点。每行中的数字之间用1空格分隔。
+输出格式: 按照如下的格式，每行输出一个连通集。先输出DFS的结果，再输出BFS的结果。
+输入样例: 8 60 70 12 04 12 43 5输出样例: { 0 1 4 2 7 }{ 3 5 }{ 6 }代码实现 DFS #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int N, E; bool visit[11]; bool arcs[11][11]; void read() { cin &amp;gt;&amp;gt; N &amp;gt;&amp;gt; E; int a, b; while (E--) { cin &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b; arcs[a][b] = 1; arcs[b][a] = 1; } } void dfs(int v) { printf(&amp;#34; %d&amp;#34;, v); visit[v] = 1; for (int i = 0; i &amp;lt; N; i++) { if (!</description>
+    </item>
+    
+    <item>
+      <title>POJ-2387-Til_the_Cows_Come_Home</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/22/poj2387/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/22/poj2387/</guid>
+      <description>问题描述 贝西（Bessie）在野外，想回到谷仓以尽可能多地睡觉，直到农夫约翰（John Farmer）叫醒她早上进行挤奶。贝西需要美睡，所以她想尽快回来。
+农夫约翰的田地里有N（2 &amp;lt;= N &amp;lt;= 1000）个地标，唯一编号为1..N。地标1是谷仓；Bessie整日站立的苹果树丛是地标N。奶牛使用地标之间长度各异的T（1 &amp;lt;= T &amp;lt;= 2000）双向奶牛场在田间旅行。贝西对自己的导航能力不抱有信心，因此，从开始到结束，她始终保持在步道上。
+给定地标之间的路径，确定Bessie返回谷仓必须行走的最小距离。可以保证存在这样的路经。
+大意 题目会给你n个点，m条边，然后给你每条边又哪两个点相连，并且其中的路程是多少。我们需要找到最短路径的总路程。
+样例输入 5 51 2 202 3 303 4 204 5 201 5 100样例输出 90代码实现 #include &amp;lt;algorithm&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;iostream&amp;gt;using namespace std; #define Max 0xfffffff #define N 1005 int arcs[N][N]; int visit[N]; int f[N]; int n, t; void shortestPath() { int i, j, k, min; memset(visit, 0, sizeof(visit)); for (i = 1; i &amp;lt;= n; i++) f[i] = arcs[1][i]; f[1] = 0; for (i = 1; i &amp;lt; n; i++) { min = Max; for (j = 1; j &amp;lt;= n; j++) { if (!</description>
+    </item>
+    
+    <item>
+      <title>最小生成树的求法</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/21/%D1%81/</link>
+      <pubDate>Thu, 21 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/21/%D1%81/</guid>
+      <description>问题描述 请对下图的无向带权图 (1)写出它的邻接矩阵，并按普里姆算法求其最小生成树； (2)写出它的邻接表，并按克鲁斯卡尔算法求其最小生成树。 问题解决 邻接矩阵 0 4 3 - - - - -4 0 5 5 9 - - -3 5 0 5 - - - 5- 5 5 0 7 6 5 4- 9 - 7 0 3 - -- - - 6 3 0 2 -- - - 5 - 2 0 6- - 5 4 - - 6 0#include &amp;lt;stdio.</description>
+    </item>
+    
+    <item>
+      <title>无向图的遍历</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/15/%CD%BC%C4%B1/</link>
+      <pubDate>Fri, 15 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/15/%CD%BC%C4%B1/</guid>
+      <description>问题描述  分别使用邻接表和邻接矩阵存储无向图图，并设计深度优先搜索遍历算法和广度优先搜索遍历算法。 用1,2,3，&amp;hellip;，表示结点 并分别求出深度优先生成树和广度优先生成树的边集。  代码实现 邻接表 #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt; #define MAX_VERTEX_NUM 31 typedef int InfoType; typedef int VertexType; bool visited[MAX_VERTEX_NUM]; bool dfs_arc[MAX_VERTEX_NUM][MAX_VERTEX_NUM]; bool bfs_arc[MAX_VERTEX_NUM][MAX_VERTEX_NUM]; typedef struct ArcNode { int adjvex; ArcNode *nextarc; InfoType *info; } ArcNode; typedef struct VNode { VertexType data; ArcNode *firstarc; } VNode, AdjList[MAX_VERTEX_NUM]; typedef struct { AdjList vertices; int vexnum, arcnum; int kind; } ALGraph; //创建无向图 void Create(ALGraph &amp;amp;G) { puts(&amp;#34;输入节点数和边数&amp;#34;); scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;G.vexnum, &amp;amp;G.arcnum); for (int i = 1; i &amp;lt;= G.</description>
+    </item>
+    
+  </channel>
+</rss>

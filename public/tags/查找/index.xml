@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>查找 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E6%9F%A5%E6%89%BE/</link>
+    <description>Recent content in 查找 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 01 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E6%9F%A5%E6%89%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>哈希表设计</title>
+      <link>https://fffzlfk.gitlab.io/2019/12/01/%CF%A3/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/12/01/%CF%A3/</guid>
+      <description>问题描述 针对某个集体（比如你所在的班级）中的“人名”设计一个哈希表，使得平均查找长度不超过R，完成相应的建表和查表程序。
+基本要求 假设人名为中国人姓名的汉语拼音形式。待填入哈希表的人名共有30个，取平均查找长度的上限为2。哈希函数用除留余数法构造，用伪随机探测再散列发处理冲突。
+代码实现 #include &amp;lt;iostream&amp;gt;#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt;#include &amp;lt;string.h&amp;gt;using namespace std; #define M 50 struct name { char str[20]; int value; } Name[30]; struct hash { char name[20]; int key; int sum; int flag; } HashList[M]; void init() { FILE *fp; fp = fopen(&amp;#34;text.txt&amp;#34;, &amp;#34;r&amp;#34;); for (int i = 0; i &amp;lt; 30; i++) { fgets(Name[i].str, 20, fp); int j = 0; for (; Name[i].str[j] != &amp;#39;\n&amp;#39;; j++) ; Name[i].</description>
+    </item>
+    
+    <item>
+      <title>二分查找及二叉排序树</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/22/%D6%B2%D2%BD%D2%B7/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/22/%D6%B2%D2%BD%D2%B7/</guid>
+      <description>问题描述  顺序表的二分查找（折半查找),同时实现寻找左边界和右边界的算法 二叉排序树的查找、删除以及添加结点  代码实现 二分查找 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int search_bi(vector&amp;lt;int&amp;gt; nums, int target) { int low = 0; int high = nums.size() - 1; int mid; while (low &amp;lt;= high) { mid = (low + high) / 2; if (nums[mid] == target) return mid; else if (nums[mid] &amp;lt; target) { low = mid + 1; } else { high = mid - 1; } } return -1; } int search_left(vector&amp;lt;int&amp;gt; nums, int target) { // 寻找左边界  if (!</description>
+    </item>
+    
+  </channel>
+</rss>

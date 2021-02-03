@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PTA on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/pta/</link>
+    <description>Recent content in PTA on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 28 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/pta/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一元多项式的乘法和加法运算</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/28/%D2%BB%D4%AB%CA%BD%C4%B3%CD%BC%D3%B7/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/28/%D2%BB%D4%AB%CA%BD%C4%B3%CD%BC%D3%B7/</guid>
+      <description>问题描述 设计函数分别求两个一元多项式的乘积与和。
+输入格式: 输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数（绝对值均为不超过1000的整数）。数字间以空格分隔。
+输出格式: 输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出0 0。
+输入样例: 4 3 4 -5 2 6 1 -2 03 5 20 -7 4 3 1输出样例: 15 24 -25 22 30 21 -10 20 -21 8 35 6 -33 5 14 4 -15 3 18 2 -6 15 20 -4 4 -5 2 9 1 -2 0代码实现 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int m, n; int A[1005]; int B[1005]; int C[2005]; void read() { int t1, t2; cin &amp;gt;&amp;gt; m; while (m--) { cin &amp;gt;&amp;gt; t1 &amp;gt;&amp;gt; t2; A[t2] += t1; } cin &amp;gt;&amp;gt; n; while (n--) { cin &amp;gt;&amp;gt; t1 &amp;gt;&amp;gt; t2; B[t2] += t1; } } void mul() { bool zero = 1; int flag = 1; for (int i = 1004; i &amp;gt;= 0; i--) { for (int j = 1004; j &amp;gt;= 0; j--) { C[i + j] += A[i] * B[j]; } } for (int i = 2004; i &amp;gt;= 0; i--) { if (C[i]) { zero = 0; printf(flag ?</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>动态规划 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+    <description>Recent content in 动态规划 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 25 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>背包九讲</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/25/%C5%BE/</link>
+      <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/25/%C5%BE/</guid>
+      <description>#01 01背包问题 AC代码 AC代码 #02 完全背包问题 AC代码 AC代码 #03 多重背包问题 AC代码 AC代码 AC代码 #04 混合背包问题 AC代码 AC代码 AC代码 #06 分组背包问题 AC代码 #07 有依赖的背包问题 AC代码 AC代码 #08 背包问题求方案数 AC代码 #09 背包问题求具体方案 AC代码   </description>
+    </item>
+    
+    <item>
+      <title>最大子列和问题</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/28/%D0%BA/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/28/%D0%BA/</guid>
+      <description>问题描述 给定K个整数组成的序列,其中“最大子列和”则被定义为所有连续子列元素的和中最大者。例如给定序列{ -2, 11, -4, 13, -5, -2 }，其连续子列{ 11, -4, 13 }有最大的和20。现要求你编写程序，计算给定整数序列的最大子列和。
+本题旨在测试各种不同的算法在各种数据情况下的表现。各组测试数据特点如下：
+数据1：与样例等价，测试基本正确性；数据2：102个随机整数；数据3：103个随机整数；数据4：104个随机整数；数据5：105个随机整数；输入格式: 输入第1行给出正整数K (≤100000)；第2行给出K个整数，其间以空格分隔。
+输出格式: 在一行中输出最大子列和。如果序列中所有整数皆为负数，则输出0。
+输入样例: 6-2 11 -4 13 -5 -2输出样例: 20解决思路 最大连续子列只可能是以0～n-1位置结尾，若前面位置的最大连续子列和max(i-1) &amp;gt; 0, 则以i位置结尾的最大连续子列和max(i)为max(i-1) + nums[i], 否则为nums[i]。
+代码实现 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; int n; int a[100005]; long long getMax() { long long max = a[0]; long long cur = a[0]; for (int i = 1; i &amp;lt; n; i++) { cur = (cur &amp;gt; 0 ?</description>
+    </item>
+    
+  </channel>
+</rss>

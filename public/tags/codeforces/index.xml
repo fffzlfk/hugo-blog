@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CodeForces on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/codeforces/</link>
+    <description>Recent content in CodeForces on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 03 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/codeforces/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CF#653(div3)</title>
+      <link>https://fffzlfk.gitlab.io/2020/08/03/cf#653div3/</link>
+      <pubDate>Mon, 03 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/08/03/cf#653div3/</guid>
+      <description>AC代码 AC代码 AC代码 AC代码 AC代码 </description>
+    </item>
+    
+    <item>
+      <title>CF#640(div4)</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/15/cf#640div4/</link>
+      <pubDate>Mon, 15 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/15/cf#640div4/</guid>
+      <description>Problem A For example, the following numbers are round: $$ 4000, 1, 9, 800, 90. $$ The following numbers are not round: $$ 110, 707, 222, 1001. $$
+You are given a positive integer n ($$1≤n≤10^4$$). Represent the number n as a sum of round numbers using the minimum number of summands (addends). In other words, you need to represent the given number n as a sum of the least number of terms, each of which is a round number.</description>
+    </item>
+    
+  </channel>
+</rss>

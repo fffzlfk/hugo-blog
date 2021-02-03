@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>串 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E4%B8%B2/</link>
+    <description>Recent content in 串 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 21 Oct 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E4%B8%B2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>删除子串</title>
+      <link>https://fffzlfk.gitlab.io/2019/10/21/%C9%BE%D3%B5/</link>
+      <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/10/21/%C9%BE%D3%B5/</guid>
+      <description>问题描述 删除s中所有与t相同的子串
+ 如 s = &amp;ldquo;abcdabcdabcd&amp;rdquo;, t = &amp;ldquo;cd&amp;rdquo;, 则操作后s = &amp;ldquo;ababab&amp;rdquo;
+ 代码实现 #include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;using namespace std; int* GetNext(string p) { int pLen = p.length(); int *next = new int[pLen]; next[0] = -1; int j = 0; int k = -1; while (j &amp;lt; pLen - 1) { if (k == -1 || p[j] == p[k]) { j++; k++; next[j] = k; } else { j = next[j]; } } return next; } void solve(string &amp;amp;s, string p) { int* next =GetNext(p); int sLen = s.</description>
+    </item>
+    
+    <item>
+      <title>求最长重复子串及其位置</title>
+      <link>https://fffzlfk.gitlab.io/2019/10/19/%D8%B8%D3%B5%CE%BB/</link>
+      <pubDate>Sat, 19 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/10/19/%D8%B8%D3%B5%CE%BB/</guid>
+      <description>问题描述 给出一个线性排列的串s，求出s中出现的第一个最长重复子串及其位置；并分析时间复杂度。
+ 例如 s = &amp;ldquo;abcdbcd&amp;rdquo;，它的第一个出现的最长重复子串及其位置分别为：&amp;ldquo;bcd，1&amp;rdquo;。
+ 代码实现 #include &amp;lt;iostream&amp;gt;using namespace std; int* GetNext(string p) { int pLen = p.length(); int* next = new int[pLen]; next[0] = -1; int j = 0; int k = -1; while (j &amp;lt; pLen - 1) { if (k == -1 || p[k] == p[j]) { k++; j++; if (p[k] != p[j]) { next[j] = k; } else { next[j] = next[k]; } } else { k = next[k]; } } return next; } int KmpSearch(string s, string p) { int *next = GetNext(p); int sLen = s.</description>
+    </item>
+    
+    <item>
+      <title>KMP算法</title>
+      <link>https://fffzlfk.gitlab.io/2019/10/13/kmp%E3%B7%A8/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/10/13/kmp%E3%B7%A8/</guid>
+      <description>KMP算法描述  算法流程   设文本串匹配到i，模式串匹配到j
+  若j == -1或者匹配成功(s[i] == p[j])，则i++，j++； 若j != -1且匹配不成功，则j = next[j]（相当于模式串p相对于文本串s向右移动(j - next[j])位）。  得到next数组   next数组表示当前字符之前的字符串中，有多大长度的相同前缀后缀
+ 对于P的前j+1个序列字符：
+ 若p[k] == p[j]，则next[j + 1 ] = next [j] + 1 = k + 1； 若p[k ] ≠ p[j]，如果此时p[ next[k] ] == p[j ]，则next[ j + 1 ] = next[k] + 1，否则继续递归前缀索引k = next[k]，而后重复此过程。  代码实现 C语言 #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt; #define MAXN 100  int* GetNext(char* p) { int pLen = strlen(p); int j = 0; int k = -1; int* next = new int[strlen(p)]; next[0] = -1; while (j &amp;lt; pLen - 1) { if (k == -1 || p[j] == p[k]) { j++; k++; if (p[j] !</description>
+    </item>
+    
+  </channel>
+</rss>

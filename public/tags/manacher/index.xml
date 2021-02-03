@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Manacher on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/manacher/</link>
+    <description>Recent content in Manacher on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/manacher/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KMP &amp; Manacher</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/24/kmpandmanacher/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/24/kmpandmanacher/</guid>
+      <description>P3375 【模板】KMP字符串匹配 AC代码 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; const int maxn = 1e6 + 5; char s1[maxn]; char s2[maxn]; int _next[maxn]; void get_next(int len) { int j = 0; for (int i = 2; i &amp;lt;= len; i++) { while (j &amp;amp;&amp;amp; s2[j + 1] != s2[i]) j = _next[j]; if (s2[j + 1] == s2[i]) j++; _next[i] = j; } } void find(int len1, int len2) { int j = 0; for (int i = 1; i &amp;lt;= len1; i++) { while (j &amp;amp;&amp;amp; s2[j + 1] !</description>
+    </item>
+    
+  </channel>
+</rss>

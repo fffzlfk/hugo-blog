@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="关闭编译器优化" />
+<meta name="keywords" content=", C&#43;&#43;" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://fffzlfk.gitlab.io/posts/c&#43;&#43;%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E6%9E%90/" /> 
+<title>
+     C&#43;&#43;(临时对象的分析) :: fffzlfk&#39;s Blog  — Thinking will not overcome fear but action will. 
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css">  
+<link rel="stylesheet" href="/main.0b44ca839b5cf0ae1c9a176353cd724cec3113bb1cfc03e2d9bbec8c21d31f40.css"> 
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+ <meta itemprop="name" content="C&#43;&#43;(临时对象的分析)">
+<meta itemprop="description" content="关闭编译器优化">
+<meta itemprop="datePublished" content="2020-10-10T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-10-10T00:00:00+00:00" />
+<meta itemprop="wordCount" content="293">
+<meta itemprop="image" content="https://fffzlfk.gitlab.io"/>
+
+
+
+<meta itemprop="keywords" content="C&#43;&#43;," />
+ <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://fffzlfk.gitlab.io"/>
+
+<meta name="twitter:title" content="C&#43;&#43;(临时对象的分析)"/>
+<meta name="twitter:description" content="关闭编译器优化"/>
+  <meta property="og:title" content="C&#43;&#43;(临时对象的分析)" />
+<meta property="og:description" content="关闭编译器优化" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fffzlfk.gitlab.io/posts/c&#43;&#43;%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E6%9E%90/" />
+<meta property="og:image" content="https://fffzlfk.gitlab.io"/>
+<meta property="article:published_time" content="2020-10-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-10T00:00:00+00:00" /><meta property="og:site_name" content="fffzlfk&#39;s Blog" />
+   
+<meta property="article:published_time" content="2020-10-10 00:00:00 &#43;0000 UTC" /> 
+
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+</script>
+
+<body class="line-numbers" ></body>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0BH7B3RWSF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-0BH7B3RWSF');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd fffzlfk/home/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://fffzlfk.gitlab.io/about">About</a></li><li><a href="https://fffzlfk.gitlab.io/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        2 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://fffzlfk.gitlab.io/posts/c&#43;&#43;%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E6%9E%90/">C++(临时对象的分析)</a>
+      </h1>
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#复制构造函数">复制构造函数</a></li>
+    <li><a href="#移动构造函数">移动构造函数</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
+
+      
+
+      <div class="post-content">
+        <h2 id="复制构造函数">复制构造函数</h2>
+<p>💻笔者在学习OOP时，看到一个讲C++复制构造函数在什么情况下会执行的代码片段，如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Student</span> {
+   <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    Student(){};
+    Student <span style="color:#a6e22e">returnS</span>(Student s) { <span style="color:#66d9ef">return</span> s; }
+    Student(<span style="color:#66d9ef">const</span> Student <span style="color:#f92672">&amp;</span>e) { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Copy Constructure</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+    <span style="color:#f92672">~</span>Student() { cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Destructure</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+};
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    Student stu1;
+    stu1.returnS(stu1);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>于是乎，笔者在电脑上敲了一边，确实按照预期复制构造函数执行了两次，第一次在构造形参对象时执行，第二次在返回值复制到主函数产生临时对象时执行。</p>
+<p>接着笔者将主函数修改为</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    Student stu1;
+    Student stu2 <span style="color:#f92672">=</span> stu1.returnS(stu1);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>心想：不出意外在构造stu2时，会再执行一次复制构造函数，然而当笔者看到运行结果后，发现并非如此，复制构造函数还是执行了两次，于是笔者陷入了大思考。<br>
+想到可能是聪明的编译器是不是帮我优化掉了临时对象，直接复制构造了stu2。导致了上面的代码经过优化之后和这样写其实是一样的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    Student stu1;
+    Student <span style="color:#f92672">&amp;&amp;</span>stu2 <span style="color:#f92672">=</span> stu1.returnS(stu1);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><style type="text/css">.notice{padding:18px;line-height:24px;margin-bottom:24px;border-radius:4px;color:#444;background:#e7f2fa}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:#fff;background:#6ab0de}.notice.warning .notice-title{background:rgba(217,83,79,.9)}.notice.warning{background:#fae2e2}.notice.info .notice-title{background:#f0b37e}.notice.info{background:#fff2db}.notice.note .notice-title{background:#6ab0de}.notice.note{background:#e7f2fA}.notice.tip .notice-title{background:rgba(92,184,92,.8)}.notice.tip{background:#e6f9e6}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:currentColor}.icon-notice img,.icon-notice.baseline svg{top:0.125em;position:relative}</style>
+<svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg><div class="notice tip" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#tip-notice"></use></svg></span>Tip</p><p><a href="https://zh.wikipedia.org/wiki/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><strong>右值引用</strong></a><br>
+C++中，引用（reference）是指绑定到内存中的相应对象上。左值引用是绑定到左值对象上；右值引用是绑定到临时对象上。这里的左值对象是指可以通过取地址&amp;运算符得到该对象的内存地址；而临时对象是不能用取地址&amp;运算符获取到对象的内存地址。</p></div>
+
+<p>于是经过几番搜索，找到了这个东西：<br>
+<div class="notice tip" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#tip-notice"></use></svg></span>Tip</p><p><strong>-fno-elide-constructors</strong></p>
+<p>The C++ standard allows an implementation to omit creating a temporary that is only used to initialize another object of the same type. Specifying this option disables that optimization, and forces G++ to call the copy constructor in all cases.</p></div>
+</p>
+<p>果然不出所料，当笔者加上这个参数之后</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">g++ test_ref.cpp -o test -fno-elide-constructors
+</code></pre></div><p>一切都对劲了起来😄！</p>
+<h2 id="移动构造函数">移动构造函数</h2>
+<p>使用<a href="https://en.cppreference.com/w/cpp/language/move_constructor">移动构造函数</a>可以提高内存资源的利用效率，从而改进程序的执行性能。</p>
+<p>示例程序</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> {
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>i;
+    A(<span style="color:#66d9ef">int</span> _i) <span style="color:#f92672">:</span> i(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>(_i)) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;A(int) &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+    }
+    <span style="color:#f92672">~</span>A() {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;delete pointer: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+        <span style="color:#66d9ef">delete</span> i;
+    }
+    <span style="color:#75715e">// 复制构造函数
+</span><span style="color:#75715e"></span>    A(<span style="color:#66d9ef">const</span> A <span style="color:#f92672">&amp;</span>a) <span style="color:#f92672">:</span> i(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span>a.i)) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;A(const A&amp;) &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+    }
+    <span style="color:#75715e">// 移动构造函数
+</span><span style="color:#75715e"></span>    A(A <span style="color:#f92672">&amp;&amp;</span>a) <span style="color:#f92672">:</span> i(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span>a.i)) {
+        cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;A(const A&amp;&amp;) &#34;</span> <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+        a.i <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+    }
+};
+
+A <span style="color:#a6e22e">getA</span>(A para) {
+    A tmp(<span style="color:#ae81ff">2</span>);
+    cout <span style="color:#f92672">&lt;&lt;</span> hex <span style="color:#f92672">&lt;&lt;</span> tmp.i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+    <span style="color:#66d9ef">return</span> tmp;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+    A a(<span style="color:#ae81ff">1</span>);
+    A b <span style="color:#f92672">=</span> getA(a);
+    cout <span style="color:#f92672">&lt;&lt;</span> a.i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>A(int) 0x8016eb0            构造a对象
+A(const A&amp;) 0x80172e0       参数复制构造para
+A(int) 0x8017300            构造tmp对象
+0x8017300
+A(const A&amp;&amp;) 0x8017320      调用移动构造函数(临时对象构造返回值)
+delete pointer: 0           析构临时对象
+A(const A&amp;&amp;) 0x8017340      调用移动构造函数(返回值移动到b对象)
+delete pointer: 0           析构临时对象(指返回值)
+delete pointer: 0x80172e0   析构函数para
+0x8016eb0               
+delete pointer: 0x8017340   析构b对象
+delete pointer: 0x8016eb0   析构a对象
+</code></pre>
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://fffzlfk.gitlab.io/tags/c&#43;&#43;/">C&#43;&#43;</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        293 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2020-10-10 08:00
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;caption=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;canonicalUrl=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;body=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f&amp;media=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f;description=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f&amp;title=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;summary=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;source=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f&amp;resubmit=true&amp;title=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f;title=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29%20https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f&amp;t=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=C%2b%2b%28%e4%b8%b4%e6%97%b6%e5%af%b9%e8%b1%a1%e7%9a%84%e5%88%86%e6%9e%90%29&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fc%2b%2b%25E4%25B8%25B4%25E6%2597%25B6%25E5%25AF%25B9%25E8%25B1%25A1%25E7%259A%2584%25E5%2588%2586%25E6%259E%2590%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+      <div class="pagination">
+        <div class="pagination__title">
+          <span class="pagination__title-h">Read other posts</span>
+          <hr />
+        </div>
+
+        <div class="pagination__buttons">
+          
+            <span class="button previous">
+              <a href="https://fffzlfk.gitlab.io/posts/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86/">
+                <span class="button__icon">←</span>
+                <span class="button__text">微机原理</span>
+              </a>
+            </span>
+          
+
+          
+            <span class="button next">
+              <a href="https://fffzlfk.gitlab.io/posts/%E7%AE%97%E6%B3%95%E7%AC%AC%E5%9B%9B%E7%89%88%E4%BD%9C%E4%B8%9A%E9%A2%98/">
+                <span class="button__text">算法（第四版）</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          
+        </div>
+      </div>
+    
+
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            
+                <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://fffzlfk.gitlab.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/fffzlfk">fffzlfk</a></span>
+          </div>
+    </div>
+</footer>
+<script src="https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js"></script>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.074523d4a7ea4c66d0617d43c2d0ea3783a6599876123627c61b28fa46b5c6005b6526f9cdfcd9a3bde4791145652e1b2dfd9ec30abb69fd067621dd3a852d25.js" integrity="sha512-B0Uj1KfqTGbQYX1DwtDqN4OmWZh2EjYnxhso&#43;ka1xgBbZSb5zfzZo73keRFFZS4bLf2ewwq7af0GdiHdOoUtJQ=="></script>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>链表 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E9%93%BE%E8%A1%A8/</link>
+    <description>Recent content in 链表 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 06 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E9%93%BE%E8%A1%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>约瑟夫环问题</title>
+      <link>https://fffzlfk.gitlab.io/2019/11/06/%D5%AC%C9%AA/</link>
+      <pubDate>Wed, 06 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2019/11/06/%D5%AC%C9%AA/</guid>
+      <description>问题描述 编号为1, 2, 3,&amp;hellip;,n的n个人围成一圈，每个人持有一个密码（正整数），从初始m为上限从1开始报数，报到m为止，报m的出列，将他的密码作为下一个m值，如此下去，求出出列顺序。
+解决思路 很容易想到用循环链表来解决该问题
+测试样例 样例输入 7 203 1 7 2 4 8 4样例输出 6147235代码实现 Clang #include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h&amp;gt; typedef struct Node { int data; int id; Node *next; } * LinkList; void Create(LinkList &amp;amp;L, int n) { L = (Node*)malloc(sizeof(Node)); Node *node, *end; end = L; for (int i = 0; i &amp;lt; n; i++) { node = (Node*)malloc(sizeof(Node)); scanf(&amp;#34;%d&amp;#34;, &amp;amp;node-&amp;gt;data); node-&amp;gt;id = i + 1; end-&amp;gt;next = node; end = node; } end-&amp;gt;next = L-&amp;gt;next; } int solve(LinkList &amp;amp;L, int m) { if (m &amp;lt; 1) return -1; int t = m; Node *last = L-&amp;gt;next; Node *cur = L-&amp;gt;next; while (cur-&amp;gt;next !</description>
+    </item>
+    
+  </channel>
+</rss>

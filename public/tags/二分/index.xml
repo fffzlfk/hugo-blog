@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二分 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86/</link>
+    <description>Recent content in 二分 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 23 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E4%BA%8C%E5%88%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>二分</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/23//</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/23//</guid>
+      <description>P1024 一元三次方程求解【浮点数二分模版】 AC代码 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; double A, B, C, D; double check(double x) { return A * pow(x, 3) + B * pow(x, 2) + C * x + D; } void bs() { double l, r, mid; int cnt = 0; for (double i = -100.0; i &amp;lt;= 100.0; i++) { l = i, r = i + 1; double chl = check(l); double chr = check(r); if (chl == 0) { printf(&amp;#34;%.</description>
+    </item>
+    
+  </channel>
+</rss>

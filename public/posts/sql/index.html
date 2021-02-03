@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="SQL概述 SQL的特点  综合统一：集DQ、DDL、DML、DCL于一体 高度非过程化：不用考虑如何实现，只需提出“做什么”，不关心“怎么做” 面向集合的操作方式：查询、插入、删除、更新操作对象及结果都是集合 以同一种语法结构提供两种使用方法：可交互式和嵌入式使用 以简捷的自然语言实现对数据库的定义、操作和控制功能：定义了少量的关键字实现对数据库的定义、操纵和控制功能  SQL所使用的动词（核心功能）    SQL功能 动词     数据查询 SELECT   数据定义 CREATE, DROP, ALTER   数据操作 INSERT, UPDATE, DELETE   数据控制 GRANT, REVOKE    数据定义 SQL的数据定义语句 SQL中的数据类型 基本表的定义 创建基本表 CREATE TABLE &amp;lt;表名&amp;gt; ( &amp;lt;列名&amp;gt; &amp;lt;数据类型&amp;gt;[&amp;lt;列级完整性约束条件&amp;gt;] [, &amp;lt;列名&amp;gt; &amp;lt;数据类型&amp;gt;[&amp;lt;列级完整性约束条件&amp;gt;] ] … [, &amp;lt;表级完整性约束条件&amp;gt; ] ) ;  常用的完整性约束  主码约束：PRIMARY KEY (&amp;lt;列名1&amp;gt;, &amp;lt;列名2&amp;gt;,…) 非空值约束：NOT NULL 唯一性约束：UNIQUE 参照完整性约束：FOREIGN KEY (&amp;lt;列名&amp;gt;) REFERENCES &amp;lt;表名&amp;gt;(&amp;lt;列名&amp;gt;) 一般性约束：CHECK(&amp;lt;谓词&amp;gt;)    删除基本表 DROP TABLE &amp;lt;表名&amp;gt; [RESTRICT|CASCADE];   RESTRICT：删除表是有限制的：" />
+<meta name="keywords" content=", SQL" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://fffzlfk.gitlab.io/posts/sql/" /> 
+<title>
+     SQL :: fffzlfk&#39;s Blog  — Thinking will not overcome fear but action will. 
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css">  
+<link rel="stylesheet" href="/main.0b44ca839b5cf0ae1c9a176353cd724cec3113bb1cfc03e2d9bbec8c21d31f40.css"> 
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+ <meta itemprop="name" content="SQL">
+<meta itemprop="description" content="SQL概述 SQL的特点  综合统一：集DQ、DDL、DML、DCL于一体 高度非过程化：不用考虑如何实现，只需提出“做什么”，不关心“怎么做” 面向集合的操作方式：查询、插入、删除、更新操作对象及结果都是集合 以同一种语法结构提供两种使用方法：可交互式和嵌入式使用 以简捷的自然语言实现对数据库的定义、操作和控制功能：定义了少量的关键字实现对数据库的定义、操纵和控制功能  SQL所使用的动词（核心功能）    SQL功能 动词     数据查询 SELECT   数据定义 CREATE, DROP, ALTER   数据操作 INSERT, UPDATE, DELETE   数据控制 GRANT, REVOKE    数据定义 SQL的数据定义语句 SQL中的数据类型 基本表的定义 创建基本表 CREATE TABLE &lt;表名&gt; ( &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] [, &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] ] … [, &lt;表级完整性约束条件&gt; ] ) ;  常用的完整性约束  主码约束：PRIMARY KEY (&lt;列名1&gt;, &lt;列名2&gt;,…) 非空值约束：NOT NULL 唯一性约束：UNIQUE 参照完整性约束：FOREIGN KEY (&lt;列名&gt;) REFERENCES &lt;表名&gt;(&lt;列名&gt;) 一般性约束：CHECK(&lt;谓词&gt;)    删除基本表 DROP TABLE &lt;表名&gt; [RESTRICT|CASCADE];   RESTRICT：删除表是有限制的：">
+<meta itemprop="datePublished" content="2020-10-24T20:22:42+08:00" />
+<meta itemprop="dateModified" content="2020-10-24T20:22:42+08:00" />
+<meta itemprop="wordCount" content="683">
+<meta itemprop="image" content="https://fffzlfk.gitlab.io"/>
+
+
+
+<meta itemprop="keywords" content="SQL," />
+ <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://fffzlfk.gitlab.io"/>
+
+<meta name="twitter:title" content="SQL"/>
+<meta name="twitter:description" content="SQL概述 SQL的特点  综合统一：集DQ、DDL、DML、DCL于一体 高度非过程化：不用考虑如何实现，只需提出“做什么”，不关心“怎么做” 面向集合的操作方式：查询、插入、删除、更新操作对象及结果都是集合 以同一种语法结构提供两种使用方法：可交互式和嵌入式使用 以简捷的自然语言实现对数据库的定义、操作和控制功能：定义了少量的关键字实现对数据库的定义、操纵和控制功能  SQL所使用的动词（核心功能）    SQL功能 动词     数据查询 SELECT   数据定义 CREATE, DROP, ALTER   数据操作 INSERT, UPDATE, DELETE   数据控制 GRANT, REVOKE    数据定义 SQL的数据定义语句 SQL中的数据类型 基本表的定义 创建基本表 CREATE TABLE &lt;表名&gt; ( &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] [, &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] ] … [, &lt;表级完整性约束条件&gt; ] ) ;  常用的完整性约束  主码约束：PRIMARY KEY (&lt;列名1&gt;, &lt;列名2&gt;,…) 非空值约束：NOT NULL 唯一性约束：UNIQUE 参照完整性约束：FOREIGN KEY (&lt;列名&gt;) REFERENCES &lt;表名&gt;(&lt;列名&gt;) 一般性约束：CHECK(&lt;谓词&gt;)    删除基本表 DROP TABLE &lt;表名&gt; [RESTRICT|CASCADE];   RESTRICT：删除表是有限制的："/>
+  <meta property="og:title" content="SQL" />
+<meta property="og:description" content="SQL概述 SQL的特点  综合统一：集DQ、DDL、DML、DCL于一体 高度非过程化：不用考虑如何实现，只需提出“做什么”，不关心“怎么做” 面向集合的操作方式：查询、插入、删除、更新操作对象及结果都是集合 以同一种语法结构提供两种使用方法：可交互式和嵌入式使用 以简捷的自然语言实现对数据库的定义、操作和控制功能：定义了少量的关键字实现对数据库的定义、操纵和控制功能  SQL所使用的动词（核心功能）    SQL功能 动词     数据查询 SELECT   数据定义 CREATE, DROP, ALTER   数据操作 INSERT, UPDATE, DELETE   数据控制 GRANT, REVOKE    数据定义 SQL的数据定义语句 SQL中的数据类型 基本表的定义 创建基本表 CREATE TABLE &lt;表名&gt; ( &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] [, &lt;列名&gt; &lt;数据类型&gt;[&lt;列级完整性约束条件&gt;] ] … [, &lt;表级完整性约束条件&gt; ] ) ;  常用的完整性约束  主码约束：PRIMARY KEY (&lt;列名1&gt;, &lt;列名2&gt;,…) 非空值约束：NOT NULL 唯一性约束：UNIQUE 参照完整性约束：FOREIGN KEY (&lt;列名&gt;) REFERENCES &lt;表名&gt;(&lt;列名&gt;) 一般性约束：CHECK(&lt;谓词&gt;)    删除基本表 DROP TABLE &lt;表名&gt; [RESTRICT|CASCADE];   RESTRICT：删除表是有限制的：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fffzlfk.gitlab.io/posts/sql/" />
+<meta property="og:image" content="https://fffzlfk.gitlab.io"/>
+<meta property="article:published_time" content="2020-10-24T20:22:42+08:00" />
+<meta property="article:modified_time" content="2020-10-24T20:22:42+08:00" /><meta property="og:site_name" content="fffzlfk&#39;s Blog" />
+   
+<meta property="article:published_time" content="2020-10-24 20:22:42 &#43;0800 CST" /> 
+
+
+
+
+
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]} });
+</script>
+
+<body class="line-numbers" ></body>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0BH7B3RWSF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-0BH7B3RWSF');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd fffzlfk/home/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://fffzlfk.gitlab.io/about">About</a></li><li><a href="https://fffzlfk.gitlab.io/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        4 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://fffzlfk.gitlab.io/posts/sql/">SQL</a>
+      </h1>
+        <hr />
+        <aside id="toc">
+          <div class="toc-title">Table of Contents</div>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#sql概述">SQL概述</a>
+      <ul>
+        <li><a href="#sql的特点">SQL的特点</a></li>
+        <li><a href="#sql所使用的动词核心功能">SQL所使用的动词（核心功能）</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据定义">数据定义</a>
+      <ul>
+        <li><a href="#sql的数据定义语句">SQL的数据定义语句</a></li>
+        <li><a href="#sql中的数据类型">SQL中的数据类型</a></li>
+        <li><a href="#基本表的定义">基本表的定义</a></li>
+        <li><a href="#索引的定义">索引的定义</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据查询">数据查询</a>
+      <ul>
+        <li><a href="#单表查询">单表查询</a></li>
+        <li><a href="#连接查询">连接查询</a></li>
+        <li><a href="#嵌套查询">嵌套查询</a></li>
+        <li><a href="#集合查询">集合查询</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据更新">数据更新</a>
+      <ul>
+        <li><a href="#插入数据">插入数据</a></li>
+        <li><a href="#修改数据">修改数据</a></li>
+        <li><a href="#删除数据">删除数据</a></li>
+        <li><a href="#注意事项">注意事项</a></li>
+      </ul>
+    </li>
+    <li><a href="#大作业">大作业</a></li>
+  </ul>
+</nav>
+        </aside>
+        <hr />
+
+      
+
+      <div class="post-content">
+        <h2 id="sql概述">SQL概述</h2>
+<h3 id="sql的特点">SQL的特点</h3>
+<ol>
+<li><strong>综合统一</strong>：集DQ、DDL、DML、DCL于一体</li>
+<li><strong>高度非过程化</strong>：不用考虑如何实现，只需提出“做什么”，不关心“怎么做”</li>
+<li><strong>面向集合的操作方式</strong>：查询、插入、删除、更新操作对象及结果都是集合</li>
+<li><strong>以同一种语法结构提供两种使用方法</strong>：可交互式和嵌入式使用</li>
+<li><strong>以简捷的自然语言实现对数据库的定义、操作和控制功能</strong>：定义了少量的关键字实现对数据库的定义、操纵和控制功能</li>
+</ol>
+<h3 id="sql所使用的动词核心功能">SQL所使用的动词（核心功能）</h3>
+<table>
+<thead>
+<tr>
+<th>SQL功能</th>
+<th>动词</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据查询</td>
+<td>SELECT</td>
+</tr>
+<tr>
+<td>数据定义</td>
+<td>CREATE, DROP, ALTER</td>
+</tr>
+<tr>
+<td>数据操作</td>
+<td>INSERT, UPDATE, DELETE</td>
+</tr>
+<tr>
+<td>数据控制</td>
+<td>GRANT, REVOKE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据定义">数据定义</h2>
+<h3 id="sql的数据定义语句">SQL的数据定义语句</h3>
+
+    <img src="https://i.postimg.cc/3JJJHQR6/1.png"  class="center"  style="border-radius: 8px; width: 75% ;"  />
+
+
+<h3 id="sql中的数据类型">SQL中的数据类型</h3>
+
+    <img src="https://i.postimg.cc/BbdCGB3Q/2.png"  class="center"  style="border-radius: 8px; width: 75% ;"  />
+
+
+<h3 id="基本表的定义">基本表的定义</h3>
+<h4 id="创建基本表">创建基本表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span>
+    	　  ( <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">数据类型</span><span style="color:#f92672">&gt;</span>[<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列级完整性约束条件</span><span style="color:#f92672">&gt;</span>]
+      　　[, <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">数据类型</span><span style="color:#f92672">&gt;</span>[<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列级完整性约束条件</span><span style="color:#f92672">&gt;</span>] ] <span style="color:#960050;background-color:#1e0010">…</span>
+      　　[, <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表级完整性约束条件</span><span style="color:#f92672">&gt;</span> ]  ) ;
+</code></pre></div><ul>
+<li>常用的完整性约束
+<ul>
+<li>主码约束：<strong>PRIMARY  KEY (&lt;列名1&gt;, &lt;列名2&gt;,…)</strong></li>
+<li>非空值约束：<strong>NOT NULL</strong></li>
+<li>唯一性约束：<strong>UNIQUE</strong></li>
+<li>参照完整性约束：<strong>FOREIGN KEY (&lt;列名&gt;) REFERENCES  &lt;表名&gt;(&lt;列名&gt;)</strong></li>
+<li>一般性约束：<strong>CHECK(&lt;谓词&gt;)</strong></li>
+</ul>
+</li>
+</ul>
+
+    <img src="https://i.postimg.cc/k5M65Y7Y/3.png"  class="left"  style="border-radius: 8px; width: 75% ;"  />
+
+
+<h4 id="删除基本表">删除基本表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DROP</span>  <span style="color:#66d9ef">TABLE</span>  <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span> [<span style="color:#66d9ef">RESTRICT</span><span style="color:#f92672">|</span><span style="color:#66d9ef">CASCADE</span>]; 
+</code></pre></div><ul>
+<li>
+<p><strong>RESTRICT</strong>：删除表是有限制的：</p>
+<ul>
+<li>欲删除的基本表不能被其他表的约束所引用</li>
+<li>如果存在依赖该表的对象，则此表不能被删除</li>
+</ul>
+</li>
+<li>
+<p><strong>CASCADE</strong>：级联，删除该表没有限制。
+在删除基本表的同时，相关的依赖对象一起删除</p>
+<p>⚠️<strong>缺省是RESTRICT</strong></p>
+</li>
+</ul>
+<h4 id="修改基本表">修改基本表</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span>
+	[<span style="color:#66d9ef">ADD</span>[<span style="color:#66d9ef">COLUMN</span>] <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">新列名</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">数据类型</span><span style="color:#f92672">&gt;</span> [ <span style="color:#960050;background-color:#1e0010">完整性约束</span> ]]
+	[<span style="color:#66d9ef">ADD</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表级完整性约束</span><span style="color:#f92672">&gt;</span>]
+	[<span style="color:#66d9ef">DROP</span> [ <span style="color:#66d9ef">COLUMN</span> ] <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span> [<span style="color:#66d9ef">CASCADE</span><span style="color:#f92672">|</span><span style="color:#66d9ef">RESTRICT</span>]]
+    [<span style="color:#66d9ef">DROP</span> <span style="color:#66d9ef">CONSTRAINT</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">完整性约束名</span><span style="color:#f92672">&gt;</span>[<span style="color:#66d9ef">RESTRICT</span><span style="color:#f92672">|</span><span style="color:#66d9ef">CASCADE</span>]]
+	[<span style="color:#66d9ef">ALTER</span> <span style="color:#66d9ef">COLUMN</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">数据类型</span><span style="color:#f92672">&gt;</span>];
+</code></pre></div><ul>
+<li>&lt;表名&gt;：要修改的基本表</li>
+<li><strong>ADD子句</strong>：增加新列和新的完整性约束条件</li>
+<li><strong>DROP COLUMN子句</strong>: 用于删除表中的列</li>
+<li><strong>DROP CONSTRAINT</strong>子句：删除指定的完整性约束条件</li>
+<li><strong>ALTER COLUMN</strong>子句：用于修改列名和数据类型</li>
+</ul>
+<p>⚠️删除属性列</p>
+<ul>
+<li>间接删除(由DBA或表的Owner操作)
+<ol>
+<li>把表中要保留的列及其内容复制到一个新表中</li>
+<li>删除原表</li>
+<li>再将新表重命名为原表名</li>
+</ol>
+</li>
+<li>直接删除(SQL-99)<br>
+　例：ALTER  TABLE  S  Drop  Scome ;</li>
+</ul>
+<h3 id="索引的定义">索引的定义</h3>
+<h4 id="索引的分类">索引的分类</h4>
+<ol>
+<li><strong>普通索引(Normal Index)</strong>：一个索引值可能对应多条存储记录</li>
+<li><strong>单一索引(Unique Index)</strong>：每一个索引值只对应唯一的数据记录。</li>
+<li><strong>聚簇索引(Cluster Index)</strong>：基本表按照索引项顺序组织存储。
+<ul>
+<li>一个基本表上最多只能建立一个聚簇索引</li>
+<li>在最经常查询的列上建立聚簇索引</li>
+<li>经常更新的列不宜建立聚簇索引</li>
+</ul>
+</li>
+</ol>
+<h4 id="创建索引">创建索引</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> [<span style="color:#66d9ef">UNIQUE</span>] <span style="color:#f92672">|</span> [<span style="color:#66d9ef">CLUSTER</span>] <span style="color:#66d9ef">INDEX</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">索引名</span><span style="color:#f92672">&gt;</span>
+ 	　<span style="color:#66d9ef">ON</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span>[<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">次序</span><span style="color:#f92672">&gt;</span>][,<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#f92672">&gt;</span>[<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">次序</span><span style="color:#f92672">&gt;</span>] ]<span style="color:#960050;background-color:#1e0010">…</span>);
+</code></pre></div><ul>
+<li>用&lt;表名&gt;指定要建索引的基本表名字</li>
+<li>索引可以建立在该表的一列或多列上，各列名之间用逗号分隔</li>
+<li>用&lt;次序&gt;指定索引值的排列次序。升序：ASC，降序：DESC，缺省值：ASC</li>
+<li>UNIQUE表明此索引的每一个索引值对应唯一的数据记录</li>
+<li>CLUSTER表示要建立的索引是聚簇索引</li>
+</ul>
+<p>例7: 为学生表S和选课表SC建立索引。其中S表按学号升序建唯一索引，按年龄降序建立普通索引，SC表按学号升序和课程号降序建唯一索引。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">	<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">INDEX</span> Stusno <span style="color:#66d9ef">ON</span> S (Sno);
+	<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> Stusage <span style="color:#66d9ef">ON</span> S (Sage <span style="color:#66d9ef">DESC</span>);
+	<span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">UNIQUE</span> <span style="color:#66d9ef">INDEX</span> SCno 
+                    <span style="color:#66d9ef">ON</span> SC(Sno <span style="color:#66d9ef">ASC</span>, Cno <span style="color:#66d9ef">DESC</span>);
+</code></pre></div><h4 id="删除索引">删除索引</h4>
+<p><strong>DROP INDEX  &lt;索引名&gt;;</strong></p>
+<h4 id="修改索引">修改索引</h4>
+<p><strong>ALTER INDEX &lt;旧索引名&gt; RENAME TO &lt;新索引名&gt;;</strong></p>
+<h2 id="数据查询">数据查询</h2>
+<ul>
+<li>
+<p>查询语法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> [<span style="color:#66d9ef">ALL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">DISTINCT</span>] <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">目标列表达式</span><span style="color:#f92672">&gt;</span> [,<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">目标列表达式</span><span style="color:#f92672">&gt;</span>] <span style="color:#960050;background-color:#1e0010">…</span>
+<span style="color:#66d9ef">FROM</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名或视图名</span><span style="color:#f92672">&gt;</span>[, <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名或视图名</span><span style="color:#f92672">&gt;</span> ] <span style="color:#960050;background-color:#1e0010">…</span>
+[ <span style="color:#66d9ef">WHERE</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">条件表达式</span><span style="color:#f92672">&gt;</span> ]
+[ <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> [ <span style="color:#66d9ef">HAVING</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">条件表达式</span><span style="color:#f92672">&gt;</span> ] ]
+[ <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> [ <span style="color:#66d9ef">ASC</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">DESC</span> ] ] ;
+</code></pre></div></li>
+</ul>
+<h3 id="单表查询">单表查询</h3>
+<ul>
+<li>
+<p>目标列为表达式的查询</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span>  Sname, <span style="color:#ae81ff">1996</span> <span style="color:#f92672">-</span> Sage
+<span style="color:#66d9ef">FROM</span>  Student ;
+</code></pre></div></li>
+<li>
+<p>使用别名改变查询结果的列标题</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span>  Sname  NAME, <span style="color:#e6db74">&#39;Year of Birth:&#39;</span>  BIRTH,
+      <span style="color:#ae81ff">1996</span> <span style="color:#f92672">-</span> Sage  BIRTHYEAR, 
+      ISLOWER ( Sdept )  DEPARTMENT
+</code></pre></div></li>
+<li>
+<p>消除结果中重复的行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"> <span style="color:#66d9ef">SELECT</span>  <span style="color:#f92672">**</span><span style="color:#66d9ef">DISTINCT</span><span style="color:#f92672">**</span>  Sno <span style="color:#66d9ef">FROM</span>  SC ;
+</code></pre></div></li>
+<li>
+<p>限定查询范围</p>
+<table>
+<thead>
+<tr>
+<th>查询条件</th>
+<th>谓　词</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>比　　较</td>
+<td>= , &lt; ,  &gt; ,    &lt;= ,  &gt;= ,  &lt;&gt; ,    != ,  !&gt; ,  !&lt;    ;   NOT + 上述比较符</td>
+</tr>
+<tr>
+<td>确定范围</td>
+<td>BETWEEN … AND … ,   NOT  BETWEEN … AND …</td>
+</tr>
+<tr>
+<td>确定集合</td>
+<td>IN,  NOT IN</td>
+</tr>
+<tr>
+<td>字符匹配</td>
+<td>LIKE,  NOT LIKE</td>
+</tr>
+<tr>
+<td>空　　值</td>
+<td>IS NULL,  IS NOT NULL</td>
+</tr>
+<tr>
+<td>多重条件</td>
+<td>AND,  OR   -</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>确定范围</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span>  Sname, Sdept, Sage
+<span style="color:#66d9ef">FROM</span>  Student
+<span style="color:#66d9ef">WHERE</span>  Sage  <span style="color:#66d9ef">BETWEEN</span>  <span style="color:#ae81ff">20</span>  <span style="color:#66d9ef">AND</span>  <span style="color:#ae81ff">23</span> ;
+</code></pre></div></li>
+<li>
+<p>确定集合</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span>  Sname, Ssex
+<span style="color:#66d9ef">FROM</span>  Student
+<span style="color:#66d9ef">WHERE</span>  Sdept  <span style="color:#66d9ef">NOT</span>  <span style="color:#66d9ef">IN</span> (<span style="color:#e6db74">&#39;IS&#39;</span>, <span style="color:#e6db74">&#39;MA&#39;</span>, <span style="color:#e6db74">&#39;CS&#39;</span>) ;
+</code></pre></div></li>
+<li>
+<p>字符串匹配</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">[<span style="color:#66d9ef">NOT</span>] <span style="color:#66d9ef">LIKE</span>  <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">匹配模板</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">’</span>  [<span style="color:#66d9ef">ESCAPE</span> <span style="color:#960050;background-color:#1e0010">‘</span><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">换码字符</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">’</span>]
+</code></pre></div><ul>
+<li>
+<p><strong>%(百分号)：代表任意长度(可以为0)的字符串。</strong></p>
+<p>例：a%b表示以a开头，以b结尾的任意长度的字符串。如acb，addgb，ab 等都满足该匹配串。</p>
+</li>
+<li>
+<p><strong>_(下横线)：代表任意单个字符。</strong></p>
+<p>例：a_b表示以a开头，以b结尾的长度为3的任意字符串。如acb，afb等都满足该匹配串，一个汉字两个下横线</p>
+</li>
+<li>
+<p><strong>当要查询的字符串本身就含有 % 或 _ 时，要使用  <code>ESCAPE '&lt;换码字符&gt;'</code>短语对通配符进行转义。</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span>  Cno, Ccredit
+<span style="color:#66d9ef">FROM</span>  Course
+<span style="color:#66d9ef">WHERE</span>  Cname  <span style="color:#66d9ef">LIKE</span>  <span style="color:#e6db74">&#39;DB\_Design&#39;</span>  <span style="color:#66d9ef">ESCAPE</span> <span style="color:#e6db74">&#39;\&#39;</span> ;
+;<span style="color:#960050;background-color:#1e0010">转义符‘\’表示模板中出现在其后的第一个字符不再是通配符，而是字符本身。</span>
+</code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>涉及空值的查询</p>
+<p><strong>使用谓词 IS NULL 或 IS NOT NULL，“IS NULL” 不能用 “= NULL” 代替！</strong></p>
+</li>
+</ul>
+</li>
+<li>
+<p>排序输出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span>
+</code></pre></div><ul>
+<li><strong>升序：ASC ，排列为空值的元组最后显示 （空值最大）</strong></li>
+<li><strong>降序：DESC</strong></li>
+</ul>
+</li>
+<li>
+<p>聚集函数</p>
+<ul>
+<li>计数 COUNT (使用 DISTINCT 避免重复计数)</li>
+<li>计算总和 SUM</li>
+<li>计算平均值 AVG</li>
+<li>求最大值 MAX</li>
+<li>求最小值 MIN</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">[ <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span>  <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>[, <span style="color:#960050;background-color:#1e0010">列名</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">…</span>] [ <span style="color:#66d9ef">HAVING</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">条件表达式</span><span style="color:#f92672">&gt;</span> ] ] 
+</code></pre></div><p>未对查询结果分组，集函数将作用于整个查询结果</p>
+<p>对查询结果分组后，集函数将分别作用于每个组</p>
+<p>⚠️<strong>使用GROUP BY子句后，SELECT子句的列名表中只能出现分组属性和集函数</strong></p>
+<p>集函数只能用于SELECT子句和 HAVING短语之中，而<strong>绝对不能出现在 WHERE 子句</strong>中(WHERE子句执行过程是对记录逐一检验，并没有结果集，故无法施加集函数)。</p>
+<p><img src="http://media.sumblog.cn/blog/20181223/nPMQrirY1FGp.png?imageMogr2/thumbnail/!60p" alt=""></p>
+</li>
+</ul>
+<h3 id="连接查询">连接查询</h3>
+<ul>
+<li>
+<p>等值连接、自然连接</p>
+<p>SELECT子句和WHERE子句中出现的两个同名属性前要加所属表名作前辍以区别，无同名则可省前辍。</p>
+</li>
+<li>
+<p>自身连接</p>
+<p>需要给表起<strong>别名</strong>以示区别，由于所有的属性名都是同名属性， 因此必须使用<strong>别名前缀</strong></p>
+</li>
+<li>
+<p>外连接 <strong>Outer Join</strong></p>
+<ul>
+<li>左外连接：在连接的右边出现空行</li>
+<li>右外连接：在连接的左边出现空行</li>
+<li>左右外链接：在连接的左右出现空行</li>
+</ul>
+<style type="text/css">.notice{padding:18px;line-height:24px;margin-bottom:24px;border-radius:4px;color:#444;background:#e7f2fa}.notice p:last-child{margin-bottom:0}.notice-title{margin:-18px -18px 12px;padding:4px 18px;border-radius:4px 4px 0 0;font-weight:700;color:#fff;background:#6ab0de}.notice.warning .notice-title{background:rgba(217,83,79,.9)}.notice.warning{background:#fae2e2}.notice.info .notice-title{background:#f0b37e}.notice.info{background:#fff2db}.notice.note .notice-title{background:#6ab0de}.notice.note{background:#e7f2fA}.notice.tip .notice-title{background:rgba(92,184,92,.8)}.notice.tip{background:#e6f9e6}.icon-notice{display:inline-flex;align-self:center;margin-right:8px}.icon-notice img,.icon-notice svg{height:1em;width:1em;fill:currentColor}.icon-notice img,.icon-notice.baseline svg{top:0.125em;position:relative}</style>
+<svg width="0" height="0" display="none" xmlns="http://www.w3.org/2000/svg"><symbol id="tip-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></symbol><symbol id="note-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="warning-notice" viewBox="0 0 576 512" preserveAspectRatio="xMidYMid meet"><path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></symbol><symbol id="info-notice" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></symbol></svg><div class="notice note" >
+<p class="first notice-title"><span class="icon-notice baseline"><svg><use href="#note-notice"></use></svg></span>Note</p><p>连接类型<br>
+- 内连接（INNER JOIN）<br>
+- 左外连接（LEFT OUTER JOIN）<br>
+- 右外连接（RIGHT OUTER JOIN）<br>
+- 全外连接（FULL OUTER JOIN）</p></div>
+
+</li>
+</ul>
+<h3 id="嵌套查询">嵌套查询</h3>
+<h4 id="带有in谓词的子查询">带有IN谓词的子查询</h4>
+<h4 id="带有比较运算符的子查询">带有比较运算符的子查询</h4>
+<ul>
+<li>⚠️特别注意：子查询一定要跟在比较符之后！</li>
+</ul>
+<h4 id="带有anysome或all谓词的查询">带有ANY(SOME)或ALL谓词的查询</h4>
+
+    <img src="https://s1.ax1x.com/2020/11/05/BWeMzd.jpg"  class="center"  style="border-radius: 8px; width: 75% ;"  />
+
+
+<h4 id="带有exists谓词的子查询">带有EXISTS谓词的子查询</h4>
+<ul>
+<li>
+<p>EXISTS谓词的意义：</p>
+<ul>
+<li>是存在量词在SQL中的应用</li>
+<li>带有EXISTS谓词的子查询不返回任何数据，只产生逻辑真值“true”或逻辑假值“false”
+<ul>
+<li>若内层查询结果非空，则返回真值</li>
+<li>若内层查询结果为空，则返回假值</li>
+</ul>
+</li>
+<li>由EXISTS引出的子查询，其目标列表达式通常都用*：因为带EXISTS的子查询只返回真值或假值，给出列名无实际意义
+
+    <img src="https://s1.ax1x.com/2020/11/05/BWm9Tf.jpg"  class="center"  style="broder-radius: 8px; width: 75%;"  />
+
+</li>
+</ul>
+
+    <img src="https://s1.ax1x.com/2020/11/05/BWnpv9.jpg"  class="center"  style="broder-radius: 8px; width: 75%;"  />
+
+
+
+    <img src="https://s1.ax1x.com/2020/11/05/BWnnvd.jpg"  class="center"  style="broder-radius: 8px; width: 75%;"  />
+
+
+</li>
+</ul>
+<h4 id="嵌套查询小结">嵌套查询小结</h4>
+<p><strong>嵌套查询分为相关子查询和不相关子查询</strong></p>
+<ul>
+<li>不相关子查询的执行不依赖于父查询的任何条件
+<ul>
+<li>语句上不出现父查询中的属性</li>
+<li>执行上首先运行，且只运行一次即可得到确定的结果</li>
+<li>子查询的结果集将作为父查询的条件使用</li>
+</ul>
+</li>
+<li>相关子查询的执行与父查询的当前值相关
+<ul>
+<li>语句上出现父查询中的属性</li>
+<li>执行上父查询的当前值会作为子查询的条件</li>
+</ul>
+</li>
+<li>子查询的属性不会出现在父查询的输出上(Select 子句)</li>
+<li>子查询不能使用ORDER BY子句， ORDER BY子句只能对最终结果排序</li>
+</ul>
+<h3 id="集合查询">集合查询</h3>
+<p>将两个SELECT-FROM-WHERE查询块用集合操作命令联结起来的查询</p>
+<h4 id="集合操作命令">集合操作命令</h4>
+<ul>
+<li>并操作（UNION）</li>
+<li>交操作（INTERSECT）</li>
+<li>差操作（EXCEPT）</li>
+</ul>
+<h4 id="语句形式">语句形式</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">查询块</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">UNION</span> [<span style="color:#66d9ef">ALL</span>] <span style="color:#f92672">|</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">EXCEPT</span>
+<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">查询块</span><span style="color:#f92672">&gt;</span> ;
+</code></pre></div>
+    <img src="https://s1.ax1x.com/2020/11/05/BWuPzQ.jpg"  class="center"  style="broder-radius: 8px; width: 75%;"  />
+
+
+<h2 id="数据更新">数据更新</h2>
+<h3 id="插入数据">插入数据</h3>
+<h4 id="插入单个元组">插入单个元组</h4>
+
+    <img src="https://s3.ax1x.com/2020/11/12/Bz4Ald.jpg"  class="center"  style="width: 70% ;border-radius: 5px; box-shadow: inset 2px 2px 5px black, 2px 2px 5px black;"  />
+
+
+<h4 id="插入子查询结果">插入子查询结果</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">INSERT</span> 
+<span style="color:#66d9ef">INTO</span> <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span>  [(<span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">属性列</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> [, <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">属性列</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span><span style="color:#960050;background-color:#1e0010">…</span>  )]
+<span style="color:#960050;background-color:#1e0010">子查询</span> ;
+</code></pre></div><h3 id="修改数据">修改数据</h3>
+
+    <img src="https://s3.ax1x.com/2020/11/12/Bz5PH0.jpg"  class="center"  style="width: 70% ;border-radius: 5px; box-shadow: inset 2px 2px 5px black, 2px 2px 5px black;"  />
+
+
+<h3 id="删除数据">删除数据</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">DELETE</span>
+<span style="color:#66d9ef">FROM</span>  <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">表名</span><span style="color:#f92672">&gt;</span>
+[<span style="color:#66d9ef">WHERE</span>  <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">条件</span><span style="color:#f92672">&gt;</span>] ;
+</code></pre></div><h3 id="注意事项">注意事项</h3>
+<p>DBMS在执行插入、删除、修改语句时必须保证数据库的完整性和一致性。</p>
+<h2 id="大作业">大作业</h2>
+<script type="text/javascript" src="/js/pdf-js/build/pdf.js"></script>
+<style>
+#the-canvas {
+  border: 1px solid black;
+  direction: ltr;
+  width: 100%;
+  height: auto;
+}
+#paginator{
+    text-align: center;
+    margin-bottom: 10px;
+}
+</style>
+
+<div id="paginator">
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+    &nbsp; &nbsp;
+    <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+</div>
+<div id="embed-pdf-container">
+    <canvas id="the-canvas"></canvas>
+</div>
+
+<script type="text/javascript">
+window.onload = function() {
+
+
+
+var url = "\\pdf\\database.pdf";
+
+
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf-js/build/pdf.worker.js';
+
+
+var pdfDoc = null,
+    pageNum = 1,
+    pageRendering = false,
+    pageNumPending = null,
+    scale = 3,
+    canvas = document.getElementById('the-canvas'),
+    ctx = canvas.getContext('2d');
+
+
+
+function renderPage(num) {
+  pageRendering = true;
+  
+  pdfDoc.getPage(num).then(function(page) {
+    var viewport = page.getViewport({scale: scale});
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    
+    var renderContext = {
+      canvasContext: ctx,
+      viewport: viewport
+    };
+    var renderTask = page.render(renderContext);
+
+    
+    renderTask.promise.then(function() {
+      pageRendering = false;
+      if (pageNumPending !== null) {
+        
+        renderPage(pageNumPending);
+        pageNumPending = null;
+      }
+    });
+  });
+
+  
+  document.getElementById('page_num').textContent = num;
+}
+
+
+
+function queueRenderPage(num) {
+  if (pageRendering) {
+    pageNumPending = num;
+  } else {
+    renderPage(num);
+  }
+}
+
+
+
+function onPrevPage() {
+  if (pageNum <= 1) {
+    return;
+  }
+  pageNum--;
+  queueRenderPage(pageNum);
+}
+document.getElementById('prev').addEventListener('click', onPrevPage);
+
+
+
+function onNextPage() {
+  if (pageNum >= pdfDoc.numPages) {
+    return;
+  }
+  pageNum++;
+  queueRenderPage(pageNum);
+}
+document.getElementById('next').addEventListener('click', onNextPage);
+
+
+
+pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+  pdfDoc = pdfDoc_;
+  document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+  
+  renderPage(pageNum);
+});
+}
+
+</script>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://fffzlfk.gitlab.io/tags/sql/">SQL</a></span>
+        
+    </p>
+
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        683 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2020-10-24 20:22
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+  <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
+      <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=SQL&amp;caption=SQL&amp;canonicalUrl=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
+    <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=SQL&amp;body=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f&amp;media=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f;description=SQL" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f&amp;title=SQL&amp;summary=SQL&amp;source=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f&amp;resubmit=true&amp;title=SQL" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+  <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f;title=SQL" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="whatsapp://send?text=SQL%20https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f&amp;t=SQL" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=SQL&amp;url=https%3a%2f%2ffffzlfk.gitlab.io%2fposts%2fsql%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+  <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+      <div class="pagination">
+        <div class="pagination__title">
+          <span class="pagination__title-h">Read other posts</span>
+          <hr />
+        </div>
+
+        <div class="pagination__buttons">
+          
+            <span class="button previous">
+              <a href="https://fffzlfk.gitlab.io/posts/acwing%E5%AF%92%E5%81%87%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">
+                <span class="button__icon">←</span>
+                <span class="button__text">AcWing寒假每日一题</span>
+              </a>
+            </span>
+          
+
+          
+            <span class="button next">
+              <a href="https://fffzlfk.gitlab.io/posts/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86/">
+                <span class="button__text">微机原理</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          
+        </div>
+      </div>
+    
+
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            
+                <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://fffzlfk.gitlab.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/fffzlfk">fffzlfk</a></span>
+          </div>
+    </div>
+</footer>
+<script src="https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js"></script>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.074523d4a7ea4c66d0617d43c2d0ea3783a6599876123627c61b28fa46b5c6005b6526f9cdfcd9a3bde4791145652e1b2dfd9ec30abb69fd067621dd3a852d25.js" integrity="sha512-B0Uj1KfqTGbQYX1DwtDqN4OmWZh2EjYnxhso&#43;ka1xgBbZSb5zfzZo73keRFFZS4bLf2ewwq7af0GdiHdOoUtJQ=="></script>
+
+
+
+    </body>
+</html>

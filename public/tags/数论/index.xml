@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数论 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E6%95%B0%E8%AE%BA/</link>
+    <description>Recent content in 数论 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 17 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E6%95%B0%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数论练习</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/17/%CF%B0/</link>
+      <pubDate>Wed, 17 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/17/%CF%B0/</guid>
+      <description>以下题目来自洛谷 P3390 【模板】矩阵快速幂 AC代码 P3383 【模板】线性筛素数    10 100 1000 10000 100000 1000000 10000000 100000000     4 29 197 1426 11018 89516 754095 6515550    AC代码 CF822A I&amp;rsquo;m bored with life AC代码 #include &amp;lt;bits/stdc++.h&amp;gt;using namespace std; // using ll = long long; // 不打表也能过 int get_mul[] = {1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800, 479001600}; int main() { int a, b; scanf(&amp;#34;%d%d&amp;#34;, &amp;amp;a, &amp;amp;b); printf(&amp;#34;%d\n&amp;#34;, get_mul[min(a, b) - 1]); // for (int i = 1; i &amp;lt; 13; i++) printf(&amp;#34;%d, &amp;#34;, get(i));  // system(&amp;#34;pause&amp;#34;);  return 0; } 素数个数（线性筛模版） AC代码 #include &amp;lt;bits/stdc++.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>图论 on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/%E5%9B%BE%E8%AE%BA/</link>
+    <description>Recent content in 图论 on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/%E5%9B%BE%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>图论练习</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/21/%CD%BC%CF%B0/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/21/%CD%BC%CF%B0/</guid>
+      <description>UVA10129 单词 Play on Words（欧拉路径） AC代码 P3367 【模板】并查集 AC代码 P1551 亲戚-【模板】并查集 AC代码 P1111 修复公路 AC代码 P1195 口袋的天空 AC代码 P1196 [NOI2002]银河英雄传说-【模板】带权并查集 AC代码 P1536 村村通 AC代码 P3916 图的遍历 AC代码 P4779 【模板】单源最短路径（标准版） AC代码 POJ2186 Popular Cows AC代码 P3366 【模板】最小生成树 AC代码 POJ2421 Constructing Roads AC代码   </description>
+    </item>
+    
+  </channel>
+</rss>

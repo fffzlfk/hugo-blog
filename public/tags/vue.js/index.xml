@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vue.js on fffzlfk&#39;s Blog</title>
+    <link>https://fffzlfk.gitlab.io/tags/vue.js/</link>
+    <description>Recent content in Vue.js on fffzlfk&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Thu, 11 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://fffzlfk.gitlab.io/tags/vue.js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个Vue实现的简易计算器</title>
+      <link>https://fffzlfk.gitlab.io/2020/06/11/%D2%BBvue%CA%B5%D6%B5%C4%BC/</link>
+      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://fffzlfk.gitlab.io/2020/06/11/%D2%BBvue%CA%B5%D6%B5%C4%BC/</guid>
+      <description>点击此链接体验此计算器HTML部分 &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;calculator&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;result&amp;#34; style=&amp;#34;grid-area: result&amp;#34;&amp;gt; {{ equation }} &amp;lt;/div&amp;gt; &amp;lt;button style=&amp;#34;grid-area: ac&amp;#34; @click=&amp;#34;clear&amp;#34;&amp;gt;AC&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: plus-minus&amp;#34; @click=&amp;#34;calculateToggle&amp;#34;&amp;gt;±&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: percent&amp;#34; @click=&amp;#34;calculatePercentage&amp;#34;&amp;gt;%&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: add&amp;#34; @click=&amp;#34;append(&amp;#39;+&amp;#39;)&amp;#34;&amp;gt;+&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: subtract&amp;#34; @click=&amp;#34;append(&amp;#39;-&amp;#39;)&amp;#34;&amp;gt; - &amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: multiply&amp;#34; @click=&amp;#34;append(&amp;#39;×&amp;#39;)&amp;#34;&amp;gt;×&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: divide&amp;#34; @click=&amp;#34;append(&amp;#39;÷&amp;#39;)&amp;#34;&amp;gt;÷&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: equal&amp;#34; @click=&amp;#34;calculate&amp;#34;&amp;gt;=&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-1&amp;#34; @click=&amp;#34;append(&amp;#39;1&amp;#39;)&amp;#34;&amp;gt;1&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-2&amp;#34; @click=&amp;#34;append(&amp;#39;2&amp;#39;)&amp;#34;&amp;gt;2&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-3&amp;#34; @click=&amp;#34;append(&amp;#39;3&amp;#39;)&amp;#34;&amp;gt;3&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-4&amp;#34; @click=&amp;#34;append(&amp;#39;4&amp;#39;)&amp;#34;&amp;gt;4&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-5&amp;#34; @click=&amp;#34;append(&amp;#39;5&amp;#39;)&amp;#34;&amp;gt;5&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-6&amp;#34; @click=&amp;#34;append(&amp;#39;6&amp;#39;)&amp;#34;&amp;gt;6&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-7&amp;#34; @click=&amp;#34;append(&amp;#39;7&amp;#39;)&amp;#34;&amp;gt;7&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-8&amp;#34; @click=&amp;#34;append(&amp;#39;8&amp;#39;)&amp;#34;&amp;gt;8&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-9&amp;#34; @click=&amp;#34;append(&amp;#39;9&amp;#39;)&amp;#34;&amp;gt;9&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: number-0&amp;#34; @click=&amp;#34;append(&amp;#39;0&amp;#39;)&amp;#34;&amp;gt;0&amp;lt;/button&amp;gt; &amp;lt;button style=&amp;#34;grid-area: dot&amp;#34; @click=&amp;#34;append(&amp;#39;.</description>
+    </item>
+    
+  </channel>
+</rss>
