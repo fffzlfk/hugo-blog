@@ -216,3 +216,7 @@ print(fib(333))
 ```
 
 这样我们就非常优雅的实现了fib函数。
+
+
+>参考视频
+>{{<youtube 5VCywjS8YEA>}}
