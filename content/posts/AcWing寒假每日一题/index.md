@@ -1975,3 +1975,39 @@ int main() {
     return 0;
 }
 ```
+
+### 耍杂技的牛-贪心
+
+[题目链接](https://www.acwing.com/problem/content/127/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <climits>
+using namespace std;
+const int N = 50005;
+int n;
+pair<int, int> a[N];
+
+int main() {
+    cin >> n;
+    int w, s;
+    for (int i = 0; i < n; i++) {
+        cin >> w >> s;
+        a[i] = {w+s, w};
+    }
+    
+    sort(a, a+n);
+    int ans = INT_MIN, sum_w = 0;
+    for (int i = 0; i < n; i++) {
+        w = a[i].second, s = a[i].first - w;
+        ans = max(ans, sum_w - s);
+        sum_w += w;
+    }
+    
+    cout << ans;
+    return 0;
+}
+```
