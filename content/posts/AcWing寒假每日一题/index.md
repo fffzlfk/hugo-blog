@@ -1949,3 +1949,29 @@ int main() {
     return 0;
 }
 ```
+
+### a^b-位运算
+
+[题目链接](https://www.acwing.com/problem/content/91/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ll = long long;
+
+int main() {
+    ll a, b, p;
+    cin >> a >> b >> p;
+    ll res = 1;
+    while (b) {
+        if (b & 1) res = res * a % p;
+        a = a * a % p;
+        b >>= 1;
+    }
+    cout << res % p << endl;
+    return 0;
+}
+```
