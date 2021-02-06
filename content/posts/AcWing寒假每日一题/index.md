@@ -2011,3 +2011,86 @@ int main() {
     return 0;
 }
 ```
+
+### 数列-二进制
+
+[题目链接](https://www.acwing.com/problem/content/430/)
+
+#### 思路
+
+使用n的二进制表示
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int pow(int a, int b) {
+    int res = 1;
+    while (b) {
+        if (b & 1) res *= a;
+        a *= a;
+        b >>= 1;
+    }
+    return res;
+}
+
+int main() {
+    int k, n;
+    cin >> k >> n;
+    int ans = 0;
+    for (int i = 0; i < 10; i++) {
+        if (n >> i & 1) ans += pow(k, i);
+    }
+    cout << ans << endl;
+    return 0;
+}
+```
+
+### 借教室-二分&差分
+
+[题目链接](https://www.acwing.com/problem/content/505/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ll = long long;
+const int N = 1e6 + 5;
+
+int r[N], d[N], s[N], t[N];
+int n, m;
+ll b[N];
+
+bool check(int mid) {
+    for (int i = 1; i <= n; i++) b[i] = r[i] - r[i-1];
+    for (int i = 1; i <= mid; i++) {
+        b[s[i]] -= d[i];
+        b[t[i]+1] += d[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        b[i] += b[i-1];
+        if (b[i] < 0) return false;
+    }
+    return true;
+}
+
+int main() {
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) cin >> r[i];
+    for (int i = 1; i <= m; i++) cin >> d[i] >> s[i] >> t[i];
+    int l = 0, r = m;
+    while (l < r) {
+        int mid = l + r + 1 >> 1;
+        if (check(mid)) l = mid;
+        else r = mid - 1;
+    }
+    if (l == m) puts("0");
+    else printf("-1\n%d", l + 1);
+    return 0;
+}
+```
