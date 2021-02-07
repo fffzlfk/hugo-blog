@@ -55,11 +55,15 @@ h2 {
 }
 
 h3 {
-  font-size: 1.375rem;
+  font-size: 1.475rem;
 }
 
 h4 {
-  font-size: 1.125rem;
+  font-size: 1.325rem;
+}
+
+h5 {
+  font-size: 1.175rem;
 }
 
 @media #{$media-size-phone} {
@@ -77,6 +81,10 @@ h4 {
 
   h4 {
     font-size: 1.125rem;
+  }
+
+  h4 {
+    font-size: 1.025rem;
   }
 }
 
