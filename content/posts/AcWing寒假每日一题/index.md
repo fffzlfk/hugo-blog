@@ -2163,3 +2163,88 @@ int main() {
     return 0;
 }
 ```
+
+## Week 6
+
+### 乌龟棋-线性DP
+
+[题目链接](https://www.acwing.com/problem/content/314/)
+
+#### 思路
+
+- 状态表示：`f[b1,b2,b3,b4]` 表示所有第 i 种卡片使用了 bi 张的走法的最大分值。
+
+- 状态计算：将 `f[b1,b2,b3,b4]` 表示的所有走法按最后一步选择哪张卡片分成四类：第 i 类为最后一步选择第 i 种卡片。比如 i=2，则这一类的最大分值是 `f[b1,b2−1,b3,b4]+score[b1+2b2+3b3+4b4]`。
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 45;
+int f[N][N][N][N], b[4], w[355];
+int n, m;
+int main() {
+    cin >> n>> m;
+    for (int i = 0; i < n; i++) cin >> w[i];
+    while (m--) {
+        int t;
+        cin >> t;
+        b[t-1]++;
+    }
+    
+    for (int A = 0; A <= b[0]; A++)
+        for (int B = 0; B <= b[1]; B++)
+            for (int C = 0; C <= b[2]; C++)
+                for (int D = 0; D <= b[3]; D++) {
+                    int score = w[A * 1 + B * 2 + C * 3 + D * 4];
+                    int &v = f[A][B][C][D];
+                    v = score;
+                    if (A) v = max(v, f[A-1][B][C][D] + score);
+                    if (B) v = max(v, f[A][B-1][C][D] + score);
+                    if (C) v = max(v, f[A][B][C-1][D] + score);
+                    if (D) v = max(v, f[A][B][C][D-1] + score);
+                }
+                
+    cout << f[b[0]][b[1]][b[2]][b[3]];
+    return 0;
+}
+```
+
+### 比例简化-枚举
+
+[题目链接](https://www.acwing.com/problem/content/460/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+int main() {
+    int A, B, L;
+    cin >> A >> B >> L;
+    int a, b;
+    double t = A * 1.0 / B;
+    double delta = 1e9;
+    for (int i = 1; i <= L; i++) {
+        for (int j = 1; j <= L; j++) {
+            if (gcd(i, j) == 1) {
+                double x = i * 1.0 / j;
+                if (x >= t && x - t < delta) {
+                    delta = x - t;
+                    a = i, b = j;
+                }
+            }
+        }
+    }
+    cout << a << " " << b;
+    return 0;
+}
+```
