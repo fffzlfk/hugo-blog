@@ -2248,3 +2248,47 @@ int main() {
     return 0;
 }
 ```
+
+### 计算系数
+
+[题目链接](https://www.acwing.com/problem/content/213/)
+
+#### 思路
+
+- 二项式定理：$ ans = C_k^n x^n y^m $
+- Pascal公式：$ C_n^k = C_{n-1}^{k} + C_{n-1}^{k-1} $
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int mod = 10007;
+const int N = 1005;
+int C[N][N];
+
+int pow(int a, int b) {
+    int res = 1;
+    a %= mod;
+    while (b) {
+        if (b & 1) res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res % mod;
+}
+
+int main() {
+    int a, b, k, n, m;
+    cin >> a >> b >> k >> n >> m;
+    for (int i = 0; i <= k; i++)
+        for (int j = 0; j <= i; j++) {
+            if (!j) C[i][j] = 1;
+            else C[i][j] = (C[i-1][j] + C[i-1][j-1]) % mod;
+        }
+        
+    cout << C[k][n] * pow(a, n) % mod * pow(b, m) % mod;
+    return 0;
+}
+```
