@@ -2292,3 +2292,35 @@ int main() {
     return 0;
 }
 ```
+
+### 合并果子
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+int n;
+priority_queue<int, vector<int>, greater<int>> Q;
+int main() {
+    cin >> n;
+    int x;
+    while (n--) {
+        cin >> x;
+        Q.push(move(x));
+    }
+    int ans = 0;
+    while (Q.size() > 1) {
+        auto a = Q.top();
+        Q.pop();
+        auto b = Q.top();
+        Q.pop();
+        Q.push(a + b);
+        ans += a + b;
+    }
+    
+    cout << ans;
+    return 0;
+}
+```
