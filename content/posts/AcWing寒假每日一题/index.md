@@ -2353,3 +2353,49 @@ int main() {
     return 0;
 }
 ```
+
+### LeetCode-1755 最接近目标值的子序列和
+
+[题目链接](https://leetcode-cn.com/problems/closest-subsequence-sum/)
+
+#### 思路
+
+- generate sums for all subset: DP
+    - $ sum_i = sum_{i-1} \cup (sum_{i-1}+ nums[i]) $
+    {{<image src="https://i.postimg.cc/rpW4sXrT/Snipaste-2021-02-14-15-24-51.jpg" position="center" style="zoom: 60% ;">}}
+- 将sum of subset分成两部分，遍历前一部分二分后一部分，并且排序
+- 去重优化
+
+#### 代码
+
+[参考链接](https://zxi.mytechroad.com/blog/algorithms/binary-search/leetcode-1755-closest-subsequence-sum/)
+
+```cpp
+class Solution {
+public:
+    int minAbsDifference(vector<int>& nums, int goal) {
+        const int n = nums.size();
+        int ans = abs(goal);
+        vector<int> t1{0}, t2{0};
+        t1.reserve(1 << (n / 2 + 1)), t2.reserve(1 << (n / 2 + 1));
+        for (int i = 0; i < n / 2; i++)
+            for (int j = t1.size() - 1; j >= 0; j--)
+                t1.push_back(nums[i] + t1[j]);
+        for (int i = n / 2; i < n; i++)
+            for (int j = t2.size() - 1; j >= 0; j--)
+                t2.push_back(nums[i] + t2[j]);
+        auto it = unique(begin(t1), end(t1));
+        t1.resize(distance(begin(t1), it));
+        sort(begin(t1), end(t1), greater<int>());
+        it = unique(begin(t2), end(t2));
+        t2.resize(distance(begin(t2), it));
+        sort(begin(t2), end(t2));
+        for (const auto &e : t1) {
+            auto it = lower_bound(begin(t2), end(t2), goal - e);
+            if (it != t2.end()) ans = min(ans, abs(goal - e - *it));
+            if (it != t2.begin()) ans = min(ans, abs(goal - e - *(--it)));
+        }
+        return ans;
+    }
+};
+```
