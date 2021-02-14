@@ -2327,7 +2327,7 @@ int main() {
 
 ### 积木大赛-贪心&差分
 
-![题目链接](https://www.acwing.com/problem/content/509/)
+[题目链接](https://www.acwing.com/problem/content/509/)
 
 #### 思路
 
