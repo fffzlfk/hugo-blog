@@ -2324,3 +2324,32 @@ int main() {
     return 0;
 }
 ```
+
+### 积木大赛-贪心&差分
+
+![题目链接](https://www.acwing.com/problem/content/509/)
+
+#### 思路
+
+从后往前操作，如果当前的 bi>0bi>0，则将其减1，并将其后的某个负数加1。
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 100005;
+int n, h[N];
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> h[i];
+    
+    int res = 0;
+    for (int i = n; i >= 1; i--) res += max(0, h[i]-h[i-1]);
+    
+    cout << res << endl;
+    return 0;
+}
+```
