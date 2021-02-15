@@ -2439,3 +2439,43 @@ int main() {
     return 0;
 }
 ```
+
+### Z字形扫描
+
+[题目链接](https://www.acwing.com/problem/content/3211/)
+
+#### 思路
+
+- 下标之和为偶数，从下到上遍历
+- 下标之和为奇数，从上到下遍历
+
+#### 代码
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 505;
+int g[N][N], n;
+
+int main() {
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+		for (int j = 1; j <= n; j++) scanf("%d", &g[i][j]);
+
+	for (int i = 2; i <= 2 * n; i ++) {
+		if (i % 2 == 0) {
+			for (int j = i; j >= 1; j--) {
+				if (j >= 1 && j <= n && i - j >= 1 && i - j <= n)
+					printf("%d ", g[j][i-j]);
+			}
+		} else {
+			for (int j = 1; j <= n; j++) {
+				if (j >= 1 && j <= n && i - j >= 1 && i - j <= n)
+					printf("%d ", g[j][i-j]);
+			}
+		}
+	}
+	return 0;
+}
+```
