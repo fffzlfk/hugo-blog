@@ -2399,3 +2399,43 @@ public:
     }
 };
 ```
+
+## Week 7
+
+### 机器人跳跃问题-二分
+
+#### 思路
+
+注意mid大于等于1e5时，一定可以完成游戏
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1e5 + 5;
+int h[N], n;
+
+bool check(long mid) {
+    for (int i = 1; i <= n; i++) {
+        mid += mid - h[i];
+        if (mid > 1e5) return true;
+        if (mid < 0) return false;
+    }
+    return true;
+}
+
+int main() {
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> h[i];
+    int l = 0, r = 1e5;
+    while (l < r) {
+        const int mid = l + r >> 1;
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    cout << l;
+    return 0;
+}
+```
