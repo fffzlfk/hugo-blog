@@ -2479,3 +2479,134 @@ int main() {
 	return 0;
 }
 ```
+
+### 动态求连续区间和-线段树
+
+[题目链接](https://www.acwing.com/problem/content/1266/)
+
+#### 线段树-代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1e5 + 5;
+struct node {
+    int l, r, sum;
+} tree[N << 2];
+
+int n, m, a[N];
+
+void build(int u, int l, int r) {
+    if (l == r) tree[u] = {l, r, a[l]};
+    else {
+        const int mid = l + r >> 1;
+        build(u<<1, l, mid), build(u<<1|1, mid+1, r);
+        tree[u] = {l, r, tree[u<<1].sum + tree[u<<1|1].sum};
+    }
+}
+
+void update(int u, int i, int v) {
+    if (tree[u].l == i && tree[u].r == i) tree[u].sum += v;
+    else {
+        const int mid = tree[u].l + tree[u].r >> 1;
+        if (i <= mid) update(u<<1, i, v);
+        else update(u<<1|1, i, v);
+        tree[u].sum = tree[u<<1].sum + tree[u<<1|1].sum;
+    }
+}
+
+int query(int u, int l, int r) {
+    if (tree[u].l == l && tree[u].r == r) return tree[u].sum;
+    const int mid = tree[u].l + tree[u].r >> 1;
+    if (r <= mid) return query(u<<1, l, r);
+    else if (l > mid) return query(u<<1|1, l, r);
+    else return query(u<<1, l, mid) + query(u<<1|1, mid+1, r);
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+    build(1, 1, n);
+    int k, a, b;
+    while (m--) {
+        scanf("%d%d%d", &k, &a, &b);
+        if(!k) printf("%d\n", query(1, a, b));
+        else update(1, a, b);
+    }
+    return 0;
+}
+```
+
+#### 树状数组-代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+const int N = 1e5 + 5;
+int C[N], n, m;
+
+void add(int x, int k) {
+    for (int i = x; i <= n; i += i & -i) C[i] += k;
+}
+
+int get_sum(int x) {
+    int s = 0;
+    for (int i = x; i >= 1; i -= i & -i) s += C[i];
+    return s;
+}
+
+int main() {
+    scanf("%d%d", &n, &m);
+    int t;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &t);
+        add(i, t);
+    }
+    int k, a, b;
+    while (m--) {
+        scanf("%d%d%d", &k, &a, &b);
+        if (!k) printf("%d\n", get_sum(b) - get_sum(a-1));
+        else add(a, b);
+    }
+    return 0;
+}
+```
+
+### 奇怪的数-组合计数
+
+[题目链接](https://www.acwing.com/problem/content/3198/)
+
+#### 思路
+
+- 划分为两类
+    - 0、1：$k$位,  $ 2 \le k \le n - 2 $
+    - 2、3：$n-k$位
+- 放0、1：第一位不能放, 剩下$n-1$位可以放$k$个0、1-> $ C_{n-1}^{k} $
+- 0的个数：$1 \le cnt_0 \le k-1$, 共$k-1$种可能，2的个数：$1 \le cnt_2 \le n-k-1$，共$n-k-1$种可能
+- $ ans = \sum_{k=2}^{n-2}{C_{n-1}^{k}(k-1)(n-k-1)} $
+
+#### 代码
+
+```cpp
+#include <iostream>
+using namespace std;
+const int N = 1005;
+int n, C[N][N];
+const int mod = 1e9 + 7;
+
+int main() {
+    cin >> n;
+    for (int i = 0; i <= n; i++)
+        for (int j = 0; j <= i; j++)
+            if (!j) C[i][j] = 1;
+            else C[i][j] = (C[i-1][j] + C[i-1][j-1]) % mod;
+    int ans = 0;
+    for (int k = 2; k <= n - 2; k++) {
+        ans = (ans + C[n-1][k] * 1ll * (k - 1) % mod * (n - k - 1)) % mod;
+    }
+    cout << ans;
+    return 0;
+}
+```
