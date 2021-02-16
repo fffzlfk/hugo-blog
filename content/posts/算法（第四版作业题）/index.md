@@ -6,7 +6,7 @@ hideLastModified: true
 toc: true
 keepImageRatio: true
 tags:
-  - C++
+  - Java
 summary: "The solution of algs4's exercise"
 showInMenu: false
 ---
