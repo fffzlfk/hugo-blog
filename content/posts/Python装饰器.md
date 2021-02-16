@@ -6,6 +6,7 @@ toc: true
 images:
 tags:
   - Python
+summary: "Python decorator"
 ---
 
 ## 引入

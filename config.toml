@@ -1,11 +1,29 @@
 baseurl      = "https://fffzlfk.netlify.com/"
 title        = "fffzlfk's Blog"
 languageCode = "en-us"
-theme        = ["hello-friend-ng", "hugo-notice"]
+theme        = ["fuji", "hugo-notice"]
 paginate     = 10
 
 enableEmoji = true
+summaryLength = 10 # Custom summary length, add <!--more--> in post file to custom split point
+
+[outputFormats]
+  [outputFormats.SearchIndex]
+    isPlainText = true
+    notAlternative = true
+    mediaType = "application/json"
+    path = "/search/"
+
+[outputs]
+  home = ["HTML", "RSS", "SearchIndex"]
+
+[permalinks]
+  post = "/:section/:filename/" # Custom post links, e.g. "/:year/:month/:title/"
+
 [params]
+  showToc = true # 对所有文章开关目录显示
+  showWordCounter = true
+  showReadTime = true
   prismLineNumbers = true
   dateform        = "Jan 2, 2006"
   dateformShort   = "Jan 2"
@@ -26,6 +44,11 @@ enableEmoji = true
   description = "My new homepage or blog"
   keywords = "homepage, blog"
   images = [""]
+  lazyPlaceholder = "/assets/lazyload/dsrca_loading_480x270.svg"
+  # 32:9
+  lazyPlaceholderRow = "/assets/lazyload/dsrca_loading_960x270.svg"
+  # 8:9
+  lazyPlaceholderCol = "/assets/lazyload/dsrca_loading_480x540.svg"
 
   # Default theme "light" or "dark"
   justifyContent = false  # Set "text-align: justify" to .post-content.
@@ -104,12 +127,50 @@ enableEmoji = true
     # alt = "Your example logo alt text"
 
   # And you can even create generic menu
-  [[menu.main]]
-    identifier = "blog"
-    name       = "Blog"
-    url        = "/posts"
 
-  [[menu.main]]
-  identifier = "about"
-  name       = "About"
-  url        = "/About"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  # Enable user to embed HTML snippets in Markdown content
+  [markup.highlight]
+    codeFences = false  # Disable Hugo's code highlighter
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[menu]
+  [[menu.nav]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.nav]]
+    name = "Archives"
+    url = "/archives/"
+    weight = 2
+  [[menu.nav]]
+    name = "About"
+    url = "/about/"
+    weight = 3
+  [[menu.nav]]
+    name = "Search"
+    url = "/search/"
+    weight = 4
+  [[menu.nav]]
+    name = "RSS"
+    url = "/index.xml"
+    weight = 5
+
+  [[menu.link]]
+    name = "GitHub"
+    url = "https://github.com/fffzlfk"
+    weight = 1
+  [[menu.link]]
+    name = "Twitter"
+    url = "https://twitter.com/fffzlfk"
+    weight = 2
+  [[menu.link]]
+    name = "bilibili"
+    url = "https://space.bilibili.com/82433974"
+    weight = 3

@@ -3,7 +3,7 @@ title: "SQL"
 date: 2020-10-24T20:22:42+08:00
 draft: false
 toc: true
-images: 
+summary: "SQL 语句"
 tags:
   - SQL
 ---
