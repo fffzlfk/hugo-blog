@@ -387,7 +387,7 @@ $$ D(N) = 2D(\frac N 2) + N, for N > 1, with\ D(1) = 0. $$
 2. proof by expansion
 
     $$
-    \begin{align}
+    \begin{aligned}
     D(N)&=2D(N/2)+N \cr
     {D(N)} /{N} &= 2D(N / 2)/N + 1\cr
     &= D(N/2)/(N/2)+1 \cr
@@ -396,7 +396,7 @@ $$ D(N) = 2D(\frac N 2) + N, for N > 1, with\ D(1) = 0. $$
     ...\cr
     &= D(N/N)/(N/N)+1+1+...+1\cr
     &= lgN
-    \end{align}
+    \end{aligned}
     $$
 
 3. proof by induction
@@ -406,12 +406,12 @@ $$ D(N) = 2D(\frac N 2) + N, for N > 1, with\ D(1) = 0. $$
     - Goal: showthat $ D(2N) = (2N)lg(2N).$
 
     $$
-    \begin{align}
+    \begin{aligned}
     D(2N) &= 2D(N)+2N \cr
         &= 2NlgN+2N \cr
         &= 2N(lgN+1) \cr
         &= 2Nlg(2N)
-    \end{align}
+    \end{aligned}
     $$
 
 ### practical improvements
@@ -514,10 +514,10 @@ public static void main(String[] args) {
     - $N! $different orderings $\Rightarrow$ at least $ N!$ leaves.
     
     $$ 
-    \begin{align}
+    \begin{aligned}
     2^h \ge ＃leaves \ge N! \cr
     \Rightarrow h \ge lg(N!)\sim NlgN 
-    \end{align}$$
+    \end{aligned}$$
 
 ### Stability
 
@@ -691,20 +691,20 @@ $$ NC_N-(N-1)C_{N-1}=2N+2C_{N-1} $$
 $$ \frac{C_N}{N+1} = \frac{C_{N-1}}{N} + \frac{2}{N+1} $$
 - Repeatedly apply above equation:
 $$
-\begin{align}
+\begin{aligned}
 \frac{C_N}{N+1} &= \frac{C_{N-1}}{N}+\frac{2}{N+1} \cr
 &= \frac{C_{N-2}}{N-1}+\frac{2}{N}+\frac{2}{N+1} \cr
 &= \frac{C_{N-3}}{N-2}+\frac{2}{N-1}+\frac{2}{N}+\frac{2}{N+1} \cr
 &= \frac 2 3 + \frac 2 4 + \frac 2 5 +...+\frac 2 {N+1}
-\end{align}
+\end{aligned}
 $$
 
 - Approximate sum by an integral:
 $$
-\begin{align}
+\begin{aligned}
 C_N &= 2(N+1)(\frac 1 3 + \frac 1 4 + \frac 1 5 +...+ \frac{1}{N+1}) \cr
 & \sim 2(N+1) \int_{3}^{N+1}{\frac{1}{x}dx}
-\end{align}
+\end{aligned}
 $$
 
 - Finally, the desired result:
