@@ -1,7 +1,7 @@
 baseurl      = "https://fffzlfk.netlify.com/"
 title        = "fffzlfk's Blog"
 languageCode = "en-us"
-theme        = ["fuji", "hugo-notice"]
+theme        = ["hugo-theme-fuji", "hugo-notice"]
 paginate     = 10
 
 enableEmoji = true
