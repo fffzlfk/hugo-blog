@@ -1,8 +1,11 @@
 baseurl      = "https://fffzlfk.netlify.com/"
 title        = "fffzlfk's Blog"
-languageCode = "en-us"
+languageCode = "zh-hans"
 theme        = ["hugo-theme-fuji", "hugo-notice"]
 paginate     = 10
+enableRobotsTXT = true
+disableKinds = ["taxonomy"]
+ignoreErrors = ["error-disable-taxonomy"]
 
 enableEmoji = true
 summaryLength = 10 # Custom summary length, add <!--more--> in post file to custom split point
@@ -21,28 +24,18 @@ summaryLength = 10 # Custom summary length, add <!--more--> in post file to cust
   post = "/:section/:filename/" # Custom post links, e.g. "/:year/:month/:title/"
 
 [params]
+  author = "fffzlfk"
+  subtitle     = "Thinking will not overcome fear but action will."
   showToc = true # 对所有文章开关目录显示
   showWordCounter = true
   showReadTime = true
   prismLineNumbers = true
-  dateform        = "Jan 2, 2006"
-  dateformShort   = "Jan 2"
-  dateformNum     = "2006-01-02"
-  dateformNumTime = "2006-01-02 15:04"
-  
   math        = true
-  # Subtitle for home
-  homeSubtitle = "Thinking will not overcome fear but action will."
 
-  # Set disableReadOtherPosts to true in order to hide the links to other posts.
-  disableReadOtherPosts = false
 
   # Enable sharing buttons, if you linke
   enableSharingButtons = true
 
-  # Metadata mostly used in document's head
-  description = "My new homepage or blog"
-  keywords = "homepage, blog"
   images = [""]
   lazyPlaceholder = "/assets/lazyload/dsrca_loading_480x270.svg"
   # 32:9
@@ -56,75 +49,20 @@ summaryLength = 10 # Custom summary length, add <!--more--> in post file to cust
   # Default theme "light" or "dark"
   #
   defaultTheme = "light"
-  themeColor = "#252627"
-
-  # Custom footer 
-  # If you want, you can easily override the default footer with your own content. 
-  #
-  # footerLeft = "Powered by <a href=\"http://gohugo.io\">Hugo</a>"
-  # footerRight = "Made with &#10084; by <a href=\"https://github.com/rhazdon\">Djordje Atlialp</a>"
-
-  # Colors for favicons
-  #
-  [params.favicon.color]
-    mask = "#252627"
-    msapplication = "#252627"
-    theme = "#252627"
-
-  [params.logo]
-    logoText     = "$ cd /home/"
-    logoHomeLink = "/"
-    # Set true to remove the logo cursor entirely.
-    logoCursorDisabled = true
-    # Set to a valid CSS color to change the cursor in the logo.
-    logoCursorColor    = "#67a2c9"
-    # Set to a valid CSS time value to change the animation duration, "0s" to disable.
-    logoCursorAnimate  = "2s"
   
-  [[params.social]]
-    name = "twitter"
-    url  = "https://twitter.com/fffzlfk"
+  # Disqus, see: https://disqus.com/admin/install/platforms/universalcode/
+  disqusShortname = "https-fffzlfk-netlify-app-1"
+  # Also use DisqusJS for accessing from Mainland China, see: https://github.com/SukkaW/DisqusJS
+  # If you want to set multiple api key, see theme's README for more details
+  # disqusJSApi = "https://disqus.skk.moe/disqus/"
+  # disqusJSApikey = "rXoweqmxKe3VcLmzxlkslKy1V0t9PK4lHGHsTt5yhn0qSFjJxUHJQxPPhrhxMamk"
 
-  [[params.social]]
-    name = "instagram"
-    url  = "https://www.instagram.com/fffzlfk"
 
-  [[params.social]]
-    name = "email"
-    url  = "1319933925qq@gmail.com"
-
-  [[params.social]]
-    name = "github"
-    url  = "https://github.com/fffzlfk"
-
-  [[params.social]]
-    name = "youtube"
-    url  = "https://www.youtube.com/channel/UCXSyagqJBsy3s7P3gEknPsA"
-  
-  [[params.social]]
-    name = "gitlab"
-    url  = "https://gitlab.com/fffzlfk"
-    
 [taxonomies]
     category = "blog"
     tag      = "tags"
     series   = "series"
 
-[languages]
-  [languages.en]
-    title = "fffzlfk's Blog"
-    subtitle = "Thinking will not overcome fear but action will."
-    keywords = ""
-    copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
-    readOtherPosts = "Read other posts"
-
-    [languages.en.params.logo]
-      logoText = "$ cd fffzlfk/home/"
-      logoHomeLink = "/"
-    # or
-    #
-    # path = "/img/your-example-logo.svg"
-    # alt = "Your example logo alt text"
 
   # And you can even create generic menu
 

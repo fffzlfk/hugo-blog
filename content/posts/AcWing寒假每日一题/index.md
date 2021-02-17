@@ -2611,3 +2611,72 @@ int main() {
     return 0;
 }
 ```
+
+### 最优配餐-多源BFS
+
+[题目链接](https://www.acwing.com/problem/content/description/3208/)
+
+#### 思路
+
+将起点都入队列进行BFS
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <queue>
+using namespace std;
+const int N = 1005;
+
+int n, m, k, d, dist[N][N], w[N][N];
+queue<pair<int, int>> Q;
+
+void bfs() {
+    const int dx[]{-1, 0, 1, 0}, dy[]{0, 1, 0, -1};
+    while (!Q.empty()) {
+        auto [x, y] = Q.front();
+        Q.pop();
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i], ny = y + dy[i];
+            if (nx <= 0 || nx > n || ny <= 0 || ny > n || dist[nx][ny] != -1) continue;
+            dist[nx][ny] = dist[x][y] + 1;
+            Q.push({nx, ny});
+        }
+    }
+}
+
+int main() {
+    scanf("%d%d%d%d", &n, &m, &k, &d);
+    memset(dist, -1, sizeof dist);
+    int x, y;
+    while (m--) {
+        scanf("%d%d", &x, &y);
+        Q.push({x, y});
+        dist[x][y] = 0;
+    }
+    int c;
+    for (int i = 0; i < k; i++) {
+        scanf("%d%d%d", &x, &y, &c);
+        w[x][y] += c;
+    }
+    
+    for (int i = 0; i < d; i++) {
+        scanf("%d%d", &x, &y);
+        dist[x][y] = -2;
+    }
+    
+    bfs();
+
+    long ans = 0;
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++) {
+            if (w[i][j])
+                ans += w[i][j] * dist[i][j] * 1ll;
+        }
+    
+    printf("%ld\n", ans);
+    return 0;
+}
+```
