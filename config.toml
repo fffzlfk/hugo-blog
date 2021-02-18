@@ -49,9 +49,11 @@ summaryLength = 10 # Custom summary length, add <!--more--> in post file to cust
   # Default theme "light" or "dark"
   #
   defaultTheme = "light"
-  
+  # utterances, see: https://utteranc.es/
+  utterancesRepo = "fffzlfk/utterances"
+  utterancesIssueTerm = "pathname"
   # Disqus, see: https://disqus.com/admin/install/platforms/universalcode/
-  disqusShortname = "https-fffzlfk-netlify-app-1"
+  # disqusShortname = "https-fffzlfk-netlify-app-1"
   # Also use DisqusJS for accessing from Mainland China, see: https://github.com/SukkaW/DisqusJS
   # If you want to set multiple api key, see theme's README for more details
   # disqusJSApi = "https://disqus.skk.moe/disqus/"
