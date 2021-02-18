@@ -2714,3 +2714,182 @@ public:
     }
 };
 ```
+
+### 最小生成树
+
+[题目链接](https://loj.ac/p/123)
+
+#### Prim
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <queue>
+using namespace std;
+using P = pair<int, int>;
+const int N = 2e5 + 5;
+
+vector<P> g[N];
+bool vis[N];
+int n, m;
+priority_queue<P> Q;
+int main() {
+    scanf("%d%d", &n, &m);
+    int a, b, c;
+    while (m--) {
+        scanf("%d%d%d", &a, &b, &c);
+        g[a].push_back({b, c});
+        g[b].push_back({a, c});
+    }
+    Q.push({0, 1});
+    long ans = 0;
+    for (int i = 0; i < n; i++) {
+        while (true) {
+            auto [w, v] = Q.top();
+            Q.pop();
+            if (vis[v]) continue;
+            vis[v] = true;
+            ans += -w;
+            for (auto [_v, _w] : g[v]) {
+                if (vis[_v]) continue;
+                Q.push({-_w, _v});
+            }
+            break;
+        }
+    }
+    printf("%ld\n", ans);
+    return 0;
+}
+```
+
+#### Kruskal
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#include <queue>
+using namespace std;
+class UF {
+	vector<int> id, sz;
+	public:
+	UF(int N) {
+		id.resize(N);
+		sz.resize(N);
+		for (int i = 0; i < N; i++) {
+			id[i] = i;
+			sz[i] = 1;
+		}
+	}
+
+	int find(int p) {
+		while (p != id[p]) {
+			id[p] = id[id[p]];
+			p = id[p];
+		}
+		return p;
+	}
+
+	bool _union(int p, int q) {
+		int i = find(p), j = find(q);
+		if (i == j) return false;
+		if (sz[i] < sz[j]) {
+			id[i] = j;
+			sz[j] += sz[i];
+		} else {
+			id[j] = i;
+			sz[i] += sz[j];
+		}
+		return true;
+	}
+};
+
+struct node {
+	int w, u, v;
+	friend bool operator<(const node &a, const node& b) {
+		if (a.w == b.w) {
+			return make_pair(a.u, a.v) > make_pair(b.u, b.v);
+		}
+		return a.w > b.w;
+	}
+};
+
+int n, m;
+priority_queue<node> Q;
+int main() {
+	scanf("%d%d", &n, &m);
+	UF uf(n);
+	int a, b, c;
+	while (m--) {
+		scanf("%d%d%d", &a, &b, &c);
+		Q.push({c, a, b});
+	}
+	int cnt = 0;
+	long ans = 0;
+	while (!Q.empty() && cnt < n - 1) {
+		auto [w, u, v] = Q.top();
+		Q.pop();
+		if (uf._union(u-1, v-1)) {
+			ans += w;
+			++cnt;
+		}
+	}
+
+	printf("%ld\n", ans);
+	return 0;
+}
+```
+
+### 网络延时-树形DP
+
+[题目链接](https://www.acwing.com/problem/content/3218/)
+
+#### 思路
+
+树形DP模板
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+const int N = 20005;
+int h[N], e[N], ne[N], idx;
+int n, m, f[N]; // f[u]: 表示u到最远叶节点的距离。显然如果u是节点，则f[u]=0
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+int ans = 0;
+
+void dfs(int u) { // 求以u为根节点到叶节点的最大距离
+    int a = 0, b = 0; // a记录u到最远叶节点的距离，b记录u到次远叶节点的距离
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int v = e[i];
+        dfs(v); //求子节点j到最远叶节点的距离
+        int t = f[v] + 1; //u通过j能到的最远叶节点的距离
+        
+        //更新a, b
+        if (t >= a) b = a, a = t;
+        else if (t > b) b = t;
+    }
+    f[u] = a;
+    // 最后的答案就是u所能到的最远叶节点距离和次远叶节点距离之和
+    ans = max(ans, a + b);
+}
+
+int main() {
+    memset(h, -1, sizeof h);
+    scanf("%d%d", &n, &m);
+    int j;
+    for (int i = 2; i <= n + m; i++) {
+        scanf("%d", &j);
+        add(j, i); // 因为是自根向下DP，所以建一条边即可
+    }
+    dfs(1);
+    cout << ans << endl;
+    return 0;
+}
+```
