@@ -2680,3 +2680,37 @@ int main() {
     return 0;
 }
 ```
+
+### LeetCode-995 K 连续位的最小翻转次数 
+
+[题目链接](https://leetcode-cn.com/problems/minimum-number-of-k-consecutive-bit-flips/)
+
+#### 思路
+
+差分数组`d[i]表示i位置需要翻转的次数 - i-1位置需要翻转的次数`
+cnt表示当前位置需要翻转的次数
+若`A[i]+cnt`是偶数则需要翻转：`cnt++, d[i+k]++`
+若`i+K > n`则不可能
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int minKBitFlips(vector<int>& A, int K) {
+        const int n = A.size();
+        vector<int> d(n + 1, 0);
+        int cnt = 0, ans = 0;
+        for (int i = 0; i < n; i++) {
+            cnt += d[i];
+            if (!((A[i] + cnt) & 1)) {
+                if (i + K > n) return -1;
+                ++cnt;
+                ++ans;
+                d[i+K]--;
+            }
+        }
+        return ans;
+    }
+};
+```
