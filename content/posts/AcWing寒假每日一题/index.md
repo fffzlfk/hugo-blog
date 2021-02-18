@@ -2840,6 +2840,75 @@ int main() {
 }
 ```
 
+### 单源最短路
+
+[题目链接](https://loj.ac/p/119)
+
+#### 代码
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <cstring>
+using namespace std;
+using P = pair<int, int>;
+const int N = 2505, M = 12500;
+
+int h[N], e[M], ne[M], w[M], idx;
+
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+int n, m, dist[N];
+bool st[N];
+priority_queue<P> Q;
+
+void dijkstra(int s, int t) {
+    memset(dist, 0x3f, sizeof dist);
+    Q.push({0, s});
+    dist[s] = 0;
+
+    while (!Q.empty()) {
+        auto [d, u] = Q.top();
+        Q.pop();
+
+        if (st[u])
+            continue;
+
+        st[u] = true;
+
+        for (int i = h[u]; ~i; i = ne[i]) {
+            int v = e[i];
+
+            if (dist[v] > -d + w[i]) {
+                dist[v] = -d + w[i];
+                Q.push({-dist[v], v});
+            }
+        }
+    }
+}
+
+int main() {
+    memset(h, -1, sizeof h);
+    int s, t;
+    scanf("%d%d%d%d", &n, &m, &s, &t);
+    int a, b, c;
+
+    while (m--) {
+        scanf("%d%d%d", &a, &b, &c);
+        add(a, b, c);
+        add(b, a, c);
+    }
+
+    dijkstra(s, t);
+
+    printf("%d\n", dist[t]);
+    return 0;
+}
+```
+
 ### 网络延时-树形DP
 
 [题目链接](https://www.acwing.com/problem/content/3218/)
