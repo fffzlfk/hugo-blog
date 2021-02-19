@@ -2962,3 +2962,42 @@ int main() {
     return 0;
 }
 ```
+
+### 序列化二叉树
+
+[题目链接](https://www.acwing.com/problem/content/description/46/)
+
+#### 代码
+
+```python
+class Solution:
+    def serialize(self, root):
+        ans = ""
+        def dfs_s(root):
+            nonlocal ans
+            if not root:
+                ans += 'None '
+                return
+            else: 
+                ans += str(root.val) + ' '
+            dfs_s(root.left)
+            dfs_s(root.right)
+        dfs_s(root)
+        return ans
+
+    def deserialize(self, data):
+        A = data.split()
+        k = 0
+        def dfs_d():
+            nonlocal A, k
+            if k == len(A): return None
+            if A[k] == 'None': 
+                k += 1
+                return None
+            root = TreeNode(int(A[k]))
+            k += 1
+            root.left = dfs_d()
+            root.right = dfs_d()
+            return root
+        return dfs_d()
+```
