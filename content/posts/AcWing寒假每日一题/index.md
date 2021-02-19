@@ -3048,3 +3048,63 @@ int main() {
     return 0;
 }
 ```
+
+### 通信网络-枚举+dfs
+
+[题目链接](https://www.acwing.com/problem/content/description/3253/)
+
+#### 代码
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int N = 1005, M = 10005;
+
+int h[N], e[M], ne[M], idx;
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+int n, m;
+bool st[N][N];
+
+void dfs(int s, int u) {
+    st[s][u] = true;
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int v = e[i];
+        if (st[s][v]) continue;
+        dfs(s, v);
+    }
+}
+
+int main() {
+    memset(h, -1, sizeof h);
+    scanf("%d%d", &n, &m);
+    int a, b;
+    while (m--) {
+        scanf("%d%d", &a, &b);
+        add(a, b);
+    }
+
+    for (int i = 1; i <= n; i++)
+        dfs(i, i);
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++)
+            if (st[i][j]) st[j][i] = true;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        int j = 1;
+        for (; j <= n; j++)
+            if(!st[i][j]) break;
+        if (j > n) ++ans;
+    }
+
+    cout << ans;
+    return 0;
+}
+```
