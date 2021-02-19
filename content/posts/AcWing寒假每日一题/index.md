@@ -3001,3 +3001,50 @@ class Solution:
             return root
         return dfs_d()
 ```
+
+### 最大亦或和-线性基
+
+[题目链接](https://www.acwing.com/problem/content/submission/3167/)
+
+#### 思路
+
+- 构造线性基的方法如下：对于集合中的每个数`x`转为二进制，从高位向低位扫，对于第`i`位是`1`的，如果`p[i]`不存在，那么`p[i] = x`结束扫描，如果存在，令`x = x ^ p[i]`
+- 查询集合内任意几个元素`xor`最大值：从高位向低位扫，若`xor`上当前扫到的`p[i]`答案变大，就把答案`xor`上`p[i]`
+- 查询原集合内任意几个元素`xor`的最小值，就是线性基集合所有元素中最小的那个
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+using ull = unsigned long long;
+ull p[65];
+int n;
+int main() {
+    scanf("%d", &n);
+    auto insert = [](ull x) {
+        for (int i = 63; ~i; i--) {
+            if (!(x >> i & 1)) continue;
+            if (!p[i]) {
+                p[i] = x;
+                break;
+            }
+            x ^= p[i];
+        }
+    };
+    ull x;
+    while (n--) {
+        scanf("%lld", &x);
+        insert(x);
+    }
+    
+    ull ans = 0;
+    
+    for (int i = 63; ~i; i--)
+        ans = max(ans, ans ^ p[i]);
+        
+    printf("%lld", ans);
+    return 0;
+}
+```
