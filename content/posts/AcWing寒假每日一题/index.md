@@ -3108,3 +3108,40 @@ int main() {
     return 0;
 }
 ```
+
+### 压缩编码-区间DP
+
+#### 思路
+
+- 状态表示`f[i][j]`
+    - 集合：所有将`[i, j]`合并成一堆的方案的集合
+    - 属性：最小值
+- 状态计算：`f[i][j] = min(f[i][j], f[i][k] + f[k+1][j] + s[j] - s[i-1])`
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <climits>
+using namespace std;
+const int N = 1005;
+int n, f[N][N], s[N];
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &s[i]);
+        s[i] += s[i-1];
+    }
+    
+    for (int len = 2; len <= n; len++)
+        for (int i = 1; i + len - 1 <= n; i++) {
+            int j = i + len - 1;
+            f[i][j] = INT_MAX;
+            for (int k = i; k < j; k++)
+                f[i][j] = min(f[i][j], f[i][k] + f[k+1][j] + s[j] - s[i-1]);
+        }
+    cout << f[1][n];
+}
+```
