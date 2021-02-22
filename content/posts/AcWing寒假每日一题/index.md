@@ -1479,6 +1479,8 @@ int main() {
 
 ### 最大的和-最大子矩形
 
+[题目链接](https://www.acwing.com/problem/content/description/128/)
+
 #### 思路
 
 - 前缀和数组`A[i][j]`表示 $ \sum_{i=1}^{n}{a[i][j]} $
@@ -1487,33 +1489,42 @@ int main() {
 
 #### 代码
 
-```cpp
-#include <iostream>
-#include <algorithm>
-#include <climits>
-using namespace std;
-const int N = 105;
-int a[N][N], n;
-int main() {
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= n; j++) {
-            cin >> a[i][j];
-            a[i][j] += a[i-1][j];
-        }
-    int ans = INT_MIN;
-    for (int i = 1; i <= n; i++) {
-        for (int j = i; j <= n; j++) {
-            int s = 0;
-            for (int k = 1; k <= n; k++) {
-                // s = (s < 0 ? a[j][k]-a[i-1][k] : a[j][k]-a[i-1][k] + s);
-                s = max(s, 0) + a[j][k] - a[i-1][k];
-                ans = max(ans, s);
-            }
-        }
-    }
-    cout << ans;
-    return 0;
+```go
+package main
+
+import (
+	"fmt"
+)
+
+var M [201][201]int
+var n int
+
+func main() {
+	fmt.Scanf("%d", &n)
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= n; j++ {
+			fmt.Scanf("%d", &M[i][j])
+			M[i][j] += M[i-1][j]
+		}
+	}
+	ans := int(-1e9)
+	for i := 1; i <= n; i++ {
+		for j := i; j <= n; j++ {
+			s := 0
+			for k := 1; k <= n; k++ {
+				s = max(0, s) + M[j][k] - M[i-1][k]
+				ans = max(ans, s)
+			}
+		}
+	}
+	fmt.Println(ans)
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 ```
 
