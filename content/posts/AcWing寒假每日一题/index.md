@@ -3156,3 +3156,246 @@ int main() {
     cout << f[1][n];
 }
 ```
+
+## 杂题记录
+
+### 后序遍历
+
+[题目链接](https://hihocoder.com/problemset/problem/1049)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <functional>
+
+using namespace std;
+const int N = 30;
+
+struct node {
+    char c;
+    node *l, *r;
+    node(char _c) : c(_c), l(nullptr), r(nullptr) {}
+};
+
+void print(node *root) {
+    if (!root) return;
+    print(root->l);
+    print(root->r);
+    printf("%c", root->c);
+}
+unordered_map<char, int> M;
+string A, B;
+
+node* dfs(int pl, int pr, int il, int ir) {
+    if (pl > pr) return nullptr;
+    auto it = M[A[pl]];
+    node *root = new node(A[pl]);
+    root->l = dfs(pl + 1, pl + 1 + it - il - 1, il, it - 1);
+    root->r = dfs(pl + 1 + it - il, pr, it + 1, ir);
+    return root;
+};
+
+int main() {
+    ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    cin >> A >> B;
+    const int n = A.size();
+    for (int i = 0; i < n; i++) M[B[i]] = i;
+    auto root = dfs(0, n - 1, 0, n - 1);
+    print(root);
+    return 0;
+}
+```
+
+### 树中的最长路
+
+[题目链接](https://hihocoder.com/problemset/problem/1050?sid=1602976)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <functional>
+#include <cstring>
+
+using namespace std;
+const int N = 1e5 + 5;
+int h[N], e[N], ne[N], idx;
+
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+int n, f[N], ans;
+
+void dfs(int u) {
+    int a = 0, b = 0;
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int v = e[i];
+        dfs(v);
+        int t = f[v] + 1;
+        if (t >= a) b = a, a = t;
+        else if (t > b) b = t;
+    }
+    f[u] = a;
+    ans = max(ans, a + b);
+}
+
+int main() {
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+    ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    memset(h, -1, sizeof h);
+    cin >> n;
+    int a, b;
+    for (int i = 0; i < n - 1; i++) {
+        cin >> a >> b;
+        add(a, b);
+    }
+    dfs(1);
+    cout << ans << '\n';
+    return 0;
+}
+```
+
+### RMQ问题再临
+
+[题目链接](https://hihocoder.com/problemset/problem/1070)
+
+#### 代码
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e4 + 5;
+
+struct node {
+    int l, r, minv;
+} tree[N << 2];
+
+int n, m, a[N];
+
+void build(int u, int l, int r) {
+    if (l == r) tree[u] = {l, r, a[l]};
+    else {
+        const int mid = l + r >> 1;
+        build(u<<1, l, mid), build(u<<1|1, mid+1, r);
+        tree[u] = {l, r, min(tree[u<<1].minv, tree[u<<1|1].minv)};
+    }
+}
+
+
+void update(int u, int i, int v) {
+    if (tree[u].l == i && tree[u].r == i)
+        tree[u].minv = v;
+    else {
+        const int mid = tree[u].l + tree[u].r >> 1;
+        if (i <= mid) update(u<<1, i, v);
+        else update(u<<1|1, i, v);
+        tree[u].minv = min(tree[u<<1].minv, tree[u<<1|1].minv);
+    }
+}
+
+int query(int u, int l, int r) {
+    if (tree[u].l == l && tree[u].r == r) return tree[u].minv;
+    const int mid = tree[u].l + tree[u].r >> 1;
+    if (r <= mid) return query(u<<1, l, r);
+    else if (l > mid) return query(u<<1|1, l, r);
+    else return min(query(u<<1, l, mid), query(u<<1|1, mid+1, r));
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr), cout.tie(nullptr);
+    cin >> n;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    cin >> m;
+    build(1, 1, n);
+    int a, b, c;
+    while (m--) {
+        cin >> a >> b >> c;
+        if (!a) cout << query(1, b, c) << endl;
+        else update(1, b, c);
+    }
+    return 0;
+}
+```
+
+### 无间道之并查集
+
+[题目链接](https://hihocoder.com/problemset/problem/1066)
+
+#### 代码
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+class UF {
+    vector<int> id, sz;
+public:
+    UF(int N) {
+        id.resize(N), sz.resize(N);
+        for (int i = 0; i < N; i++)
+            id[i] = i, sz[i] = 1;
+    }
+
+    int find(int x) {
+        while (x != id[x]) {
+            id[x] = id[id[x]];
+            x = id[x];
+        }
+        return x;
+    }
+
+    bool is_connected(int p, int q) {
+        int i = find(p), j = find(q);
+        return i == j;
+    }
+
+    bool _union(int p, int q) {
+        int i = find(p), j = find(q);
+        if (i == j) return false;
+        if (sz[i] < sz[j]) {
+            id[i] = j;
+            sz[j] += sz[i];
+        } else {
+            id[j] = i;
+            sz[i] += sz[j];
+        }
+        return true;
+    }
+};
+
+unordered_map<string, int> M;
+int idx;
+int get_hash(const string &str) {
+    if (M.count(str)) return M[str];
+    else return M[str] = idx++;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr), cout.tie(nullptr);
+    int n;
+    cin >> n;
+    UF uf(n);
+    int op;
+    string a, b;
+    while (n--) {
+        cin >> op >> a >> b;
+        int i = get_hash(a), j = get_hash(b);
+        if (!op) uf._union(i, j);
+        else {
+            puts(uf.is_connected(i, j) ? "yes" : "no");
+        }
+    }
+    return 0;
+}
+```
