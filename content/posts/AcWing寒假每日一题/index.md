@@ -3399,3 +3399,69 @@ int main() {
     return 0;
 }
 ```
+
+### 二分图判定
+
+[题目链接](https://hihocoder.com/problemset/problem/1121)
+
+#### 思路
+
+染色法
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <functional>
+#include <cstring>
+
+using namespace std;
+const int N = 1e4 + 5, M = 1e5;
+
+int h[N], e[M], ne[M], idx;
+
+void add(int a, int b) {
+    e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+int n, m, color[N];
+
+bool dfs(int u, int c) {
+    color[u] = c;
+    for (int i = h[u]; ~i; i = ne[i]) {
+        int v = e[i];
+        if (color[v]) {
+            if (color[v] == c) return false;
+        } else if (!dfs(v, 3 - c)) return false;
+    }
+    return true;
+}
+
+int main() {
+    ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    int T;
+    cin >> T;
+    while (T--) {
+        idx = 0;
+        memset(h, -1, sizeof h);
+        memset(color, 0, sizeof color);
+        cin >> n >> m;
+        int a, b;
+        while (m--) {
+            cin >> a >> b;
+            add(a, b);
+            add(b, a);
+        }
+        bool is_break = false;
+        for (int i = 1; i <= n; i++)
+            if (!color[i] && !dfs(i, 1)) {
+                is_break = true;
+                break;
+            }
+        puts(is_break ? "Wrong" : "Correct");
+    }
+    return 0;
+}
+```
