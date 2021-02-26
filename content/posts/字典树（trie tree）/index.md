@@ -184,3 +184,71 @@ int main() {
 	return 0;
 }
 ```
+
+## Trie in Golang
+
+```go
+package main
+
+import "fmt"
+
+const ALPHABET_SIZE= 26
+
+type Node struct {
+	children [ALPHABET_SIZE]*Node
+	isEnd bool
+}
+
+type Trie struct {
+	root *Node
+}
+
+func InitTrie() *Trie {
+	result := &Trie{root: &Node{}}
+	return result
+}
+
+func (t *Trie) Insert(w string) {
+	curNode := t.root
+	for _, v := range(w) {
+		charIndex := v - 'a'
+		if curNode.children[charIndex] == nil {
+			curNode.children[charIndex] = &Node{}
+		}
+		curNode = curNode.children[charIndex]
+	}
+	curNode.isEnd = true
+}
+
+func (t *Trie) Search(w string) bool {
+	curNode := t.root
+	for _, v := range(w) {
+		charIndex := v - 'a'
+		if curNode.children[charIndex] == nil {
+			return false
+		}
+		curNode = curNode.children[charIndex]
+	}
+	if curNode.isEnd == true {
+		return true
+	}
+	return false
+}
+
+func main() {
+	myTrie := InitTrie()
+	toAdd := []string{
+		"aragorn",
+		"aragon",
+		"argon",
+		"eragon",
+		"oregon",
+		"oregano",
+		"oreo",
+	}
+	for _, v := range(toAdd) {
+		myTrie.Insert(v)
+	}
+	fmt.Println(myTrie.Search("argon"))
+}
+```
