@@ -3465,3 +3465,41 @@ int main() {
     return 0;
 }
 ```
+
+### 猜字谜
+
+[题目链接](https://leetcode-cn.com/problems/number-of-valid-words-for-each-puzzle/)
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    vector<int> findNumOfValidWords(vector<string>& words, vector<string>& puzzles) {
+        unordered_map<int, int> mp;
+        vector<int> ans(puzzles.size());
+        for (const auto &e : words) {
+            int t = 0;
+            for (const auto &c : e)
+                t |= 1 << (c - 'a');
+            auto tmp = bitset<26>(t);
+            if (tmp.count() > 7) continue;
+            mp[t]++;
+        }
+
+        for (int i = 0; i < puzzles.size(); i++) {
+            string p = puzzles[i];
+            int mask = 0;
+            for (int i = 1; i < 7; i++)
+                mask |= 1 << (p[i] - 'a');
+            int subset = mask;
+            do {
+                int t = subset | (1 << (p[0] - 'a'));
+                if (mp.count(t)) ans[i] += mp[t];
+                subset = (subset - 1) & mask;
+            } while (subset != mask);
+        }
+        return ans;
+    }
+};
+```
