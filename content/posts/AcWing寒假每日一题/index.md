@@ -3503,3 +3503,58 @@ public:
     }
 };
 ```
+
+
+### 至少有K个重复字符的最长子串
+
+[题目链接](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
+#### Code in Golang
+
+```go
+func longestSubstring(s string, k int) (ans int) {
+    if s == "" {
+        return 0
+    }
+    cnt := [26]int{}
+    for _, v := range(s) {
+        cnt[v-'a']++
+    }
+    var split byte
+    
+    for i, v := range(cnt) {
+        if (v > 0 && v < k) {
+            split = 'a' + byte(i)
+            break
+        }
+    }
+
+    if split == 0 {
+        return len(s)
+    }
+
+    for _, v := range strings.Split(s, string(split)) {
+        ans = max(ans, longestSubstring(v, k))
+    }
+    return ans
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
+
+#### Code in Python
+
+```python
+class Solution:
+    def longestSubstring(self, s: str, k: int) -> int:
+        if len(s) < k: return 0
+        for v in set(s):
+            if s.count(v) < k:
+                return max(self.longestSubstring(t, k) for t in s.split(v))
+        return len(s)
+```
