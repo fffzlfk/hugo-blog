@@ -3558,3 +3558,78 @@ class Solution:
                 return max(self.longestSubstring(t, k) for t in s.split(v))
         return len(s)
 ```
+
+###  找到 K 个最接近的元素
+
+#### 堆-$nlogk$做法
+
+```cpp
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        priority_queue<pair<int, int>> Q;
+        for (const auto &e : arr) {
+            Q.push({abs(e - x), e});
+            if (Q.size() > k) Q.pop();
+        }
+        vector<int> ans(k);
+        int idx = 0;
+        while (!Q.empty()) {
+            ans[idx++] = Q.top().second;
+            Q.pop();
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
+```
+
+#### 二分+双指针-$logn+k$做法(Rust)
+
+```rust
+impl Solution {
+    pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
+        let n: i32 = arr.len() as i32;
+        let mut l: i32 = 0;
+        let mut r: i32 = n - 1;
+        while l < r {
+            let mid: usize = ((l + r) / 2) as usize;
+            if arr[mid] >= x {
+                r = mid as i32;
+            } else {
+                l = (mid + 1) as i32;
+            }
+        }
+        if r > 0 {
+            let a = (i32::abs(arr[(r-1) as usize] - x), arr[(r-1) as usize]);
+            let b = (i32::abs(arr[r as usize] - x), arr[r as usize]);
+            if a < b {
+                r -= 1;
+            }
+        }
+        let mut i: i32 = r;
+        let mut j: i32 = r;
+        
+        for u in 0..k-1 {
+            if ((i - 1) < 0) {
+                j += 1;
+            } else if j + 1 >= n {
+                i -= 1;
+            } else {
+                let a = (i32::abs(arr[(i-1) as usize] - x), arr[(i-1) as usize]);
+                let b = (i32::abs(arr[(j+1) as usize] - x), arr[(j+1) as usize]);
+                if a < b {
+                    i -= 1;
+                } else {
+                    j += 1;
+                }
+            }
+        }
+        let mut ans = Vec::new();
+        for u in i..j+1 {
+            ans.push(arr[u as usize]);
+        }
+        return ans;
+    }
+}
+```
