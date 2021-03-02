@@ -3633,3 +3633,38 @@ impl Solution {
     }
 }
 ```
+
+### 二维区域和检索 - 矩阵不可变
+
+[题目链接](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)
+
+#### 思路
+
+##### 二位前缀和
+
+- 构造: `S[i][j] = a[i][j] + S[i-1][j] + S[i][j-1] - S[i-1][j-1]`
+- 计算: `ans = S[x2][y2] - S[x1-1][y2] - S[x2][y1-1] + S[x1-1][y1-1]`
+
+#### 代码
+
+```cpp
+class NumMatrix {
+    vector<vector<int>> C;
+public:
+    NumMatrix(vector<vector<int>>& matrix) {
+        if (matrix.empty()) return;
+        const int n = matrix.size(), m = matrix[0].size();
+        C = vector<vector<int>>(n+1, vector<int>(m+1, 0));
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                C[i][j] = matrix[i-1][j-1] + C[i-1][j] + C[i][j-1] - C[i-1][j-1];
+            }
+        }
+    }
+    
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        int sum = C[row2+1][col2+1] - C[row1-1+1][col2+1] - C[row2+1][col1-1+1] + C[row1-1+1][col1-1+1];
+        return sum;
+    }
+};
+```
