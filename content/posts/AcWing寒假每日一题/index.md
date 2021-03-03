@@ -3668,3 +3668,56 @@ public:
     }
 };
 ```
+
+### 比特位计数-动态规划
+
+[题目链接](https://leetcode-cn.com/problems/counting-bits/)
+
+#### 思路
+
+- `y=x & (x - 1)`: y为将x的最低设置位从1变成0之后的数
+- 状态定义：`f[i]`: i的比特位中1的个数
+- 状态计算: `f[i] = f[i & (i-1)]`
+
+#### 代码
+
+```cpp [g-cpp]
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> f(num+1);
+        for (int i = 1; i <= num; i++)
+            f[i] = f[i&(i-1)] + 1;
+        return f;
+    }
+};
+```
+
+```python [g-python]
+class Solution:
+    def countBits(self, num: int) -> List[int]:
+        f = [0] * (num + 1)
+        for i  in range(1, num + 1):
+            f[i] = f[i & (i - 1)] + 1
+        return f
+```
+```java [g-java]
+class Solution {
+    public int[] countBits(int num) {
+        int[] f = new int[num+1];
+        for (int i = 1; i <= num; i++)
+            f[i] = f[i & (i - 1)] + 1;
+        return f;
+    }
+}
+```
+
+```go [g-go]
+func countBits(num int) []int {
+    f := make([]int, num+1)
+    for i := 1; i <= num; i++ {
+        f[i] = f[i & (i - 1)] + 1
+    }
+    return f
+}
+```
