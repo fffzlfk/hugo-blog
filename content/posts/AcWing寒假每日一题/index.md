@@ -3721,3 +3721,62 @@ func countBits(num int) []int {
     return f
 }
 ```
+
+### 俄罗斯套娃信封问题-LIS
+
+[题目链接](https://leetcode-cn.com/problems/russian-doll-envelopes/)
+
+#### 解题思路
+
+LIS变形
+
+#### 代码
+
+##### $O(n^2)$
+
+```cpp
+class Solution {
+public:
+    int maxEnvelopes(vector<vector<int>>& E) {
+        if (E.empty()) return 0;
+        sort(begin(E), end(E), [](vector<int> a, vector<int> b) {
+            return (a[0] < b[0] || (a[0] == b[0] && a[1] > b[1]));
+        });
+        const int n = E.size();
+        vector<int> f(n);
+        for (int i = 0; i < n; i++) {
+            f[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (E[i][1] > E[j][1])
+                    f[i] = max(f[i], f[j] + 1);
+            }
+        }
+        return *max_element(begin(f), end(f));
+    }
+};
+```
+
+##### $O(nlogn)$
+
+```cpp
+class Solution {
+public:
+	int maxEnvelopes(vector<vector<int>>& E) {
+		if (E.empty()) return 0;
+		sort(begin(E), end(E), [](vector<int> a, vector<int> b) {
+			return (a[0] < b[0] || (a[0] == b[0] && a[1] > b[1]));
+		});
+		const int n = E.size();
+		vector<vector<int>> f;
+
+		for (int i = 0; i < n; i++) {
+			auto it = lower_bound(begin(f), end(f), E[i], [](vector<int> a, vector<int> b) {return a[1] < b[1];});
+			if (it == f.end()) f.push_back(E[i]);
+			else *it = E[i];
+		}
+		for (int i = 0; i < f.size(); i++)
+			cout << f[i][0] << " " << f[i][1] << endl;
+		return f.size();
+	}
+};
+```
