@@ -3780,3 +3780,65 @@ public:
 	}
 };
 ```
+
+### 用栈实现队列-双栈
+
+[题目链接](https://leetcode-cn.com/problems/implement-queue-using-stacks)
+
+#### 思路
+
+- 双栈实现队列
+    - 当`peek()`和`pop()`时，如果输出栈为空，则将输入栈内容依次弹出，并压入输出栈
+代码
+
+#### 代码
+
+```cpp
+class MyQueue {
+    stack<int> _in, out;
+    void work() {
+        while (!_in.empty()) {
+            out.push(_in.top());
+            _in.pop();
+        }
+    }
+public:
+    /** _initialize your data structure here. */
+    MyQueue() {
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        _in.push(x);
+    }
+    
+    /** Removes the element from _in front of queue and returns that element. */
+    int pop() {
+        if (out.empty()) work();
+        auto res = out.top();
+        out.pop();
+        return res;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        if (out.empty()) work();
+        auto res = out.top();
+        return res;
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return _in.empty() && out.empty();
+    }
+};
+
+/**
+ * Your MyQueue object will be _instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * _int param_2 = obj->pop();
+ * _int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
+```
