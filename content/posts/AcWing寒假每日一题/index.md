@@ -3976,3 +3976,70 @@ public:
     }
 };
 ```
+
+### 从第一个节点出发到最后一个节点的受限路径数-记忆化搜索
+
+[题目链接](https://leetcode-cn.com/problems/number-of-restricted-paths-from-first-to-last-node/)
+
+#### 思路
+
+单源最短路+记忆化搜索
+
+#### 代码
+
+```cpp
+const int N = 2e4 + 5, M = 8e4 + 10;
+int h[N], e[M], ne[M], w[M], idx;
+
+void add(int a, int b, int c) {
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+class Solution {
+public:
+    int countRestrictedPaths(int n, vector<vector<int>>& edges) {
+        idx = 0;
+        memset(h, -1, sizeof h);
+        for (const auto &e : edges) {
+            add(e[0], e[1], e[2]);
+            add(e[1], e[0], e[2]);
+        }
+        vector<int> dist(n + 1, INT_MAX);
+        vector<bool> st(n + 1, false);
+        priority_queue<pair<int, int>> Q;
+        Q.push({0, n});
+        dist[n] = 0;
+        while (!Q.empty()) {
+            auto [wgt, u] = Q.top();
+            Q.pop();
+            if (st[u]) continue;
+            st[u] = true;
+            dist[u] = -wgt;
+            for (int i = h[u]; ~i; i = ne[i]) {
+                int v = e[i];
+                if (-wgt + w[i] < dist[v]) {
+                    dist[v] = -wgt + w[i];
+                    Q.push({-dist[v], v});
+                }
+            }
+        }
+
+        const int mod = 1e9 + 7;
+        vector<int> f(n + 1, INT_MAX);
+
+        function<int(int)> dfs = [&](int u) {
+            if (u == n) return 1;
+            if (f[u] != INT_MAX) return f[u];
+            int ans = 0;
+            for (int i = h[u]; ~i; i = ne[i]) {
+                int v = e[i];
+                if (dist[u] > dist[v])
+                    ans = (ans + dfs(v)) % mod;
+            }
+            return f[u] = ans;
+        };
+
+        return dfs(1);
+    }
+};
+```
