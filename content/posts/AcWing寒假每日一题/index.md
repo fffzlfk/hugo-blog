@@ -3843,6 +3843,94 @@ public:
  */
 ```
 
+### 下一个更大元素-单调栈
+
+[题目链接](https://leetcode-cn.com/problems/next-greater-element-ii/submissions/)
+
+#### 思路
+
+- 单调栈内对应元素单调不增
+- 当遇到一个比当前栈顶元素大的元素，则出栈，并且出栈元素下一个更大元素为当前元素
+- 因为环，所以将下标映射至`1..2n-1`
+
+#### 代码
+
+##### C++
+
+```cpp [g-C++]
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        const int n = nums.size();
+        vector<int> ans(n, -1);
+        stack<int> the_stack;
+        for (int i = 0; i < 2 * n; i++) {
+            while (!the_stack.empty() && nums[i % n] > nums[the_stack.top()]) {
+                ans[the_stack.top()] = nums[i % n];
+                the_stack.pop();
+            }
+            the_stack.push(i % n);
+        }
+        return ans;
+    }
+};
+```
+
+##### Java
+
+```java [g-Java]
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        final var n = nums.length;
+        var ans = new int[n];
+        Arrays.fill(ans, -1);
+        Stack<Integer> S = new Stack<>();
+        for (int i = 0; i < 2 * n; i++) {
+            while (!S.isEmpty() && nums[S.peek()] < nums[i % n])
+                ans[S.pop()] = nums[i % n];
+            S.push(i % n);
+        }
+        return ans;
+    }
+}
+```
+
+##### Python3
+
+```python [g-Python3]
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        ans = [-1] * n
+        the_stack = []
+        for i in range(2 * n):
+            while the_stack and (nums[i % n] > nums[the_stack[-1]]):
+                ans[the_stack.pop()] = nums[i % n]
+            the_stack.append(i % n)
+        return ans
+```
+
+##### Golang
+
+```go [g-Golang]
+func nextGreaterElements(nums []int) []int {
+    n := len(nums)
+    ans := make([]int, n)
+    for i := range(ans) {
+        ans[i] = -1
+    }
+    stack := []int{}
+    for i := 0; i < 2 * n; i++ {
+        for len(stack) > 0 && nums[i % n] > nums[stack[len(stack)-1]] {
+            ans[stack[len(stack)-1]] = nums[i % n]
+            stack = stack[:len(stack)-1]
+        }
+        stack = append(stack, i % n)
+    }
+    return ans
+}
+```
+
 ### 分割回文串
 
 [题目链接](https://leetcode-cn.com/problems/palindrome-partitioning/)
