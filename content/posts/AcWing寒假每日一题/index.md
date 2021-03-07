@@ -3842,3 +3842,49 @@ public:
  * bool param_4 = obj->empty();
  */
 ```
+
+### 分割回文串
+
+[题目链接](https://leetcode-cn.com/problems/palindrome-partitioning/)
+
+#### 思路
+
+##### dfs + DP预处理
+
+`f[i][j] = f[i+1][j-1] && (s[i] == s[j])`
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
+        const int n = s.length();
+        vector<string> tmp;
+        vector<vector<string>> ans;
+        vector<vector<bool>> f(n, vector<bool>(n, true));
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i + 1; j < n; j++)
+                f[i][j] = f[i+1][j-1] && (s[i] == s[j]);
+        }
+
+        function<void(int)> dfs = [&](int i) {
+            if (i >= n) {
+                ans.push_back(tmp);
+                return;
+            }
+            for (int j = i; j < n; j++) {
+                if (f[i][j]) {
+                    tmp.push_back(s.substr(i, j - i + 1));
+                    dfs(j+1);
+                    tmp.pop_back();
+                }
+            }
+        };
+
+        dfs(0);
+
+        return ans;
+    }
+};
+```
