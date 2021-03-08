@@ -4043,3 +4043,78 @@ public:
     }
 };
 ```
+
+### 公共钥匙盒-模拟
+
+[题目链接](https://www.acwing.com/problem/content/3251/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <queue>
+#include <tuple>
+using namespace std;
+const int N = 1005;
+
+// #define DEBUG
+
+pair<int, int> T[N];
+
+int n, k, a[N];
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr), cout.tie(nullptr);
+	priority_queue<tuple<int, bool, int>> Q;
+	cin >> n >> k;
+	int w, s, c;
+
+	for (int i = 1; i <= n; i++)
+		a[i] = i;
+
+	while (k--) {
+		cin >> w >> s >> c;
+		T[w] = {s, c};
+#ifdef DEBUG
+		printf("in w = %d\n", abs(w));
+#endif
+		Q.push({ -s, false, -w});
+		Q.push({ -(s + c), true, -w});
+	}
+
+	while (Q.size()) {
+		auto it = Q.top();
+		auto t = get<0>();
+		auto b = get<1>();
+		auto w = get<2>();
+		Q.pop();
+#ifdef DEBUG
+		printf("s = %d, b = %d, w = %d\n", -t, b, w);
+#endif
+		if (!b) {
+			for (int i = 1; i <= n; i++)
+				if (a[i] == -w) {
+					a[i] = 0;
+					break;
+				}
+		}
+		else {
+			for (int i = 1; i <= n; i++)
+				if (!a[i]) {
+					a[i] = -w;
+#ifdef DEBUG
+					printf("i = %d, w = %d\n", i, -w);
+#endif
+					break;
+				}
+		}
+	}
+
+	for (int i = 1; i <= n; i++)
+		cout << a[i] << " ";
+
+	return 0;
+}
+```
