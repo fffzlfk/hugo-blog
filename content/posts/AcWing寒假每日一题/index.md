@@ -4086,9 +4086,9 @@ int main() {
 
 	while (Q.size()) {
 		auto it = Q.top();
-		auto t = get<0>();
-		auto b = get<1>();
-		auto w = get<2>();
+		auto t = get<0>(it);
+		auto b = get<1>(it);
+		auto w = get<2>(it);
 		Q.pop();
 #ifdef DEBUG
 		printf("s = %d, b = %d, w = %d\n", -t, b, w);
@@ -4117,4 +4117,40 @@ int main() {
 
 	return 0;
 }
+```
+
+### 基本计算器-栈
+
+[题目链接](https://leetcode-cn.com/problems/basic-calculator/)
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> sign;
+        sign.push(1);
+        int cur = 1;
+        int ans = 0;
+        const int n = s.length();
+        for (int i = 0; i < n; i++) {
+            if (s[i] == ' ') continue;
+            else if (s[i] == '+') cur = sign.top();
+            else if (s[i] == '-') cur = -sign.top();
+            else if (s[i] == '(') sign.push(cur);
+            else if (s[i] == ')') sign.pop();
+            else {
+                int sum = 0;
+                while (i < n && s[i] >= '0' && s[i] <= '9') {
+                    sum = sum * 10 + (s[i] - '0');
+                    ++i;
+                }
+                --i;
+                ans += sum * cur;
+            }
+        }
+        return ans;
+    }
+};
 ```
