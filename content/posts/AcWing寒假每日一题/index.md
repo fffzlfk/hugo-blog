@@ -4058,8 +4058,6 @@ public:
 using namespace std;
 const int N = 1005;
 
-// #define DEBUG
-
 pair<int, int> T[N];
 
 int n, k, a[N];
@@ -4077,9 +4075,6 @@ int main() {
 	while (k--) {
 		cin >> w >> s >> c;
 		T[w] = {s, c};
-#ifdef DEBUG
-		printf("in w = %d\n", abs(w));
-#endif
 		Q.push({ -s, false, -w});
 		Q.push({ -(s + c), true, -w});
 	}
@@ -4090,9 +4085,6 @@ int main() {
 		auto b = get<1>(it);
 		auto w = get<2>(it);
 		Q.pop();
-#ifdef DEBUG
-		printf("s = %d, b = %d, w = %d\n", -t, b, w);
-#endif
 		if (!b) {
 			for (int i = 1; i <= n; i++)
 				if (a[i] == -w) {
@@ -4104,9 +4096,6 @@ int main() {
 			for (int i = 1; i <= n; i++)
 				if (!a[i]) {
 					a[i] = -w;
-#ifdef DEBUG
-					printf("i = %d, w = %d\n", i, -w);
-#endif
 					break;
 				}
 		}
@@ -4153,4 +4142,45 @@ public:
         return ans;
     }
 };
+```
+
+### 基本计算器II-栈
+
+[题目链接](https://leetcode-cn.com/problems/basic-calculator-ii/)
+
+#### 思路
+
+- 如果数字前是+, 将数字压栈
+- 如果数字前是-, 将数字相反数压栈
+- 如果数字前是*, 将栈顶元素乘以数字
+- 如果数字前是/, 将栈顶元素除以数字
+
+#### 代码
+
+```go
+func calculate(s string) int {
+    stack := []int{}
+    num := 0
+    pre := '+'
+    for i, v := range(s) {
+        if v >= '0' && v <= '9' {
+            num = num * 10 + int(v - '0')
+        }
+        if (!(v >= '0' && v <= '9') && v != ' ') || i == len(s)-1 {
+            switch pre {
+                case '+': stack = append(stack, num)
+                case '-': stack = append(stack, -num)
+                case '*': stack[len(stack)-1] *= num
+                case '/': stack[len(stack)-1] /= num
+            }
+            pre = v
+            num = 0
+        }
+    }
+    ans := 0
+    for _, v := range(stack) {
+        ans += v
+    }
+    return ans
+}
 ```
