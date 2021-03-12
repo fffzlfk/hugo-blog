@@ -4184,3 +4184,47 @@ func calculate(s string) int {
     return ans
 }
 ```
+
+### 验证二叉树的前序序列化
+
+[题目链接](https://leetcode-cn.com/problems/verify-preorder-serialization-of-a-binary-tree/)
+
+#### 解题思路
+
+遍历过程中：
+- 根结点提供两个出度
+- 除了根结点以外的非空结点提供一个入度数、两个出度
+- 空结点提供一个入度
+
+还没遍历结束时候满足：入度 < 出度
+
+#### 代码
+
+```go
+func isValidSerialization(preorder string) bool {
+    if preorder == "#" {
+        return true
+    }
+    res := strings.Split(preorder, ",")
+    in, out := 0, 0
+    for i := range(res) {
+        if i == 0 {
+            if res[i] == "#" {
+                return false
+            }
+            out += 2
+            continue
+        }
+        if res[i] == "#" {
+            in++
+        } else {
+            in++
+            out += 2
+        }
+        if i != len(res)-1 && out <= in {
+            return false
+        }
+    }
+    return in == out
+}
+```
