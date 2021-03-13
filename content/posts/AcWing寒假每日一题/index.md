@@ -4228,3 +4228,120 @@ func isValidSerialization(preorder string) bool {
     return in == out
 }
 ```
+
+### 设计哈希集合
+
+[题目链接](https://leetcode-cn.com/problems/design-hashset/)
+
+#### 思路
+
+拉链法
+
+#### 代码
+
+##### C++
+
+```cpp
+constexpr int N = 10007;
+class MyHashSet {
+    int h[N], e[N], ne[N], idx;
+public:
+    /** Initialize your data structure here. */
+    MyHashSet() {
+        idx = 0;
+        memset(h, -1, sizeof h);
+    }
+    
+    void add(int key) {
+        if (!contains(key)) {
+            int k = key % N;
+            e[idx] = key;
+            ne[idx] = h[k];
+            h[k] = idx++;
+        }
+    }
+    
+    void remove(int key) {
+        int k = key % N;
+        if (h[k] == -1) return;
+        if (e[h[k]] == key) // 第一个结点就是
+            h[k] = ne[h[k]];
+        for (int i = h[k]; ~i && ~ne[i]; i = ne[i]) {
+            if (e[ne[i]] == key) {
+                ne[i] = ne[ne[i]];
+            }
+        }
+    }
+    
+    /** Returns true if this set contains the specified element */
+    bool contains(int key) {
+        int k = key % N;
+        for (int i = h[k]; ~i; i = ne[i]) {
+            if (e[i] == key) return true;
+        }
+        return false;
+    }
+};
+```
+
+##### Golang
+
+```go
+const N = 10007
+
+type MyHashSet struct {
+    h []int
+    e []int
+    ne []int
+    idx int
+}
+
+
+/** Initialize your data structure here. */
+func Constructor() MyHashSet {
+    t := make([]int, N)
+    for i := range(t) {
+        t[i] = -1
+    }
+    return MyHashSet{t, make([]int, N), make([]int, N), 0}
+}
+
+
+func (this *MyHashSet) Add(key int)  {
+    if !this.Contains(key) {
+        k := (key % N + N) % N
+        this.e[this.idx] = key
+        this.ne[this.idx] = this.h[k]
+        this.h[k] = this.idx
+        this.idx++
+    }
+}
+
+
+func (this *MyHashSet) Remove(key int)  {
+    k := (key % N + N) % N
+    if this.h[k] == -1 {
+        return
+    }
+    if this.e[this.h[k]] == key {
+        this.h[k] = this.ne[this.h[k]]
+    }
+    for i := this.h[k]; i != -1 && this.ne[i] != -1; i = this.ne[i] {
+        if this.e[this.ne[i]] == key {
+            this.ne[i] = this.ne[this.ne[i]]
+        }
+    }
+}
+
+
+/** Returns true if this set contains the specified element */
+func (this *MyHashSet) Contains(key int) bool {
+    k := (key % N + N) % N
+    for i := this.h[k]; i != -1; i = this.ne[i] {
+        if this.e[i] == key {
+            return true
+        }
+    }
+    return false
+}
+```
