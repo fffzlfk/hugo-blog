@@ -4345,3 +4345,87 @@ func (this *MyHashSet) Contains(key int) bool {
     return false
 }
 ```
+
+### 设计哈希映射
+
+[题目链接](https://leetcode-cn.com/problems/design-hashmap/)
+
+#### 思路
+
+拉链法
+
+#### 代码
+
+```go
+const N = 10007
+
+type Pair struct {
+    k int
+    v int
+}
+
+type MyHashMap struct {
+    h []int
+    e []Pair
+    ne []int
+    idx int
+}
+
+
+/** Initialize your data structure here. */
+func Constructor() MyHashMap {
+    h := make([]int, N)
+    for i := range(h) {
+        h[i] = -1
+    }
+    return MyHashMap{h, make([]Pair, N), make([]int, N), 0}
+}
+
+
+/** value will always be non-negative. */
+func (this *MyHashMap) Put(key int, value int)  {
+    if this.Get(key) == -1 {
+        k := (key % N + N) % N
+        this.e[this.idx] = Pair{key, value}
+        this.ne[this.idx] = this.h[k]
+        this.h[k] = this.idx
+        this.idx++
+    } else {
+        k := (key % N + N) % N
+        for i := this.h[k]; i != -1; i = this.ne[i] {
+            if this.e[i].k == key {
+                this.e[i].v = value
+            }
+        }
+    }
+}
+
+
+/** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+func (this *MyHashMap) Get(key int) int {
+    k := (key % N + N) % N
+    for i := this.h[k]; i != -1; i = this.ne[i] {
+        if this.e[i].k == key {
+            return this.e[i].v
+        }
+    }
+    return -1
+}
+
+
+/** Removes the mapping of the specified value key if this map contains a mapping for the key */
+func (this *MyHashMap) Remove(key int)  {
+    k := (key % N + N) % N
+    if this.h[k] == -1 {
+        return
+    }
+    if this.e[this.h[k]].k == key {
+        this.h[k] = this.ne[this.h[k]]
+    }
+    for i := this.h[k]; i != -1 && this.ne[i] != -1; i = this.ne[i] {
+        if this.e[this.ne[i]].k == key {
+            this.ne[i] = this.ne[this.ne[i]]
+        }
+    }
+}
+```
