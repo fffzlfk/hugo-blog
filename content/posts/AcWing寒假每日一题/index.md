@@ -4429,3 +4429,41 @@ func (this *MyHashMap) Remove(key int)  {
     }
 }
 ```
+
+### [不同的子序列-DP](https://leetcode-cn.com/problems/distinct-subsequences/)
+
+#### 思路
+
+$$
+f[i][j] = 
+\begin{cases}
+f[i+1][j+1] + f[i+1][j],  &s[i] = t[j]&  \cr
+f[i+1][j],  &s[i] \ne t[j]
+\end{cases}
+$$
+
+#### 代码
+
+```go
+func numDistinct(s string, t string) int {
+    n, m := len(s), len(t)
+    if n < m {
+        return 0
+    }
+    f := make([][]int, n+1)
+    for i := range f {
+        f[i] = make([]int, m+1)
+        f[i][m] = 1
+    }
+    for i := n-1; i >= 0; i-- {
+        for j := m-1; j >= 0; j-- {
+            if s[i] == t[j] {
+                f[i][j] = f[i+1][j+1] + f[i+1][j]
+            } else {
+                f[i][j] = f[i+1][j]
+            }
+        }
+    }
+    return f[0][0]
+}
+```
