@@ -1,5 +1,5 @@
 ---
-title: AcWing寒假每日一题
+title: 每日一题
 date: 2021-01-10
 draft: false
 toc: true
@@ -4465,5 +4465,82 @@ func numDistinct(s string, t string) int {
         }
     }
     return f[0][0]
+}
+```
+
+### 反转链表II
+
+[题目链接](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+
+#### 思路
+
+- 创建头结点
+- `a := m-1`
+- 将`[m+1,n]`指针反转
+- `a->next->next = n+1`
+- `a->next = n`
+
+{{<image src="https://files.catbox.moe/tuf9ux.png" position="center" style="zoom: 30% ;">}}
+
+#### 代码
+
+```go
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+    dummy := &ListNode{0, head}
+    a := dummy
+    for i := 0; i < left-1; i++ {
+        a = a.Next
+    }
+    pre, cur := a.Next, a.Next.Next
+    for i := 0; i < right-left; i++ {
+        tmp := cur.Next
+        cur.Next = pre
+        pre = cur
+        cur = tmp
+    }
+    a.Next.Next = cur
+    a.Next = pre
+    return dummy.Next    
+}
+```
+
+### 反转链表
+
+[题目链接](https://www.acwing.com/problem/content/33/)
+
+#### 迭代法
+
+```go
+func reverseList(head *ListNode) *ListNode {
+    var pre *ListNode
+    cur := head
+    for cur != nil {
+        tmp := cur.Next
+        cur.Next = pre
+        pre = cur
+        cur = tmp
+    }
+    return pre
+}
+```
+
+#### 递归法
+
+##### 思路
+
+- 首先我们先考虑 reverseList 函数能做什么，它可以翻转一个链表，并返回新链表的头节点，也就是原链表的尾节点。
+- 所以我们可以先递归处理 reverseList(head->next)，这样我们可以将以head->next为头节点的链表翻转，并得到原链表的尾节点tail，此时head->next是新链表的尾节点，我们令它的next指针指向head，并将head->next指向空即可将整个链表翻转，且新链表的头节点是tail
+
+##### 代码
+
+```go
+func reverseList(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    tail := reverseList(head.Next)
+    head.Next.Next = head
+    head.Next = nil
+    return tail
 }
 ```
