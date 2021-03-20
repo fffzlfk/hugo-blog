@@ -4544,3 +4544,82 @@ func reverseList(head *ListNode) *ListNode {
     return tail
 }
 ```
+
+### 表达式求值-栈
+
+[题目链接](https://www.acwing.com/problem/content/description/3305/)
+
+#### 思路
+
+- 使用两个栈，一个存操作数，另一个存运算符
+- 遇到左括号入栈，遇到右括号进行计算直到栈顶为左括号
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <stack>
+using namespace std;
+
+int main() {
+	string str;
+	cin >> str;
+	const int n = str.length();
+
+	stack<int> stk;
+	stack<char> op;
+
+	auto calculate = [&]() {
+		int a = stk.top();
+		stk.pop();
+		int b = stk.top();
+		stk.pop();
+		char c = op.top();
+		op.pop();
+		switch (c) {
+		case '+': stk.push(b + a); break;
+		case '-': stk.push(b - a); break;
+		case '*': stk.push(b * a); break;
+		case '/': stk.push(b / a); break;
+		}
+	};
+
+	unordered_map<char, int> mp = {{'+', 1}, {'-', 1}, {'*', 2}, {'/', 2}};
+
+	for (int i = 0; i < n; i++) {
+		auto c = str[i];
+		if (isdigit(c)) {
+			int j = i;
+			int num = 0;
+			while (j < n && isdigit(str[j])) {
+				num = num * 10 + str[j] - '0';
+				j++;
+			}
+			stk.push(num);
+			i = j - 1;
+		} else if (c == '(') {
+			op.push(c);
+		} else if (c == ')') {
+			while (op.size() && op.top() != '(') {
+				calculate();
+			}
+			op.pop();
+		} else {
+			while (op.size() && mp[op.top()] >= mp[c]) {
+				calculate();
+			}
+			op.push(c);
+		}
+	}
+
+	while (op.size()) {
+		calculate();
+	}
+
+	cout << stk.top() << endl;
+
+	return 0;
+}
+```

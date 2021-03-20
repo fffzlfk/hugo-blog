@@ -4,6 +4,8 @@ date: 2020-10-17T21:07:26+08:00
 toc: true
 draft: false
 summary: "西电微机原理"
+tags:
+  - Academic
 ---
 
 ## 单核处理器8086/8088

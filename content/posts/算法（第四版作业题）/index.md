@@ -7,6 +7,7 @@ toc: true
 keepImageRatio: true
 tags:
   - Java
+  - Academic
 summary: "The solution of algs4's exercise"
 showInMenu: false
 ---

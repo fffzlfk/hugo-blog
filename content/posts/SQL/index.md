@@ -6,6 +6,7 @@ toc: true
 summary: "SQL 语句"
 tags:
   - SQL
+  - Academic
 ---
 
 ## SQL概述

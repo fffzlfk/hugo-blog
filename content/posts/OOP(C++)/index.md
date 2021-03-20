@@ -7,6 +7,7 @@ toc: true
 keepImageRatio: true
 tags:
   - C++
+  - Academic
 summary: "Object-Oriented Programming"
 showInMenu: false
 ---
