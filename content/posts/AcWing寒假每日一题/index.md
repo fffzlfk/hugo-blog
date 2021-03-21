@@ -4623,3 +4623,77 @@ int main() {
 	return 0;
 }
 ```
+
+### 矩阵置零
+
+[题目链接](https://leetcode-cn.com/problems/set-matrix-zeroes/)
+
+#### 思路
+
+- 用两个变量记录第一行和第一列是否有0。
+- 遍历整个矩阵，用矩阵的第一行和第一列记录对应的行和列是否有0。
+- 把含有0的行和列都置成0。
+
+#### 代码
+
+```go
+func setZeroes(matrix [][]int)  {
+    n, m := len(matrix), len(matrix[0])
+    r0, c0 := 1, 1
+
+    // 第0行是否应该置为0
+    for i := 0; i < m; i++ {
+        if matrix[0][i] == 0 {
+            r0 = 0
+        }
+    }
+
+    // 第0列是否应该置为0
+    for i := 0; i < n; i++ {
+        if matrix[i][0] == 0 {
+            c0 = 0
+        }
+    }
+
+    for i := 1; i < n; i++ {
+        for j := 1; j < m; j++ {
+            if matrix[i][j] == 0 {
+                matrix[i][0] = 0
+                matrix[0][j] = 0
+            }
+        }
+    }
+
+    // matrix[0][i]表示第i列是否该置为0
+    // matrix[i][0]表示第i行是否该置为0
+    // 把含有0的行和列都置成0 用第0行和第0列标记
+    for i := 1; i < m; i++ {
+        if matrix[0][i] == 0 {
+            for j := 1; j < n; j++ {
+                matrix[j][i] = 0
+            }
+        }
+    }
+
+    for i := 1; i < n; i++ {
+        if matrix[i][0] == 0 {
+            for j := 1; j < m; j++ {
+                matrix[i][j] = 0
+            }
+        }
+    }
+
+    if r0 == 0 {
+        for i := 0; i < m; i++ {
+            matrix[0][i] = 0
+        }
+    }
+
+    if c0 == 0 {
+        for i := 0; i < n; i++ {
+            matrix[i][0] = 0
+        }
+    }
+
+}
+```
