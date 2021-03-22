@@ -4697,3 +4697,25 @@ func setZeroes(matrix [][]int)  {
 
 }
 ```
+
+### 不用加减乘除做加法
+
+[题目链接](https://www.acwing.com/problem/content/81/)
+
+#### 思路
+
+- 两个整数做异或运算，得到不进位加法的运算结果
+- 两个整数做与运算，然后左移一位，得到进位的运算结果
+- 将上面得到的两个结果相加，即重复上述步骤直到进位的结果为0
+
+#### 代码
+
+```go
+func add(num1 int, num2 int) int {
+    for num2 != 0 {
+        sum, carry := num1 ^ num2, (num1 & num2) << 1
+        num1, num2 = sum, carry
+    }
+    return num1
+}
+```
