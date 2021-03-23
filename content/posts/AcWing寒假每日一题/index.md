@@ -3209,6 +3209,75 @@ int main() {
 }
 ```
 
+### 树的遍历-中序后序求层次
+
+[题目链接](https://www.acwing.com/problem/content/1499/)
+
+#### 代码
+
+```go
+package main
+
+import "fmt"
+
+type TreeNode struct {
+    val int
+    left, right *TreeNode
+}
+
+var n int
+
+func main() {
+    fmt.Scan(&n)
+    after, in := make([]int, n), make([]int, n)
+    
+    for i := range after {
+        fmt.Scan(&after[i])
+    }
+    
+    for i := range in {
+        fmt.Scan(&in[i])
+    }
+    
+    mp := make(map[int]int)
+    
+    for i := range in {
+        mp[in[i]] = i
+    }
+    
+    var dfs func(il, ir, al, ar int) (*TreeNode)
+    dfs = func(il, ir, al, ar int) (*TreeNode) {
+        if al > ar {
+            return nil
+        }
+        idx := mp[after[ar]]
+        root := &TreeNode{
+            val: after[ar],
+            left: dfs(il, idx-1, al, al+idx-il-1),
+            right: dfs(idx+1, ir, al+idx-il, ar-1),
+        }
+        return root
+    }
+    
+    root := dfs(0, n-1, 0, n-1)
+    
+    que := make([](*TreeNode), 0)
+    que = append(que, root)
+    
+    for len(que) != 0 {
+        front := que[0]
+        fmt.Printf("%d ", front.val)
+        que = que[1:]
+        if front.left != nil {
+            que = append(que, front.left)
+        }
+        if front.right != nil {
+            que = append(que, front.right)
+        }
+    }
+}
+```
+
 ### 树中的最长路
 
 [题目链接](https://hihocoder.com/problemset/problem/1050?sid=1602976)
