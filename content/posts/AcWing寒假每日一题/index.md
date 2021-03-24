@@ -4788,3 +4788,94 @@ func add(num1 int, num2 int) int {
     return num1
 }
 ```
+
+### 132模式-单调栈
+
+[题目链接](https://leetcode-cn.com/problems/132-pattern/)
+
+#### 思路
+
+- 从右到左维护一个单调递减的栈
+- 维护一个次大值(初始值为INT_MIN)
+- 如果当前的值小于次大值则找到132子序列
+
+#### 代码
+
+```go
+func find132pattern(nums []int) bool {
+	n := len(nums)
+	stk := make([]int, 0)
+	second := math.MinInt64
+	for i := n - 1; i >= 0; i-- {
+		if nums[i] < second {
+			return true
+		}
+		for len(stk) > 0 && stk[len(stk)-1] < nums[i] {
+			second = stk[len(stk)-1]
+			stk = stk[:len(stk)-1]
+		}
+		stk = append(stk, nums[i])
+	}
+	return false
+}
+```
+
+### 直方图中最大矩形-单调栈
+
+[题目链接](https://www.acwing.com/problem/content/description/133/)
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+constexpr int N = 100005;
+int n, h[N], l[N], r[N], stk[N];
+
+void work() {
+	for (int i = 1; i <= n; i++) 
+		scanf("%d", &h[i]);
+
+    // 设置边界为-1
+	h[0] = h[n+1] = -1;
+
+    // 寻找左边界
+	stk[0] = 0;
+	int tt = 0;
+	for (int i = 1; i <= n; i++) {
+		while (h[stk[tt]] >= h[i]) {
+			tt--;
+		}
+		l[i] = stk[tt];
+		stk[++tt] = i;
+	}
+
+    // 寻找左边界
+	stk[0] = n+1;
+	tt = 0;
+	for (int i = n; i >= 1; i--) {
+		while (h[stk[tt]] >= h[i]) {
+			tt--;
+		}
+		r[i] = stk[tt];
+		stk[++tt] = i;
+	}
+
+	long long ans = 0;
+	for (int i = 1; i <= n; i++) {
+		ans = max(ans, h[i] * 1ll * (r[i]-l[i]-1));
+	}
+
+	printf("%lld\n", ans);
+}
+
+int main() {
+	while (scanf("%d", &n)) {
+		if (!n) return 0;
+		work();
+	}
+	return 0;
+}
+```
