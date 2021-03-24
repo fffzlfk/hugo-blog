@@ -4825,6 +4825,10 @@ func find132pattern(nums []int) bool {
 
 [题目链接](https://www.acwing.com/problem/content/description/133/)
 
+#### 思路
+
+单调栈可以解决：左边比当前值大或小的第一个数
+
 #### 代码
 
 ```cpp
