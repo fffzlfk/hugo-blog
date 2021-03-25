@@ -4884,3 +4884,38 @@ int main() {
 	return 0;
 }
 ```
+
+### 删除排序链表中的重复元素
+
+[题目链接](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
+
+#### 思路
+
+- `pre`保存当前结点前驱结点
+- 找到右边第一个不相等的结点`right`
+- 如果`cur.Next == right`则不用删，否则`pre.Next = right`删除
+
+#### 代码
+
+```go
+func deleteDuplicates(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    pre := &ListNode{0, head}
+    ans, cur := pre, head
+    for cur != nil {
+        right := cur
+        for right != nil && right.Val == cur.Val {
+            right = right.Next
+        }
+        if cur.Next == right {
+            pre = cur
+        } else {
+            pre.Next = right
+        }
+        cur = right
+    }
+    return ans.Next
+}
+```
