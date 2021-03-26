@@ -4919,3 +4919,72 @@ func deleteDuplicates(head *ListNode) *ListNode {
     return ans.Next
 }
 ```
+
+### 可达性统计-拓扑排序
+
+[题目链接](https://www.acwing.com/problem/content/description/166/)
+
+#### 思路
+
+- 从x出发能够到达的点，是从“x的各个后续节点y”出发能够到达的点的并集，再加上x点本身
+- 可以求出拓扑序，按照拓扑序逆序进行计算
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <bitset>
+using namespace std;
+const int N = 30005;
+int h[N], ne[N], e[N], idx, d[N];
+int n, m;
+
+void add(int a, int b) {
+	e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+int seq[N], cnt;
+bitset<N> f[N];
+
+void toposort() {
+	int que[N];
+	int hh = 0, tt = -1;
+	for (int i = 1; i <= n; i++)
+		if (!d[i]) que[++tt] = i;
+	while (hh <= tt) {
+		int front = que[hh++];
+		seq[cnt++] = front;
+		for (int i = h[front]; ~i; i = ne[i]) {
+			int j = e[i];
+			if (--d[j] == 0)
+				que[++tt] = j;
+		}
+	}
+}
+
+int main() {
+    memset(h, -1, sizeof h);
+	scanf("%d%d", &n, &m);
+	int a, b;
+	while (m--) {
+		scanf("%d%d", &a, &b);
+		add(a, b);
+		d[b]++;
+	}
+
+	toposort();
+
+	for (int i = n-1; ~i; i--) {
+		int j = seq[i];
+		f[j][j] = 1;
+		for (int k = h[j]; ~k; k = ne[k]) {
+			f[j] |= f[e[k]];
+		}
+	}
+
+	for (int i = 1; i <= n; i++)
+		printf("%lld\n", f[i].count());
+	return 0;
+}
+```
