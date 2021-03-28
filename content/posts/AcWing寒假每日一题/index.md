@@ -4988,3 +4988,31 @@ int main() {
 	return 0;
 }
 ```
+
+### 二叉树的下一个结点
+
+[题目链接](https://www.acwing.com/problem/content/31/)
+
+#### 思路
+
+1. 若当前结点有右儿子，则右子树中最左侧的结点就是当前结点的后继
+2. 如果当前没有右儿子，则要沿着`father`域一直向上找，找到第一个是其`father`左儿子的结点，该结点的`father`就是当前结点的后继
+
+#### 代码
+
+```go
+func inorderSuccessor(p *TreeNode) *TreeNode {
+    if p.Right != nil {
+        p = p.Right
+        for p.Left != nil {
+            p = p.Left
+        }
+        return p
+    }
+    
+    for (p.Father != nil && p == p.Father.Right) {
+        p = p.Father
+    }
+    return p.Father
+}
+```
