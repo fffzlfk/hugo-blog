@@ -5016,3 +5016,47 @@ func inorderSuccessor(p *TreeNode) *TreeNode {
     return p.Father
 }
 ```
+
+### 二叉搜索树迭代器-中序遍历非递归
+
+[题目链接](https://leetcode-cn.com/problems/binary-search-tree-iterator/)
+
+#### 思路
+
+- 将根节点的左链入栈
+- 当取出一个元素后，如果这个结点有右子树，则将其右子树的左链入栈
+
+#### 代码
+
+```go
+type BSTIterator struct {
+    stk []*TreeNode
+}
+
+func Constructor(root *TreeNode) BSTIterator {
+    stk := make([](*TreeNode), 0)
+    for root != nil {
+        stk = append(stk, root)
+        root = root.Left
+    }
+    return BSTIterator{stk}
+}
+
+
+func (this *BSTIterator) Next() int {
+    root := this.stk[len(this.stk)-1]
+    this.stk = this.stk[:len(this.stk)-1]
+    ret := root.Val
+    root = root.Right
+    for root != nil {
+        this.stk = append(this.stk, root)
+        root = root.Left
+    }
+    return ret
+}
+
+
+func (this *BSTIterator) HasNext() bool {
+    return len(this.stk) > 0
+}
+```
