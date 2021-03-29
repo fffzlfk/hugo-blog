@@ -5060,3 +5060,31 @@ func (this *BSTIterator) HasNext() bool {
     return len(this.stk) > 0
 }
 ```
+
+### 翻转单词顺序
+
+[题目链接](https://www.acwing.com/problem/content/73/)
+
+#### 思路
+
+1. 将整个字符串翻转
+2. 翻转每个单词
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    string reverseWords(string s) {
+        const int n = s.length();
+        reverse(begin(s), end(s));
+        for (int i = 0; i < n; i++) {
+            int j = i + 1;
+            while (j < n && s[j] != ' ') ++j;
+            reverse(begin(s) + i, begin(s) + j);
+            i = j;
+        }
+        return s;
+    }
+};
+```
