@@ -5088,3 +5088,36 @@ public:
     }
 };
 ```
+
+### 搜索二维矩阵-二分
+
+[题目链接](https://leetcode-cn.com/problems/search-a-2d-matrix/)
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& M, int target) {
+        const int n = M.size(), m = M[0].size();
+        int l = 0, r = n - 1;
+        while (l < r) {
+            const int mid = (l + r + 1) >> 1;
+            if (M[mid][0] <= target) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+        int row = l;
+        l = 0, r = m - 1;
+        while (l < r) {
+            const int mid = (l + r + 1) >> 1;
+            if (M[row][mid] <= target) {
+                l = mid;
+            } else r = mid - 1;
+        }
+        return M[row][l] == target;
+    }
+};
+```
