@@ -5101,33 +5101,22 @@ public:
 
 |时间复杂度 | 空间复杂度 |
 | -- | -- |
-|$O(logm+logn)$ | $O(1)$ |
+|$O(log(n^2)) = O(logn)$ | $O(1)$ |
 
-```cpp
-class Solution {
-public:
-    bool searchMatrix(vector<vector<int>>& M, int target) {
-        const int n = M.size(), m = M[0].size();
-        int l = 0, r = n - 1;
-        while (l < r) {
-            const int mid = (l + r + 1) >> 1;
-            if (M[mid][0] <= target) {
-                l = mid;
-            } else {
-                r = mid - 1;
-            }
+```go
+func searchMatrix(M [][]int, target int) bool {
+    n, m := len(M), len(M[0])
+    l, r := 0, n * m - 1
+    for l < r {
+        mid := (l + r + 1) >> 1
+        if M[mid/m][mid%m] <= target {
+            l = mid
+        } else {
+            r = mid - 1
         }
-        int row = l;
-        l = 0, r = m - 1;
-        while (l < r) {
-            const int mid = (l + r + 1) >> 1;
-            if (M[row][mid] <= target) {
-                l = mid;
-            } else r = mid - 1;
-        }
-        return M[row][l] == target;
     }
-};
+    return M[l/m][l%m] == target
+}
 ```
 
 ### 二维数组中的查找-二分
