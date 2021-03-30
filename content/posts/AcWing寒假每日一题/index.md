@@ -5070,6 +5070,10 @@ func (this *BSTIterator) HasNext() bool {
 1. 将整个字符串翻转
 2. 翻转每个单词
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(1)$ |
+
 #### 代码
 
 ```cpp
@@ -5094,6 +5098,10 @@ public:
 [题目链接](https://leetcode-cn.com/problems/search-a-2d-matrix/)
 
 #### 代码
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(logm+logn)$ | $O(1)$ |
 
 ```cpp
 class Solution {
@@ -5120,4 +5128,43 @@ public:
         return M[row][l] == target;
     }
 };
+```
+
+### 二维数组中的查找-二分
+
+[题目链接](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
+
+#### 思路
+
+{{<image src="https://files.catbox.moe/l0kwns.png" position="center" style="zoom: 80% ;">}}
+
+我们可以发现：`x`左边的数都小于等于`x`，`x`下边的数都大于等于`x`
+
+1. 如果 `x` 等于`target`，则说明我们找到了目标值，返回`true`；
+2. 如果 `x` 小于`target`，则 `x` 左边的数一定都小于`target`，我们可以直接排除当前一整行的数
+3. 如果 `x` 大于`target`，则 `x` 下边的数一定都大于`target`，我们可以直接排序当前一整列的数
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(m+n)$ | $O(1)$ |
+
+#### 代码
+
+```go
+func findNumberIn2DArray(M [][]int, target int) bool {
+    if len(M) == 0 {
+        return false
+    }
+    i, j := 0, len(M[0]) - 1
+    for i < len(M) && j >= 0 {
+        if M[i][j] == target {
+            return true
+        } else if (M[i][j] < target) {
+            i++
+        } else {
+            j--
+        }
+    }
+    return false
+}
 ```
