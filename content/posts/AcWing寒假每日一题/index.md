@@ -5202,3 +5202,47 @@ public:
     }
 };
 ```
+
+### 递归实现组合型枚举
+
+[题目链接](https://www.acwing.com/problem/content/95/)
+
+#### 思路
+
+{{<image src="https://files.catbox.moe/z9l558.png" position="center" style="zoom: 70% ;">}}
+
+#### 代码
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+const int N = 30;
+
+int n, m;
+
+int path[N];
+
+// u是层数，start是起始值
+void dfs(int u, int start) {
+    if (u > m) {
+        for (int i = 1; i <= m; i++)
+            cout << path[i] << " ";
+        cout << endl;
+        return;
+    }
+    for (int i = start; i <= n; i++) {
+        path[u] = i;
+        dfs(u + 1, i + 1);
+        path[u] = 0;
+    }
+}
+
+
+int main() {
+    cin >> n >> m;
+    dfs(1, 1);
+    return 0;
+}
+```
