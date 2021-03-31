@@ -5157,3 +5157,48 @@ func findNumberIn2DArray(M [][]int, target int) bool {
     return false
 }
 ```
+
+### 子集II
+
+#### 思路
+
+- 先排序，把所有相同的元素放在一起，之后统计相同元素个数，对于每个相同元素可以选择的次数为0-t(t表示元素出现次数)
+- 将所有元素的所有次数可能相互组合即可得到所有解集
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n2^n)$ | $O(n)$ |
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        int n = nums.size();
+        sort(begin(nums), end(nums));
+        vector<int> tmp;
+        vector<vector<int>> ans;
+        function<void(int)> dfs = [&](int u){
+            if (u >= n) {
+                ans.emplace_back(tmp);
+                return;
+            }
+
+            int k = 0;
+            while (u + k < n && nums[u] == nums[u+k]) k++;
+
+            for (int i = 0; i <= k; i++) {
+                dfs(u + k);
+                tmp.emplace_back(nums[u]);
+            }
+            
+            for (int i = 0; i <= k; i++)
+                tmp.pop_back();
+        };
+
+        dfs(0);
+        return ans;
+    }
+};
+```
