@@ -5246,3 +5246,212 @@ int main() {
     return 0;
 }
 ```
+
+### 直方图的水量-单调栈|DP
+
+[题目链接](https://leetcode-cn.com/problems/volume-of-histogram-lcci/)
+
+#### 单调栈
+
+##### 思路
+
+- 维护一个单调栈（严格递减），那么一定有`height[t] > height[left]`(left是栈顶下面的元素)
+- 若`height[i] > height[t]`则可形成一个盛水区域，宽度为`i-left-1`，高度为`min(height[i], height[left])-height[t]`
+
+##### 代码
+
+```go
+func trap(height []int) int {
+    stk := make([]int, 0)
+    ans := 0
+    for i := range height {
+        for len(stk) > 0 && height[i] >= height[stk[len(stk)-1]] {
+            top := stk[len(stk)-1]
+            stk = stk[:len(stk)-1]
+            if len(stk) <= 0 {
+                break
+            }
+            left := stk[len(stk)-1]
+            ans += (i - left - 1) * (min(height[i], height[left])-height[top])
+        }
+        stk = append(stk, i)
+    }
+    return ans
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+```
+
+#### DP
+
+##### 思路
+
+对于下标 `i`，水能到达的最大高度等于下标 `i` 两边的最大高度的最小值，下标 `i` 处能接的水的量等于下标 `i` 处的水能到达的最大高度减去 `height[i]`。
+
+##### 代码
+
+```go
+func trap(height []int) int {
+    n := len(height)
+    if n == 0 {
+        return 0
+    }
+    left, right := make([]int, n), make([]int, n)
+    left[0] = height[0]
+    for i := 1; i < n; i++ {
+        left[i] = max(left[i-1], height[i])
+    }
+    right[n-1] = height[n-1]
+    for i := n-2; i >= 0; i-- {
+        right[i] = max(right[i+1], height[i])
+    }
+    ans := 0
+    for i := range height {
+        ans += min(left[i], right[i]) - height[i]
+    }
+    return ans
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
+
+### 雨-最短路变形
+
+[题目链接](https://www.acwing.com/problem/content/description/594/)
+
+#### 思路
+
+- 将海水抽象为一个源点
+- 求海水到每个点所经过的点的最大权值的最短路
+
+#### 代码
+
+```go
+package main
+
+import  (
+    "fmt"
+    "container/heap"
+)
+
+type Node struct {
+    x int
+    y int
+    d int
+}
+
+type NodeHeap []Node
+
+func (n NodeHeap) Len() int {
+    return len(n)
+}
+
+func (n NodeHeap) Swap(i, j int) {
+    n[i], n[j] = n[j], n[i]
+}
+
+func (n NodeHeap) Less(i, j int) bool {
+    return n[i].d < n[j].d
+}
+
+func (n *NodeHeap) Push(h interface{}) {
+    *n = append(*n, h.(Node))
+}
+
+func (n *NodeHeap) Pop() (x interface{}) {
+    x = (*n)[len(*n)-1]
+    *n = (*n)[:len(*n)-1]
+    return
+}
+
+func main() {
+    var T int
+    fmt.Scan(&T)
+    var n, m int
+    for C := 1; C <= T; C++ {
+        fmt.Scan(&n, &m)
+        h := make([][]int, n+1)
+        dist := make([][]int, n+1)
+        st := make([][]bool, n+1)
+        for i := 1; i <= n; i++ {
+            h[i] = make([]int, m+1)
+            st[i] = make([]bool, m+1)
+            dist[i] = make([]int, m+1)
+            for j := 1; j <= m; j++ {
+                fmt.Scan(&h[i][j])
+                dist[i][j] = int(^uint(0)>>1)
+            }
+        }
+        
+        hp := &NodeHeap{}
+        
+        heap.Init(hp)
+        
+        for i := 1; i <= n; i++ {
+            heap.Push(hp, Node{i, 1, h[i][1]})
+            dist[i][1] = h[i][1]
+            heap.Push(hp, Node{i, m, h[i][m]})
+            dist[i][m] = h[i][m]
+        }
+        
+        for i := 2; i <= m; i++ {
+            heap.Push(hp, Node{1, i, h[1][i]})
+            dist[1][i] = h[1][i]
+            heap.Push(hp, Node{n, i, h[n][i]})
+            dist[n][i] = h[n][i]
+        }
+        
+        ans := 0
+        
+        dx, dy := [4]int{-1, 0, 1, 0}, [4]int{0, 1, 0, -1}
+        
+        for hp.Len() > 0 {
+            top := heap.Pop(hp).(Node)
+            
+            st[top.x][top.y] = true
+            ans += top.d - h[top.x][top.y]
+            
+            for i := range dx {
+                nx, ny := top.x + dx[i], top.y + dy[i]
+                
+                if nx < 1 || nx > n || ny < 1 || ny > m || st[nx][ny] {
+                    continue
+                }
+                
+                if dist[nx][ny] > max(top.d, h[nx][ny]) {
+                    dist[nx][ny] = max(top.d, h[nx][ny])
+                    heap.Push(hp, Node{nx, ny, dist[nx][ny]})
+                }
+            }
+        }
+        
+        fmt.Printf("Case #%d: %d\n", C, ans)
+    }
+}
+
+func max(a, b int) (x int) {
+    if a > b {
+        x = a
+    } else {
+        x = b
+    }
+    return
+}
+```
