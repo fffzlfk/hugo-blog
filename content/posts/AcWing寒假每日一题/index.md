@@ -5455,3 +5455,54 @@ func max(a, b int) (x int) {
     return
 }
 ```
+
+### 密码脱落-LCS
+
+#### 思路
+
+求字符串及其翻转串的LCS长度
+
+#### 代码
+
+```go
+package main
+
+import "fmt"
+
+func reverse(s string) (res string) {
+    a := []rune(s)
+    n := len(a)
+    for i, j := 0, n-1; i < j; i, j = i+1, j-1 {
+        a[i], a[j] = a[j], a[i]
+    }
+    return string(a)
+}
+
+func main() {
+    var a, b string
+    fmt.Scanf("%s", &a)
+    n := len(a)
+    b = reverse(a)
+    f := make([][]int, n+1)
+    for i := range f {
+        f[i] = make([]int, n+1)
+    }
+    for i := 1; i <= n; i++ {
+        for j := 1; j <= n; j++ {
+            if a[i-1] == b[j-1] {
+                f[i][j] = f[i-1][j-1] + 1
+            } else {
+                f[i][j] = max(f[i-1][j], f[i][j-1])
+            }
+        }
+    }
+    fmt.Println(n - f[n][n])
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
