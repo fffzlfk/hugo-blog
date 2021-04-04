@@ -5211,6 +5211,11 @@ public:
 
 {{<image src="https://files.catbox.moe/z9l558.png" position="center" style="zoom: 70% ;">}}
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(2^n)$ | $O(n)$ |
+
+
 #### 代码
 
 ```cpp
@@ -5258,6 +5263,11 @@ int main() {
 - 维护一个单调栈（严格递减），那么一定有`height[t] > height[left]`(left是栈顶下面的元素)
 - 若`height[i] > height[t]`则可形成一个盛水区域，宽度为`i-left-1`，高度为`min(height[i], height[left])-height[t]`
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(n)$ |
+
+
 ##### 代码
 
 ```go
@@ -5292,6 +5302,11 @@ func min(a, b int) int {
 ##### 思路
 
 对于下标 `i`，水能到达的最大高度等于下标 `i` 两边的最大高度的最小值，下标 `i` 处能接的水的量等于下标 `i` 处的水能到达的最大高度减去 `height[i]`。
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(n)$ |
+
 
 ##### 代码
 
@@ -5458,9 +5473,16 @@ func max(a, b int) (x int) {
 
 ### 密码脱落-LCS
 
+[题目链接](https://www.acwing.com/problem/content/1224/)
+
 #### 思路
 
 求字符串及其翻转串的LCS长度
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n^2)$ | $O(n^2)$ |
+
 
 #### 代码
 
@@ -5504,5 +5526,37 @@ func max(a, b int) int {
         return a
     }
     return b
+}
+```
+
+### 森林中的兔子
+
+[题目链接](https://leetcode-cn.com/problems/rabbits-in-forest/)
+
+#### 思路
+
+- 统计每种$x$出现的次数
+- 若$x$出现了$k$次为了使得兔子数量最小，则兔子种类数为 $\lceil \frac{k}{x+1} \rceil$, 且每种兔子数量为$x+1$
+- 则兔子总数为$\sum_i^n{ \lceil \frac{k_i}{x_i+1} \rceil \times (x_i+1)}$
+- 例如有13只兔子回答5，则至少有六只同一种类兔子记为红色，还有六只另一种类记为蓝色，还剩下一只兔子回答5，则必然还有五只兔子与这一只兔子颜色相同记为白色。综上有$\lceil \frac{13}{5+1} \rceil \times (5+1) = 18$只兔子。
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(n)$ |
+
+
+#### 代码
+
+```go
+func numRabbits(answers []int) int {
+    mp := make(map[int]int)
+    for i := range answers {
+        mp[answers[i]]++
+    }
+    ret := 0
+    for k, v := range mp {
+        ret += (v + k) / (k + 1) * (k + 1);
+    }
+    return ret;
 }
 ```
