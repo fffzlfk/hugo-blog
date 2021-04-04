@@ -5560,3 +5560,130 @@ func numRabbits(answers []int) int {
     return ret;
 }
 ```
+
+### 石子合并-区间DP
+
+[题目链接](https://www.acwing.com/problem/content/description/284/)
+
+#### 思路
+
+- $f[i][j]$表示将表示将 $i$ 到 $j$ 合并成一堆的方案的集合，属性是最小值
+- $f[i][j]=min_{i≤k≤j−1}\\{f[i][k]+f[k+1][j]+s[j]−s[i−1]\\}$
+
+#### 代码
+
+```go
+package main
+
+import "fmt"
+
+const N = 305
+var n int
+var s [N]int
+var f [N][N]int
+
+func main() {
+    fmt.Scan(&n)
+    for i := 1; i <= n; i++ {
+        fmt.Scan(&s[i])
+        s[i] += s[i-1]
+    }
+    
+    for len := 2; len <= n; len++ {
+        for i := 1; i + len - 1 <= n; i++ {
+            j := i + len - 1
+            f[i][j] = int(^uint(0) >> 1)
+            for k := i; k < j; k++ {
+                f[i][j] = min(f[i][j], f[i][k] + f[k+1][j] + s[j] - s[i-1])
+            }
+        }
+    }
+    
+    fmt.Println(f[1][n])
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+```
+
+#### 环形石子合并
+
+[题目链接](https://loj.ac/p/10147)
+
+##### 思路
+
+- 破环成链
+- 求所有区间长度为n的链形石子合并
+- 枚举长度为n的区间，取max
+
+##### 代码
+
+```go
+package main
+
+import "fmt"
+
+const (
+	N       = 405
+	INT_MAX = int(^uint(0) >> 1)
+	INT_MIN = -INT_MAX - 1
+)
+
+var (
+	n int
+	f [N][N]int
+	g [N][N]int
+	s [N]int
+	a [N]int
+)
+
+func main() {
+	fmt.Scan(&n)
+	for i := 1; i <= n; i++ {
+		fmt.Scan(&a[i])
+		a[i+n] = a[i]
+	}
+
+	for i := 1; i <= 2*n; i++ {
+		s[i] = s[i-1] + a[i]
+	}
+
+	for l := 2; l <= n; l++ {
+		for i := 1; i+l-1 <= 2*n; i++ {
+			j := i + l - 1
+			f[i][j], g[i][j] = INT_MAX, INT_MIN
+			for k := i; k < j; k++ {
+				f[i][j], g[i][j] = min(f[i][j], f[i][k]+f[k+1][j]+s[j]-s[i-1]), max(g[i][j], g[i][k]+g[k+1][j]+s[j]-s[i-1])
+			}
+		}
+	}
+
+	minv, maxv := INT_MAX, INT_MIN
+
+	for i := 1; i <= n; i++ {
+		minv = min(minv, f[i][i+n-1])
+		maxv = max(maxv, g[i][i+n-1])
+	}
+
+	fmt.Println(minv)
+	fmt.Println(maxv)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+```
