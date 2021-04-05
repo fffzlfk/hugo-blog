@@ -5570,6 +5570,10 @@ func numRabbits(answers []int) int {
 - $f[i][j]$表示将表示将 $i$ 到 $j$ 合并成一堆的方案的集合，属性是最小值
 - $f[i][j]=min_{i≤k≤j−1}\\{f[i][k]+f[k+1][j]+s[j]−s[i−1]\\}$
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n^3)$ | $O(n^2)$ |
+
 #### 代码
 
 ```go
@@ -5685,5 +5689,41 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+```
+
+### 合并两个有序数组
+
+[题目链接](https://leetcode-cn.com/problems/merge-sorted-array/submissions/)
+
+#### 解题思路
+
+- 指针从后往前移动
+- 每次将较大值插到后面
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(m+n)$ | $O(1)$ |
+
+#### 代码
+
+```go
+func merge(A []int, m int, B []int, n int)  {
+    i, j := m-1, n-1
+    for k := m+n-1; k >= 0; k-- {
+        if i == -1 {
+            A[k] = B[j]
+            j--
+        } else if j == -1 {
+            A[k] = A[i]
+            i--
+        } else if A[i] > B[j] {
+            A[k] = A[i]
+            i--
+        } else {
+            A[k] = B[j]
+            j--
+        }
+    }
 }
 ```
