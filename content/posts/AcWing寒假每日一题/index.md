@@ -5727,3 +5727,31 @@ func merge(A []int, m int, B []int, n int)  {
     }
 }
 ```
+
+### 删除有序数组中的重复项II
+
+[题目链接](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/)
+
+#### 思路
+
+1. `k`指向新数组的末尾
+2. 遍历数组，若当前元素不等于`nums[k-2]`则插入新数组的末尾
+
+#### 代码
+
+```go
+func removeDuplicates(nums []int) int {
+    n := len(nums)
+    if n <= 2 {
+        return n
+    }
+    k := 2
+    for i := 2; i < n; i++ {
+        if nums[i] != nums[k-2] {
+            nums[k] = nums[i]
+            k++
+        }
+    }
+    return k
+}
+```
