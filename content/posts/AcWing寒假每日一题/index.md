@@ -5737,6 +5737,11 @@ func merge(A []int, m int, B []int, n int)  {
 1. `k`指向新数组的末尾
 2. 遍历数组，若当前元素不等于`nums[k-2]`则插入新数组的末尾
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(1)$ |
+
+
 #### 代码
 
 ```go
@@ -5753,5 +5758,54 @@ func removeDuplicates(nums []int) int {
         }
     }
     return k
+}
+```
+
+### 搜索旋转排序数组II-二分
+
+[题目链接](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/)
+
+#### 思路
+
+- `nums[l] == nums[mid]`：不能确定哪一个区间是有序的，`l++`
+- `nums[l] < nums[mid]`：左区间是有序的
+- `nums[l] > nums[mid]`：右区间是有序的
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(1)$ |
+
+
+#### 代码
+
+```go
+func search(nums []int, target int) bool {
+    n := len(nums)
+    if n == 0 {
+        return false
+    }
+    l, r := 0, n-1
+    for l <= r {
+        mid := (l + r) >> 1
+        if nums[mid] == target {
+            return true
+        } else if nums[l] == nums[mid] {
+            l++
+            continue
+        } else if nums[l] < nums[mid] {
+            if nums[l] <= target && target < nums[mid] {
+                r = mid - 1
+            } else {
+                l = mid + 1
+            }
+        } else {
+            if nums[mid] < target && target <= nums[r] {
+                l = mid + 1
+            } else {
+                r = mid - 1
+            }
+        }
+    }
+    return false
 }
 ```
