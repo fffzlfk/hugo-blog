@@ -5809,3 +5809,44 @@ func search(nums []int, target int) bool {
     return false
 }
 ```
+
+### 0到n-1中缺失的数字-二分
+
+[题目链接](https://www.acwing.com/problem/content/64/)
+
+#### 思路
+
+{{<image src="https://cdn.acwing.com/media/article/image/2019/05/31/1_37a28f4683-%E7%BC%BA%E5%A4%B1%E6%95%B0%E5%AD%97.png" position="center" style="zoom: 80% ;">}}
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(logn)$ | $O(1)$ |
+
+#### 代码
+
+```go
+class Solution {
+public:
+    int getMissingNumber(vector<int>& nums) {
+        const int n = nums.size();
+        if (!n) {
+            return 0;
+        }
+        if (nums[n-1] == n-1) {
+            return n;
+        }
+        
+        int l = 0, r = n-1;
+        while (l < r) {
+            const int mid = (l + r) >> 1;
+            if (nums[mid] != mid) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        
+        return l;
+    }
+};
+```
