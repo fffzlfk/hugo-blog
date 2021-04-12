@@ -5850,3 +5850,56 @@ public:
     }
 };
 ```
+
+### 移去K位数字-贪心
+
+[题目链接](https://www.acwing.com/problem/content/1455/)
+
+#### 思路
+
+- 如果字符串已经是有序的，则应该删除后$k$位
+- 如果出现逆序，则应该把前一个元素删除
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(1)$ |
+
+
+#### 代码
+
+```go
+package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    var s string
+    var k int
+    fmt.Scan(&s, &k)
+    
+    ans := "0"
+    
+    for _, v := range s {
+        for k > 0 && ans[len(ans)-1] > byte(v) {
+            ans = ans[:len(ans)-1]
+            k--
+        }
+        ans += string(v)
+    }
+    
+    for k > 0 {
+        ans = ans[:len(ans)-1]
+        k--
+    }
+    
+    i := 0
+    
+    for i < len(ans) - 1 && ans[i] == '0' {
+        i++
+    }
+    
+    fmt.Println(ans[i:])
+}
+```
