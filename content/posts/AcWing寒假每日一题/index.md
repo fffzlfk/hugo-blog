@@ -5903,3 +5903,49 @@ func main() {
     fmt.Println(ans[i:])
 }
 ```
+
+### 二叉搜索树节点最小距离
+
+[题目链接](https://leetcode-cn.com/problems/minimum-distance-between-bst-nodes/)
+
+#### 思路
+
+二叉搜索树中序遍历有序
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(1)$ |
+
+#### 代码
+
+```go
+const MAX int = int(^uint(0) >> 1)
+func minDiffInBST(root *TreeNode) (ans int) {
+    ans = MAX
+    var last int
+    is_first := false
+    var dfs func(root *TreeNode)
+    dfs = func(root *TreeNode) {
+        if root == nil {
+            return
+        }
+        dfs(root.Left)
+        if (!is_first) {
+            is_first = true
+        } else {
+            ans = min(ans, root.Val - last)
+        }
+        last = root.Val
+        dfs(root.Right)
+    }
+    dfs(root)
+    return
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+```
