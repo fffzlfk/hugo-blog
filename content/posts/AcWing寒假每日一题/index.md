@@ -5949,3 +5949,184 @@ func min(a, b int) int {
     return b
 }
 ```
+
+### 实现Trie树
+
+#### 思路
+
+- 字典树
+
+#### 代码
+
+```go
+type Trie struct {
+    son [26]*Trie
+    isEnd bool
+}
+
+/** Initialize your data structure here. */
+func Constructor() Trie {
+    return Trie{}
+}
+
+func (this *Trie) query(word string) (res *Trie) {
+    node := this
+    for _, v := range word {
+        t := v - 'a'
+        if node.son[t] == nil {
+            res = nil
+            return
+        }
+        node = node.son[t]
+    }
+    res = node
+    return
+}
+
+
+/** Inserts a word into the trie. */
+func (this *Trie) Insert(word string)  {
+    node := this
+    for _, v := range word {
+        t := v - 'a'
+        if node.son[t] == nil {
+            node.son[t] = &Trie{}
+        }
+        node = node.son[t]
+    }
+    node.isEnd = true
+}
+
+
+/** Returns if the word is in the trie. */
+func (this *Trie) Search(word string) bool {
+    node := this.query(word)
+    return node != nil && node.isEnd
+}
+
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+func (this *Trie) StartsWith(prefix string) bool {
+    return this.query(prefix) != nil
+}
+```
+
+### 前缀统计-Trie
+
+[题目链接](https://www.acwing.com/problem/content/description/144/)
+
+#### 链表代码
+
+```go
+package main
+
+import "fmt"
+
+type Trie struct {
+    son [26]*Trie
+    isEnd bool
+    cnt int
+}
+
+func NewTrie() *Trie {
+    return &Trie{}
+}
+
+func (t *Trie) insert(word string) {
+    node := t
+    for _, v := range word {
+        c := v - 'a'
+        if node.son[c] == nil {
+            node.son[c] = NewTrie()
+        }
+        node = node.son[c]
+    }
+    node.cnt++
+    node.isEnd = true
+}
+
+func (t *Trie) query(word string) (ans int) {
+    node := t
+    for _, v := range word {
+        c := v - 'a'
+        if node.son[c] == nil {
+            return ans
+        }
+        node = node.son[c]
+        ans += node.cnt
+    }
+    return
+}
+
+func main() {
+    var n, m int
+    fmt.Scan(&n, &m)
+    var s string
+    t := NewTrie()
+    for i := 0; i < n; i++ {
+        fmt.Scan(&s)
+        t.insert(s)
+    }
+    for i := 0; i < m; i++ {
+        fmt.Scan(&s)
+        fmt.Println(t.query(s))
+    }
+}
+```
+
+#### 数组代码
+
+```go
+package main
+
+import "fmt"
+
+const N = 1e6 + 5
+var (
+    n, m int
+    son [N][26]int
+    idx int
+    cnt [N]int
+)
+
+func insert(word string) {
+    p := 0
+    for _, v := range word {
+        t := v - 'a'
+        if son[p][t] == 0 {
+            idx++
+            son[p][t] = idx
+        }
+        p = son[p][t]
+    }
+    cnt[p]++
+}
+
+func query(word string) (ans int) {
+    p := 0
+    for _, v := range word {
+        t := v - 'a'
+        if son[p][t] == 0 {
+            return
+        }
+        p = son[p][t]
+        ans += cnt[p]
+    }
+    return
+}
+
+func main() {
+    fmt.Scan(&n, &m)
+    var s string
+    
+    for i := 0; i < n; i++ {
+        fmt.Scan(&s)
+        insert(s)
+    }
+    
+    for i := 0; i < m; i++ {
+        fmt.Scan(&s)
+        fmt.Println(query(s))
+    }
+}
+```
