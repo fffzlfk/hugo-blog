@@ -6130,3 +6130,51 @@ func main() {
     }
 }
 ```
+
+### 打家劫舍II-DP
+
+#### 解题思路
+
+{{<image src="https://files.catbox.moe/eqkwxw.png" position="center" style="zoom: 80% ;">}}
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n)$ | $O(n)$ |
+
+#### 代码
+
+```go
+func rob(nums []int) int {
+    n := len(nums)
+    if n == 1 {
+        return nums[0]
+    }
+    f := make([][]int, n)
+    for i := range f {
+        f[i] = make([]int, n)
+    }
+    f[0][0], f[0][1] = math.MinInt64, nums[0]
+
+    for i := 1; i < n; i++ {
+        f[i][0] = max(f[i-1][0], f[i-1][1])
+        f[i][1] = f[i-1][0] + nums[i]
+    }
+
+    res := f[n-1][0]
+
+    f[0][0], f[0][1] = 0, math.MinInt64
+    for i := 1; i < n; i++ {
+        f[i][0] = max(f[i-1][0], f[i-1][1])
+        f[i][1] = f[i-1][0] + nums[i]
+    }
+
+    return max(res, max(f[n-1][0], f[n-1][1]))
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
