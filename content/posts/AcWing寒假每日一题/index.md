@@ -6149,10 +6149,8 @@ func rob(nums []int) int {
     if n == 1 {
         return nums[0]
     }
-    f := make([][]int, n)
-    for i := range f {
-        f[i] = make([]int, n)
-    }
+    f := make([][2]int, n)
+    
     f[0][0], f[0][1] = math.MinInt64, nums[0]
 
     for i := 1; i < n; i++ {
