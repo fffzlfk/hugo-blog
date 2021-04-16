@@ -6176,3 +6176,55 @@ func max(a, b int) int {
     return b
 }
 ```
+
+### 扰乱字符串-DP
+
+[题目链接](https://leetcode-cn.com/problems/scramble-string/)
+
+#### 思路
+
+- 状态表示`f[i][j][k]`
+    - 集合：`s1[i..i+k-1]`和`s2[j..j+k-1]`所有匹配的方案的集合
+    - 属性：集合是否为空集
+- 状态计算：`f[i][j][k]`按`s1`第一段的长度划分成`k-1`类，有两种匹配方案
+    1. `f[i][j][u] && f[i+u][j+u][k-u]`
+    2. `f[i][j+k-u][u] && f[i+u][j][k-u]`
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n^4)$ | $O(n^3)$ |
+
+#### 代码
+
+```go
+func isScramble(s1 string, s2 string) bool {
+    n := len(s1)
+    f := make([][][]bool, n)
+    for i := range f {
+        f[i] = make([][]bool, n)
+        for j := range f[i] {
+            f[i][j] = make([]bool, n+1)
+        }
+    }
+    for k := 1; k <= n; k++ {
+        for i := 0; i+k-1 < n; i++ {
+            for j := 0; j+k-1 < n; j++ {
+                if k == 1 {
+                    if s1[i] == s2[j] {
+                        f[i][j][k] = true
+                    }
+                } else {
+                    for u := 1; u < k; u++ {
+                        if f[i][j][u] && f[i+u][j+u][k-u] ||
+                           f[i][j+k-u][u] && f[i+u][j][k-u] {
+                            f[i][j][k] = true
+                            break
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return f[0][0][n]
+}
+```
