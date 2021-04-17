@@ -6228,3 +6228,38 @@ func isScramble(s1 string, s2 string) bool {
     return f[0][0][n]
 }
 ```
+
+### 重复元素III-滑动窗口
+
+[题目链接](https://leetcode-cn.com/problems/contains-duplicate-iii/)
+
+#### 思路
+
+- 有序集合中查找大于等于 `x - t` 的最小的元素 `y`，如果 `y` 存在，且  `y <= x + t`则存在
+- 有序集合中元素数量超过了 `k`，将有序集合中最早被插入的元素删除即可
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(nlogk)$ | $O(k)$ |
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        set<long> st;
+        const int n = nums.size();
+        for (int i = 0; i < n; i++) {
+            auto it = st.lower_bound(nums[i]*1l-t);
+            if (it != end(st) && *it <= nums[i]*1l+t) {
+                return true;
+            }
+            st.insert(nums[i]);
+            if (i-k >= 0)
+                st.erase(nums[i-k]);
+        }
+        return false;
+    }
+};
+```
