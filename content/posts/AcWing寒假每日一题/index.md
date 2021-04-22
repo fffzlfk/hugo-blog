@@ -6300,3 +6300,43 @@ func numDecodings(s string) int {
     return f[n]
 }
 ```
+
+### 矩形区域不超过 K 的最大数值和-前缀和
+
+[题目链接](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+
+#### 思路
+
+- 二重循环枚举矩形的上边界和下边界，时间复杂度`O(n^2)`
+- 在一维数组求和不超过K的最大子数组的和，我们可以在`O(nlogn)`的时间复杂度内求解。我们知道可以使用前缀和求解子区间和：`sum(A[i:j])=preSum[j]−preSum[i−1]`。那么对于每一个`preSum[j]`，我们可以将遇到过的前缀后存入一个set中，再从set中找到一个大于等于`preSum[j]−k`的最小值，这样他们的差值就是小于等于kk的最大值。这种查找的时间复杂度是`logn`的，总共需要查找`n`次，所以总共的时间复杂度为`O(nlogn)`
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int maxSumSubmatrix(vector<vector<int>>& A, int k) {
+        const int m = A.size(), n = A[0].size();
+        int ans = INT_MIN;
+        for (int i = 0; i < m; i++) {
+            vector<int> sum(n);
+            for (int j = i; j < m; j++) {
+                for (int k = 0; k < n; k++) {
+                    sum[k] += A[j][k];
+                }
+                set<int> st{0};
+                int s = 0;
+                for (const auto &e : sum) {
+                    s += e;
+                    auto it = st.lower_bound(s - k);
+                    if (it != st.end()) {
+                        ans = max(ans, s - *it);
+                    }
+                    st.insert(s);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
