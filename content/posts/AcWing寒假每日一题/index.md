@@ -6310,6 +6310,10 @@ func numDecodings(s string) int {
 - 二重循环枚举矩形的上边界和下边界，时间复杂度`O(n^2)`
 - 在一维数组求和不超过K的最大子数组的和，我们可以在`O(nlogn)`的时间复杂度内求解。我们知道可以使用前缀和求解子区间和：`sum(A[i:j])=preSum[j]−preSum[i−1]`。那么对于每一个`preSum[j]`，我们可以将遇到过的前缀后存入一个set中，再从set中找到一个大于等于`preSum[j]−k`的最小值，这样他们的差值就是小于等于kk的最大值。这种查找的时间复杂度是`logn`的，总共需要查找`n`次，所以总共的时间复杂度为`O(nlogn)`
 
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(m^2nlogn)$ | $O(n)$ |
+
 #### 代码
 
 ```cpp
@@ -6339,4 +6343,63 @@ public:
         return ans;
     }
 };
+```
+
+### 最大整除子集-dp
+
+[题目链接](https://leetcode-cn.com/problems/largest-divisible-subset/)
+
+#### 解题思路
+
+- 前提：升序
+- 状态集合：$f[i]$表示最大元素为$nums[i]$的有效解子集
+- 属性：有效子集大小
+- 状态计算：$f[i]=max(f[i], f[j]+1), j=0..i-1$
+- 倒序遍历$f$找到集合元素
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(n^2)$ | $O(n)$ |
+
+#### 代码
+
+```go
+func largestDivisibleSubset(nums []int) []int {
+    sort.Ints(nums)
+    n := len(nums)
+    f := make([]int, n)
+    for i := range f {
+        f[i] = 1
+    }
+    
+    maxLen := 1
+
+    for i := range f {
+        for j := 0; j < i; j++ {
+            if nums[i] % nums[j] == 0 {
+                f[i] = max(f[i], f[j] + 1)
+                maxLen = max(maxLen, f[i])
+            }
+        }
+    }
+
+    ans := make([]int, maxLen)
+    end := true
+
+    for i := n-1; i >= 0 && maxLen > 0; i-- {
+        if f[i] == maxLen && (end || ans[maxLen] % nums[i] == 0) {
+            ans[maxLen-1] = nums[i]
+            end = false
+            maxLen--
+        }
+    }
+    return ans
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
 ```
