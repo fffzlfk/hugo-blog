@@ -6454,3 +6454,32 @@ func max(a, b int) int {
     return b
 }
 ```
+
+### 组合总和IV-DP
+
+[题目链接](https://leetcode-cn.com/problems/combination-sum-iv/)
+
+#### 思路
+
+考虑顺序背包->先枚举体积，再枚举物品
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(mn)$ | $O(n)$ |
+
+#### 代码
+
+```go
+func combinationSum4(nums []int, target int) int {
+    f := make([]int, target+1)
+    f[0] = 1
+    for i := 0; i <= target; i++ {
+        for _, v := range nums {
+            if i >= v {
+                f[i] += f[i-v]
+            }
+        }
+    }
+    return f[target]
+}
+```
