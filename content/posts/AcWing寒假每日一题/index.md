@@ -6403,3 +6403,54 @@ func max(a, b int) int {
     return b
 }
 ```
+
+### 整数拆分-完全背包
+
+[题目链接](https://www.acwing.com/problem/content/3385/)
+
+#### 思路
+
+完全背包
+
+- 状态表示：$f[i]$表示$i$的不同拆分方式数
+- 状态计算：$f[i]=f[j]+f[j-2^i], 0 \le 2^i \le n$
+
+|时间复杂度 | 空间复杂度 |
+| -- | -- |
+|$O(nlogn)$ | $O(n)$ |
+
+#### 代码
+
+```go
+package main
+
+import "fmt"
+
+const (
+    N = 1e6 + 5
+    mod = 1e9
+)
+
+var (
+    n int
+    f [N]int
+)
+
+func main() {
+    fmt.Scan(&n)
+    f[0] = 1
+    for i := 0; 1<<i <= n; i++ {
+        for j := 1<<i; j <= n; j++ {
+            f[j] = (f[j] + f[j-1<<i]) % mod
+        }
+    }
+    fmt.Println(f[n])
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
