@@ -255,7 +255,7 @@ CREATE [UNIQUE] | [CLUSTER] INDEX <索引名>
 
   集函数只能用于SELECT子句和 HAVING短语之中，而**绝对不能出现在 WHERE 子句**中(WHERE子句执行过程是对记录逐一检验，并没有结果集，故无法施加集函数)。  
 
-  ![](http://media.sumblog.cn/blog/20181223/nPMQrirY1FGp.png?imageMogr2/thumbnail/!60p)
+  ![](https://media.sumblog.cn/blog/20181223/nPMQrirY1FGp.png?imageMogr2/thumbnail/!60p)
 
 ### 连接查询
 
