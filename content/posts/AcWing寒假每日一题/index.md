@@ -6483,3 +6483,61 @@ func combinationSum4(nums []int, target int) int {
     return f[target]
 }
 ```
+
+### 最大的和-前缀和&滑动窗口
+
+[题目连接](https://www.acwing.com/problem/content/3496/)
+
+#### 代码
+
+```go
+package main
+
+import "fmt"
+
+const N = 1e5 + 5
+
+var (
+    n int
+    k int
+    A [N]int
+    B [N]bool
+)
+
+func main() {
+    fmt.Scan(&n, &k)
+    for i := 0; i < n; i++ {
+        fmt.Scan(&A[i])
+    }
+    
+    sum := 0
+    
+    for i := 0; i < n; i++ {
+        fmt.Scan(&B[i])
+        if B[i] {
+            sum += A[i]
+        }
+    }
+    
+    ans := 0
+    
+    for i := 0; i < n; i++ {
+        if !B[i] {
+            sum += A[i]
+        }
+        if i >= k && !B[i-k] {
+            sum -= A[i-k]
+        }
+        ans = max(ans, sum)
+    }
+    
+    fmt.Println(ans)
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+```
