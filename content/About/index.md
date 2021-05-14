@@ -20,7 +20,7 @@ Hey，我是**fffzlfk**一名西电CS在读本科生
 {{< /notice >}}
 ### 你可以在下面找到我
 
-* [GitHub](https://github.com)
+* [GitHub](https://github.com/fffzlfk)
 * WeChat
 
   {{<image src="/img/wechat.jpeg" position="center" style="width: 40% ;border-radius: 5px; box-shadow: inset 2px 2px 5px black, 2px 2px 5px black;">}}
