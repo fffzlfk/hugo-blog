@@ -6541,3 +6541,107 @@ func max(a, b int) int {
     return b
 }
 ```
+
+### 八数码-A*
+
+[题目链接](https://www.acwing.com/problem/content/description/181/)
+
+#### 代码
+
+```cpp
+#include <algorithm>
+#include <cstring>
+#include <iostream>
+#include <queue>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+const int dx[] = {-1, 0, 1, 0}, dy[] = {0, 1, 0, -1};
+const string go = "urdl";
+string s, t = "12345678x";
+
+int get_f(const string &sts, int g) {
+    int f = g;
+    for (int i = 0; i < 9; i++) {
+        if (sts[i] != t[i]) {
+            f++;
+        }
+    }
+    return f;
+}
+
+unordered_map<string, int> mp;
+priority_queue<pair<int, string>> que;
+unordered_map<string, pair<char, string>> path;
+
+int get_x(const string &sts) {
+    for (int i = 0; i < 9; i++) {
+        if (sts[i] == 'x')
+            return i;
+    }
+    return -1;
+}
+
+void dfs(const string &tmp) {
+    if (!path.count(tmp))
+        return;
+    dfs(path[tmp].second);
+    printf("%c", path[tmp].first);
+}
+
+bool check(const string &tmp) {
+    int cnt = 0;
+    for (int i = 0; i < 9; i++) {
+        if (tmp[i] == 'x')
+            continue;
+        for (int j = i + 1; j < 9; j++) {
+            if (tmp[j] != 'x' && tmp[i] > tmp[j])
+                cnt++;
+        }
+    }
+    return (cnt & 1) == 0;
+}
+
+void bfs() {
+    que.push({0, s});
+    mp[s] = 0;
+    if (!check(s)) {
+        puts("unsolvable");
+        return;
+    }
+    while (que.size()) {
+        auto [_, sts] = que.top();
+        que.pop();
+        if (sts == t) {
+            break;
+        }
+        auto idx = get_x(sts);
+        auto x = idx / 3, y = idx % 3;
+        for (int i = 0; i < 4; i++) {
+            auto cp = sts;
+            auto nx = x + dx[i], ny = y + dy[i];
+            if (nx >= 0 && nx <= 2 && ny >= 0 && ny <= 2) {
+                swap(cp[nx * 3 + ny], cp[idx]);
+                if (mp.count(cp))
+                    continue;
+                path[cp] = {go[i], sts};
+                mp[cp] = mp[sts] + 1;
+                que.push({-get_f(cp, mp[cp]), cp});
+            }
+        }
+    }
+    dfs(t);
+}
+
+int main() {
+    char tmp;
+    for (int i = 0; i < 9; i++) {
+        cin >> tmp;
+        s += tmp;
+    }
+
+    bfs();
+    return 0;
+}
+```
