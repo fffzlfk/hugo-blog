@@ -2,7 +2,6 @@
 author: fffzlfk
 catalog: true
 date: 2020-06-24
-header-img: img/2020-06-24.png
 subtitle: 模式匹配and最长回文子串
 tags:
   - C++
