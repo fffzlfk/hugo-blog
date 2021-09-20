@@ -6645,3 +6645,39 @@ int main() {
     return 0;
 }
 ```
+
+### 最长递增子序列的个数-LIS
+
+[题目链接](https://leetcode-cn.com/problems/number-of-longest-increasing-subsequence/)
+
+#### 代码
+
+```go
+func findNumberOfLIS(nums []int) int {
+    n := len(nums)
+    dp, cnt := make([]int, n), make([]int, n)
+    maxLen, ans := 0, 0
+
+    for i := range nums {
+        dp[i], cnt[i] = 1, 1
+        for j := 0; j < i; j++ {
+            if nums[i] > nums[j] {
+                if dp[j] + 1 > dp[i] {
+                    dp[i] = dp[j] + 1
+                    cnt[i] = cnt[j]
+                } else if dp[j] + 1 == dp[i] {
+                    cnt[i] += cnt[j]
+                }
+            }
+        }
+
+        if maxLen < dp[i] {
+            maxLen = dp[i]
+            ans = cnt[i]
+        } else if maxLen == dp[i] {
+            ans += cnt[i]
+        }
+    }
+    return ans
+}
+```
